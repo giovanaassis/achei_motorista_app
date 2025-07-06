@@ -1,6 +1,26 @@
 @import "tailwindcss";
 
+@theme {
+  --color-black-primary: #252525;
+}
+
+@layer base {
+  button {
+    background-color: var(--color-black-primary);
+    color: white;
+    border-radius: .25rem;
+    padding: 8px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #171717;
+  }
+}
+
 :root {
-  --background: #ffffff;
+  --background: #d8d8d8;
   --foreground: #171717;
 }

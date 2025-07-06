@@ -1,0 +1,32 @@
+import Link from "next/link";
+import React from "react";
+
+function SearchInputInitial() {
+  return (
+    <div className="flex justify-center items-center flex-col">
+      <div>
+        <div className="flex flex-col text-xl text-center tracking-widest gap-3 mb-10">
+          <label htmlFor="user-state">Qual o seu estado?</label>
+          <select className="border-2 border-black-primary rounded-sm w-70 pr-1 outline-0 text-gray-600">
+            <option value="rio">Rio de Janeiro</option>
+            <option value="sao-paulo">São Paulo</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col text-xl text-center tracking-widest gap-3">
+          <label htmlFor="user-city">Qual a sua cidade?</label>
+          <select className="border-2 border-black-primary rounded-sm w-70 pr-1 outline-0 text-gray-600">
+            <option value="nova-iguacu">Nova Iguaçu</option>
+            <option value="caxias">Caxias</option>
+          </select>
+        </div>
+      </div>
+
+      <Link href={"/search"}>
+        <button className="mt-35">achar motoristas</button>
+      </Link>
+    </div>
+  );
+}
+
+export default SearchInputInitial;
