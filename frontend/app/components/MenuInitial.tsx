@@ -12,7 +12,7 @@ function MenuInitial({ onStartSearch }: MenuInitialProps) {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
-        className="text-7xl text-black-primary"
+        className="text-4xl text-bold md:text-7xl text-black-primary"
       >
         AcheiMotorista
       </motion.h1>
@@ -22,7 +22,7 @@ function MenuInitial({ onStartSearch }: MenuInitialProps) {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
-        className="absolute -top-15"
+        className="absolute md:-top-15 -top-30"
         onClick={onStartSearch}
       >
         encontre motoristas perto de você

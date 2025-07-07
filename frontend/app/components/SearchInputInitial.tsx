@@ -5,6 +5,7 @@ function SearchInputInitial() {
   return (
     <div className="flex justify-center items-center flex-col">
       <div>
+        {/* STATE INPUT */}
         <div className="flex flex-col text-xl text-center tracking-widest gap-3 mb-10">
           <label htmlFor="user-state">Qual o seu estado?</label>
           <select className="border-2 border-black-primary rounded-sm w-70 pr-1 outline-0 text-gray-600">
@@ -13,6 +14,7 @@ function SearchInputInitial() {
           </select>
         </div>
 
+        {/* CITY INPUT */}
         <div className="flex flex-col text-xl text-center tracking-widest gap-3">
           <label htmlFor="user-city">Qual a sua cidade?</label>
           <select className="border-2 border-black-primary rounded-sm w-70 pr-1 outline-0 text-gray-600">

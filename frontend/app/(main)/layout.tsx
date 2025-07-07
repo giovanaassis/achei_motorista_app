@@ -1,3 +1,5 @@
+import Navbar from "../components/Navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -5,8 +7,8 @@ export default function RootLayout({
 }>) {
   return (
     <main>
-        <h1>AcheiMotorista</h1>
-        {children}
+      <Navbar />
+      {children}
     </main>
   );
 }

@@ -4,13 +4,24 @@
   --color-black-primary: #252525;
 }
 
+@layer components {
+  .underline-animation {
+    @apply mr-10 text-xl relative inline-block text-black-primary 
+    after:content-[""] after:absolute after:left-0 after:bottom-0 
+    after:h-[2px] after:w-full after:bg-black-primary 
+    after:transform after:scale-x-0 after:origin-center 
+    after:transition-transform after:duration-300 
+     hover:after:scale-x-100 cursor-pointer;
+  }
+}
+
 @layer base {
   button {
     background-color: var(--color-black-primary);
     color: white;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     padding: 8px;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     text-transform: uppercase;
     cursor: pointer;
   }
@@ -18,9 +29,4 @@
   button:hover {
     background-color: #171717;
   }
-}
-
-:root {
-  --background: #d8d8d8;
-  --foreground: #171717;
 }
