@@ -7,13 +7,13 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
-    <nav className="flex items-center justify-between p-5">
+    <nav className="flex items-center justify-between py-5 px-10">
       <div className="text-4xl md:text-7xl text-black-primary">
         AcheiMotorista
       </div>
 
       <div className="hidden md:block">
-        <span className="underline-animation mr-10 text-xl">
+        <span className="underline-animation mr-10 text-xl tracking-widest">
           Encontrar motoristas
         </span>
         <button>cadastre-se como motorista</button>
