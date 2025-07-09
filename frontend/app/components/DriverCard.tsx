@@ -5,15 +5,15 @@ function DriverCard() {
   return (
     <div className="border-2 border-gray-600 w-fit flex items-center p-5 gap-15 rounded-xl">
       {/* DRIVER PROFILE IMAGE */}
-      <div className="rounded-full bg-gray-800 w-30 h-30"></div>
+      <div className="rounded-full bg-gray-800 w-15 h-15 md:w-25 md:h-25"></div>
       {/* DRIVER INFO */}
       <div>
-        <div className="flex text-3xl items-center justify-between font-bold">
+        <div className="flex text-2xl items-center justify-between font-bold md:text-3xl">
           <h3>Roberto Silva</h3>
           <FaCarSide className="text-gray-primary" />
         </div>
 
-        <div className="flex items-center justify-between text-gray-primary text-xl gap-x-10 mt-3">
+        <div className="flex items-center justify-between text-gray-primary text-lg gap-x-10 mt-3 md:text-xl">
           <span>Nova Iguaçu</span>
           <span className="text-green">Disponível agora</span>
         </div>
