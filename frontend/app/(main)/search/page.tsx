@@ -1,3 +1,4 @@
+import DriverCard from "@/app/components/DriverCard";
 import SearchFilters from "@/app/components/SearchFilters";
 
 export default function SearchPage() {
@@ -9,7 +10,10 @@ export default function SearchPage() {
       <SearchFilters />
 
       {/* DRIVERS SECTION */}
-      
+      <div className="my-15 flex flex-col gap-y-10">
+        <DriverCard />
+        <DriverCard />
+      </div>
     </section>
   );
 }

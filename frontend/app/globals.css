@@ -2,6 +2,9 @@
 
 @theme {
   --color-black-primary: #252525;
+  --color-gray-primary: #4a5565;
+  --color-green: rgb(0, 155, 0);
+  --color-red: rgb(199, 2, 2);
 }
 
 @layer components {
@@ -20,7 +23,7 @@
     width: 280px;
     padding-right: 4px;
     outline: 0;
-    color: #4a5565;
+    color: var(--color-gray-primary);
   }
 
   .icons {
