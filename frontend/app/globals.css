@@ -3,6 +3,7 @@
 @theme {
   --color-black-primary: #252525;
   --color-gray-primary: #4a5565;
+  --color-gray-secondary: #3a414b;
   --color-green: rgb(0, 155, 0);
   --color-red: rgb(199, 2, 2);
 }
@@ -32,6 +33,15 @@
     color: white;
     cursor: pointer;
     padding: 2px;
+  }
+
+  .badge {
+    border-radius: 20px;
+    background-color: var(--color-gray-secondary);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.3rem;
   }
 }
 

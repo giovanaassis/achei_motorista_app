@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { FaCarSide } from "react-icons/fa";
 
 function DriverCard() {
@@ -19,7 +20,9 @@ function DriverCard() {
         </div>
       </div>
 
-      <ArrowRight className="rounded-full w-8 h-8 hover:bg-gray-500 transition duration-200 cursor-pointer"/>
+      <Link href="/profile">
+        <ArrowRight className="rounded-full w-8 h-8 hover:bg-gray-500 transition duration-200 cursor-pointer" />
+      </Link>
     </div>
   );
 }
