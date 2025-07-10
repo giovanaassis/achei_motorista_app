@@ -2,7 +2,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 function DriverInfo() {
   return (
-    <div className="flex gap-x-15">
+    <div className="flex gap-x-30">
       <div className="flex flex-col items-center gap-y-5">
         <div className="w-50 h-50 rounded-full bg-gray-700"></div>
         <h2 className="text-3xl">Roberto Silva</h2>
