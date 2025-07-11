@@ -1,6 +1,7 @@
 "use client";
 
 import { MenuIcon, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 function Navbar() {
@@ -30,7 +31,7 @@ function Navbar() {
       {menuOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center flex-col gap-y-10 z-40 md:hidden">
           <button>encontrar motoristas</button>
-          <button>cadastre-se como motorista</button>
+          <Link href={"/signup"} onClick={() => setMenuOpen(!menuOpen)}><button>cadastre-se como motorista</button></Link>
         </div>
       )}
     </nav>
