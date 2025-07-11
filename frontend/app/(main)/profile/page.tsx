@@ -4,12 +4,12 @@ import DriverInfo from "@/app/components/DriverInfo";
 
 export default function ProfilePage() {
     return (
-        <section className="flex pl-10 w-[80%] py-10 text-2xl text-black-primary">
+        <section className="flex flex-col items-center justify-center py-10 text-2xl text-black-primary md:flex-row md:justify-around md:items-start">
             {/* DRIVER INFO */}
             <DriverInfo />
 
             {/* DRIVER CONTACT */}
-            <div className="pl-30">
+            <div className="flex flex-col items-center mt-15 md:items-start md:mt-0">
                 <p className="mb-10">Entre em contato:</p>
                 <div className="flex flex-col gap-8 mb-10">
                     <div className="flex gap-5 items-center">
@@ -26,7 +26,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
 
-                <button>agenda sua viagem agora</button>
+                <button className="ml-4 md:ml-0">agenda sua viagem agora</button>
             </div>
         </section>
     )
