@@ -6,6 +6,7 @@
   --color-gray-secondary: #3a414b;
   --color-green: rgb(0, 155, 0);
   --color-red: rgb(199, 2, 2);
+  --color-lightgray: rgba(128, 128, 128, 0.486);
 }
 
 @layer components {

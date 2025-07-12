@@ -1,11 +1,11 @@
-import { ArrowLeftCircle } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 
 function GoBackButton() {
   return (
     <Link href={"/search"}>
-      <button className="bg-transparent text-black-primary hover:opacity-70">
-        <ArrowLeftCircle size={40}/>
+      <button className="hover:opacity-70 rounded-full bg-black-primary text-white">
+        <ArrowLeftIcon size={35}/>
       </button>
     </Link>
   );
