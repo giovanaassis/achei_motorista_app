@@ -4,6 +4,7 @@ import ContactForm from "@/app/components/ContactForm";
 import ProfileForm from "@/app/components/ProfileForm";
 import SignUpForm from "@/app/components/SignUpForm";
 import VehicleForm from "@/app/components/VehicleForm";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function SignUpPage() {
@@ -48,7 +49,9 @@ export default function SignUpPage() {
         {formStep === 1 && (
           <p>
             Já tem uma conta?{" "}
-            <span className="underline cursor-pointer">Faça login</span>
+            <Link href={"/signin"}>
+              <span className="underline cursor-pointer">Faça login</span>
+            </Link>
           </p>
         )}
       </form>
