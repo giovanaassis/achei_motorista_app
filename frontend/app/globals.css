@@ -21,7 +21,7 @@
 
   .input {
     border: 2px solid var(--color-black-primary);
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     width: 280px;
     padding-right: 4px;
     outline: 0;
@@ -43,6 +43,14 @@
     text-align: center;
     padding: 5px;
     font-size: 1.3rem;
+  }
+
+  .vehicle-input {
+    @apply flex items-center justify-center gap-5 text-gray-secondary text-2xl border-2 border-gray-secondary rounded-xl p-5 cursor-pointer opacity-75 hover:opacity-100 peer-checked:opacity-100;
+  }
+
+  .availability-input {
+    @apply text-xl border-2 px-5 py-2 rounded-full peer-checked:bg-black-primary peer-checked:text-white cursor-pointer transition duration-100 inline-block select-none;
   }
 }
 

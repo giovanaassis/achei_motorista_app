@@ -3,6 +3,7 @@
 import ContactForm from "@/app/components/ContactForm";
 import ProfileForm from "@/app/components/ProfileForm";
 import SignUpForm from "@/app/components/SignUpForm";
+import VehicleForm from "@/app/components/VehicleForm";
 import { useState } from "react";
 
 export default function SignUpPage() {
@@ -28,9 +29,15 @@ export default function SignUpPage() {
         {formStep == 1 && <SignUpForm />}
         {formStep == 2 && <ProfileForm />}
         {formStep == 3 && <ContactForm />}
+        {formStep == 4 && <VehicleForm />}
 
         <div className="flex flex-row-reverse gap-10">
-          <button className="w-50">próximo</button>
+          {formStep == 4 ? (
+            <button className="w-50">finalizar</button>
+          ) : (
+            <button className="w-50">próximo</button>
+          )}
+
           {formStep !== 1 && (
             <button className="w-50" type="button" onClick={handlePrev}>
               voltar

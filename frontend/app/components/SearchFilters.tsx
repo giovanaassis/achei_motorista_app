@@ -1,5 +1,5 @@
-import { MinusIcon, PlusIcon, SearchIcon } from "lucide-react";
-import React from "react";
+import { SearchIcon } from "lucide-react";
+import QuantityInput from "./QuantityInput";
 
 function SearchFilters() {
   return (
@@ -51,20 +51,13 @@ function SearchFilters() {
 
         <div className="self-start pt-1">
           <label htmlFor="number-seats">Quantidade de assentos:</label>
-          <div className="flex gap-x-5 mt-5 items-center">
-            <MinusIcon className="icons" />
-            <span id="number-seats" className="text-2xl font-bold text-black">
-              2
-            </span>
-            <PlusIcon className="icons" />
-          </div>
+          <QuantityInput />
         </div>
 
         {/* SUBMIT BUTTON FOR MOBILE */}
         <button type="submit" className="w-[50%] md:hidden">
           buscar
         </button>
-        
       </div>
     </div>
   );
