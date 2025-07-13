@@ -17,7 +17,9 @@ function Navbar() {
         <span className="underline-animation mr-10 text-xl tracking-widest">
           Encontrar motoristas
         </span>
-        <button>cadastre-se como motorista</button>
+        <Link href={"/signup"}>
+          <button>cadastre-se como motorista</button>
+        </Link>
       </div>
 
       {/* MENU MOBILE */}
@@ -31,7 +33,9 @@ function Navbar() {
       {menuOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center flex-col gap-y-10 z-40 md:hidden">
           <button>encontrar motoristas</button>
-          <Link href={"/signup"} onClick={() => setMenuOpen(!menuOpen)}><button>cadastre-se como motorista</button></Link>
+          <Link href={"/signup"} onClick={() => setMenuOpen(!menuOpen)}>
+            <button>cadastre-se como motorista</button>
+          </Link>
         </div>
       )}
     </nav>
