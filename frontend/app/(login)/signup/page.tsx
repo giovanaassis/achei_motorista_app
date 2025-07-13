@@ -1,5 +1,6 @@
 "use client";
 
+import ContactForm from "@/app/components/ContactForm";
 import ProfileForm from "@/app/components/ProfileForm";
 import SignUpForm from "@/app/components/SignUpForm";
 import { useState } from "react";
@@ -26,6 +27,7 @@ export default function SignUpPage() {
       >
         {formStep == 1 && <SignUpForm />}
         {formStep == 2 && <ProfileForm />}
+        {formStep == 3 && <ContactForm />}
 
         <div className="flex flex-row-reverse gap-10">
           <button className="w-50">próximo</button>
