@@ -3,8 +3,8 @@ import React from "react";
 
 function SearchInputInitial() {
   return (
-    <div className="flex justify-center items-center flex-col">
-      <div>
+    <div className="flex items-center flex-col">
+      <div className="mt-[20%]">
         {/* STATE INPUT */}
         <div className="flex flex-col text-xl text-center tracking-widest gap-3 mb-10">
           <label htmlFor="user-state">Qual o seu estado?</label>
@@ -25,7 +25,7 @@ function SearchInputInitial() {
       </div>
 
       <Link href={"/search"}>
-        <button className="mt-35">achar motoristas</button>
+        <button className="mt-60 md:mt-30">achar motoristas</button>
       </Link>
     </div>
   );
