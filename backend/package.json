@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "achei-motorista",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -15,9 +15,9 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.17.0",
-    "@strapi/plugin-users-permissions": "5.17.0",
-    "@strapi/strapi": "5.17.0",
+    "@strapi/plugin-cloud": "5.21.0",
+    "@strapi/plugin-users-permissions": "5.21.0",
+    "@strapi/strapi": "5.21.0",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -35,7 +35,7 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "dacf2564-210e-4383-93e1-762f4df0bad3",
-    "installId": "b6f7546fb11a3bb394196798010caf84fedc269cde95fb053979f30c27eee787"
+    "uuid": "501ed8a3-1b5d-4efe-bfff-001da091bff9",
+    "installId": "76cf98c6d2579d8ff33834a565b3b14000f6d80702c606db2732e479244fbcba"
   }
 }
