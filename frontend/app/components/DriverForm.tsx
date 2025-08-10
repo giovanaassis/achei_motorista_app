@@ -20,10 +20,6 @@ function DriverForm({ onEdit }: { onEdit: boolean }) {
     setFormStep(formStep - 1);
   };
 
-  if (onEdit) {
-    console.log("driver logged in");
-  }
-
   return (
     <form
       className="flex flex-col gap-10 mt-15 items-center justify-center"
@@ -34,7 +30,7 @@ function DriverForm({ onEdit }: { onEdit: boolean }) {
       {formStep == 3 && <ContactForm />}
       {formStep == 4 && <VehicleForm />}
 
-      <div className="flex flex-row-reverse gap-10">
+      <div className="flex md:flex-row-reverse gap-10 flex-col">
         {formStep == 4 ? (
           <button className="w-50">finalizar</button>
         ) : (

@@ -3,6 +3,21 @@
 import Image from "next/image";
 import { useState } from "react";
 
+const genders = [
+  {
+    gender: "man",
+    name: "Homem",
+  },
+  {
+    gender: "woman",
+    name: "Mulher",
+  },
+  {
+    gender: "other",
+    name: "Outro",
+  },
+];
+
 function ProfileForm() {
   const [preview, setPreview] = useState<string | null>();
 
@@ -44,6 +59,7 @@ function ProfileForm() {
           hidden
         />
       </div>
+
       {preview && (
         <label
           htmlFor="driver-profile-image"
@@ -56,38 +72,21 @@ function ProfileForm() {
       {/* GENDER INPUT */}
       <p className="text-3xl self-start -mb-3">Gênero</p>
       <div className="flex gap-5 text-2xl self-start">
-        <label className="flex items-center justify-center gap-3 cursor-pointer">
-          <input
-            type="radio"
-            name="driver-gender"
-            value="man"
-            className="peer hidden"
-          />
-          <div className="w-5 h-5 rounded-full border-2 border-gray-secondary peer-checked:bg-gray-secondary transition"></div>
-          <span>Homem</span>
-        </label>
-
-        <label className="flex items-center justify-center gap-3 cursor-pointer">
-          <input
-            type="radio"
-            name="driver-gender"
-            value="woman"
-            className="peer hidden"
-          />
-          <div className="w-5 h-5 rounded-full border-2 border-gray-secondary peer-checked:bg-gray-secondary transition"></div>
-          <span>Mulher</span>
-        </label>
-
-        <label className="flex items-center justify-center gap-3 cursor-pointer">
-          <input
-            type="radio"
-            name="driver-gender"
-            value="other"
-            className="peer hidden"
-          />
-          <div className="w-5 h-5 rounded-full border-2 border-gray-secondary peer-checked:bg-gray-secondary transition"></div>
-          <span>Outro</span>
-        </label>
+        {genders.map((gender) => (
+          <label
+            className="flex items-center justify-center gap-3 cursor-pointer"
+            key={gender.gender}
+          >
+            <input
+              type="radio"
+              name="driver-gender"
+              value={gender.gender}
+              className="peer hidden"
+            />
+            <div className="w-5 h-5 rounded-full border-2 border-gray-secondary peer-checked:bg-gray-secondary transition"></div>
+            <span>{gender.name}</span>
+          </label>
+        ))}
       </div>
 
       {/* LOCATION INPUT */}
