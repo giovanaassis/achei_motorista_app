@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "calendar_days",
+  "info": {
+    "singularName": "calendar-day",
+    "pluralName": "calendar-days",
+    "displayName": "Calendar Day"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "maxLength": 20,
+      "required": true,
+      "unique": true
+    }
+  }
+}
