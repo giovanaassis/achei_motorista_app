@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "social_networks",
+  "info": {
+    "singularName": "social-network",
+    "pluralName": "social-networks",
+    "displayName": "Social Network"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}
