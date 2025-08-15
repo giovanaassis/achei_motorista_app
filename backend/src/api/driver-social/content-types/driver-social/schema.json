@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "driver_socials",
+  "info": {
+    "singularName": "driver-social",
+    "pluralName": "driver-socials",
+    "displayName": "Driver Social"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "driver": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::driver.driver",
+      "inversedBy": "driver_socials"
+    },
+    "social": {
+      "type": "enumeration",
+      "required": false,
+      "enum": [
+        "instagram",
+        "facebook",
+        "personal-site"
+      ]
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

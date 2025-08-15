@@ -424,6 +424,7 @@ export interface ApiCalendarDayCalendarDay extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    drivers: Schema.Attribute.Relation<'manyToMany', 'api::driver.driver'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -469,13 +470,13 @@ export interface ApiCityCity extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiSocialNetworkSocialNetwork
+export interface ApiDriverSocialDriverSocial
   extends Struct.CollectionTypeSchema {
-  collectionName: 'social_networks';
+  collectionName: 'driver_socials';
   info: {
-    displayName: 'Social Network';
-    pluralName: 'social-networks';
-    singularName: 'social-network';
+    displayName: 'Driver Social';
+    pluralName: 'driver-socials';
+    singularName: 'driver-social';
   };
   options: {
     draftAndPublish: false;
@@ -484,19 +485,89 @@ export interface ApiSocialNetworkSocialNetwork
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    driver: Schema.Attribute.Relation<'manyToOne', 'api::driver.driver'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::social-network.social-network'
+      'api::driver-social.driver-social'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
+    social: Schema.Attribute.Enumeration<
+      ['instagram', 'facebook', 'personal-site']
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
+  collectionName: 'drivers';
+  info: {
+    displayName: 'Driver';
+    pluralName: 'drivers';
+    singularName: 'driver';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    city_id: Schema.Attribute.Relation<'oneToOne', 'api::city.city'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    driver_availability: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::calendar-day.calendar-day'
+    >;
+    driver_socials: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::driver-social.driver-social'
+    >;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    gender: Schema.Attribute.Enumeration<['homem', 'mulher', 'outro']> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::driver.driver'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    password: Schema.Attribute.Password &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 6;
+      }>;
+    phone_number: Schema.Attribute.BigInteger &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: '11';
+          min: '10';
+        },
+        string
+      >;
+    profile_image: Schema.Attribute.Media<'images'>;
+    publishedAt: Schema.Attribute.DateTime;
+    state_id: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vehicle_seats: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 2;
+        },
+        number
+      >;
+    vehicle_type: Schema.Attribute.Enumeration<['carro', 'moto']> &
+      Schema.Attribute.Required;
   };
 }
 
@@ -1040,7 +1111,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::calendar-day.calendar-day': ApiCalendarDayCalendarDay;
       'api::city.city': ApiCityCity;
-      'api::social-network.social-network': ApiSocialNetworkSocialNetwork;
+      'api::driver-social.driver-social': ApiDriverSocialDriverSocial;
+      'api::driver.driver': ApiDriverDriver;
       'api::state.state': ApiStateState;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

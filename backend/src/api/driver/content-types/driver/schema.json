@@ -1,0 +1,96 @@
+{
+  "kind": "collectionType",
+  "collectionName": "drivers",
+  "info": {
+    "singularName": "driver",
+    "pluralName": "drivers",
+    "displayName": "Driver"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "password": {
+      "type": "password",
+      "private": true,
+      "required": true,
+      "minLength": 6
+    },
+    "profile_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "gender": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "homem",
+        "mulher",
+        "outro"
+      ]
+    },
+    "state_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::state.state"
+    },
+    "city_id": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::city.city"
+    },
+    "phone_number": {
+      "type": "biginteger",
+      "required": true,
+      "min": "10",
+      "max": "11"
+    },
+    "vehicle_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "carro",
+        "moto"
+      ]
+    },
+    "vehicle_seats": {
+      "type": "integer",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "vehicle_type"
+            },
+            "carro"
+          ]
+        }
+      },
+      "min": 2
+    },
+    "driver_availability": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::calendar-day.calendar-day",
+      "mappedBy": "drivers"
+    },
+    "driver_socials": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::driver-social.driver-social",
+      "mappedBy": "driver"
+    }
+  }
+}
