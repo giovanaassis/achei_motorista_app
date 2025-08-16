@@ -15,17 +15,6 @@
       "type": "string",
       "required": true
     },
-    "email": {
-      "type": "email",
-      "required": true,
-      "unique": true
-    },
-    "password": {
-      "type": "password",
-      "private": true,
-      "required": true,
-      "minLength": 6
-    },
     "profile_image": {
       "type": "media",
       "multiple": false,
@@ -90,6 +79,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::driver-social.driver-social",
+      "mappedBy": "driver"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
       "mappedBy": "driver"
     }
   }
