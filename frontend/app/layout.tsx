@@ -1,10 +1,11 @@
+import { AuthProvider } from "./contexts/AuthContext";
 import "./globals.css";
-import { Afacad } from "next/font/google"
+import { Afacad } from "next/font/google";
 
 const afacad = Afacad({
   weight: ["500", "600", "700"],
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -13,8 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning className={`antialiased ${afacad.className}`}>
-        {children}
+      <body
+        suppressHydrationWarning
+        className={`antialiased ${afacad.className}`}
+      >
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
