@@ -59,6 +59,15 @@
     gap: 12px;
     @apply md:flex-row md:justify-between md:items-center;
   }
+
+  .loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-top: 3.75rem;
+  }
 }
 
 @layer base {

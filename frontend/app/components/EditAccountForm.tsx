@@ -1,6 +1,6 @@
-import React from "react";
 
-function EditForm() {
+
+function EditAccountForm() {
   return (
     <>
       <input
@@ -34,4 +34,4 @@ function EditForm() {
   );
 }
 
-export default EditForm;
+export default EditAccountForm;

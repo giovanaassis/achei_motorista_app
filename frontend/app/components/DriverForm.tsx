@@ -6,31 +6,22 @@ import ProfileForm from "./ProfileForm";
 import ContactForm from "./ContactForm";
 import VehicleForm from "./VehicleForm";
 import Link from "next/link";
-import EditForm from "./EditForm";
-import { useAuth } from "../contexts/AuthContext";
+import EditAccountForm from "./EditAccountForm";
 
 function DriverForm({ onEdit }: { onEdit: boolean }) {
-  const { name, email, password } = useAuth();
   const [formStep, setFormStep] = useState<number>(1);
 
-  const handleNext = () => {
-    setFormStep(formStep + 1);
-  };
+  // const handleNext = () => {
+  //   setFormStep(formStep + 1);
+  // };
 
   const handlePrev = () => {
     setFormStep(formStep - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formStep !== 4) {
-      if (formStep === 1) {
-        console.log(name, email, password);
-      }
-      handleNext();
-    } else {
-      console.log("enviou!");
-    }
+    console.log("enviou!")
   };
 
   return (
@@ -38,7 +29,7 @@ function DriverForm({ onEdit }: { onEdit: boolean }) {
       className="flex flex-col gap-10 mt-15 items-center justify-center"
       onSubmit={handleSubmit}
     >
-      {formStep === 1 && (onEdit ? <EditForm /> : <SignUpForm />)}
+      {formStep === 1 && (onEdit ? <EditAccountForm /> : <SignUpForm />)}
       {formStep == 2 && <ProfileForm />}
       {formStep == 3 && <ContactForm />}
       {formStep == 4 && <VehicleForm />}

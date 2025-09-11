@@ -1,4 +1,3 @@
-import { AuthProvider } from "./contexts/AuthContext";
 import "./globals.css";
 import { Afacad } from "next/font/google";
 
@@ -18,7 +17,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`antialiased ${afacad.className}`}
       >
-        <AuthProvider>{children}</AuthProvider>
+        {children}
       </body>
     </html>
   );

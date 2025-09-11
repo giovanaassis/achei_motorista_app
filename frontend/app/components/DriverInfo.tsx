@@ -7,11 +7,19 @@ function DriverInfo() {
       <div className="flex flex-col items-center gap-5">
         <div className="w-50 h-50 rounded-full bg-gray-700"></div>
         <h2 className="text-3xl">Roberto Silva</h2>
-        <Link href={"/edit-profile"}>
-          <button className="bg-blue-700 hover:bg-blue-800 text-lg">
-            editar perfil
-          </button>
-        </Link>
+        <div className="flex flex-col gap-5 justify-center items-center">
+          <Link href={"/edit-profile"}>
+            <button className="bg-blue-700 hover:bg-blue-800 text-lg">
+              editar perfil
+            </button>
+          </Link>
+
+          <Link href={"/edit-account"}>
+            <button className="bg-blue-700 hover:bg-blue-800 text-lg w-40">
+              editar conta
+            </button>
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-col text-center gap-5 lg:text-left">

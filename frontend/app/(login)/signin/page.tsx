@@ -5,9 +5,8 @@ export default function SignInPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl">Login.</h1>
-      <form className="flex flex-col gap-10 mt-15 items-center justify-center">
+      <form className="loginForm">
         <SignInForm />
-
         <button className="w-50 -mb-4">entrar</button>
 
         <p>

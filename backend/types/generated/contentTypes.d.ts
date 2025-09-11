@@ -526,17 +526,14 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::driver-social.driver-social'
     >;
-    gender: Schema.Attribute.Enumeration<['homem', 'mulher', 'outro']> &
-      Schema.Attribute.Required;
+    gender: Schema.Attribute.Enumeration<['homem', 'mulher', 'outro']>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::driver.driver'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
     phone_number: Schema.Attribute.BigInteger &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: '11';
@@ -561,8 +558,7 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
         },
         number
       >;
-    vehicle_type: Schema.Attribute.Enumeration<['carro', 'moto']> &
-      Schema.Attribute.Required;
+    vehicle_type: Schema.Attribute.Enumeration<['carro', 'moto']>;
   };
 }
 

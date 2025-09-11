@@ -1,7 +1,4 @@
-import { useAuth } from "../contexts/AuthContext";
-
 function SignUpForm() {
-  const { name, email, password, setName, setEmail, setPassword } = useAuth();
 
   return (
     <>
@@ -10,17 +7,13 @@ function SignUpForm() {
         id="driver-name"
         placeholder="Nome"
         className="input p-2 text-xl"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
       />
 
       <input
-        type="text"
+        type="email"
         id="driver-email"
         placeholder="E-mail"
         className="input p-2 text-xl"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
@@ -28,8 +21,6 @@ function SignUpForm() {
         id="driver-password"
         placeholder="Senha"
         className="input p-2 text-xl"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
         autoComplete="off"
       />
     </>

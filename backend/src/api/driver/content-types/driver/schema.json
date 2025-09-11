@@ -11,10 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
     "profile_image": {
       "type": "media",
       "multiple": false,
@@ -24,7 +20,7 @@
     },
     "gender": {
       "type": "enumeration",
-      "required": true,
+      "required": false,
       "enum": [
         "homem",
         "mulher",
@@ -43,13 +39,13 @@
     },
     "phone_number": {
       "type": "biginteger",
-      "required": true,
+      "required": false,
       "min": "10",
       "max": "11"
     },
     "vehicle_type": {
       "type": "enumeration",
-      "required": true,
+      "required": false,
       "enum": [
         "carro",
         "moto"
