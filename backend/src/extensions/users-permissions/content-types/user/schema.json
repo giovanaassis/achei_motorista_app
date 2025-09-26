@@ -16,7 +16,6 @@
     "username": {
       "type": "string",
       "minLength": 3,
-      "unique": true,
       "configurable": false,
       "required": true
     },
@@ -71,6 +70,11 @@
       "relation": "oneToOne",
       "target": "api::driver.driver",
       "inversedBy": "user"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "required": true
     }
   }
 }

@@ -1,13 +1,39 @@
+"use client";
+
+import { UserType } from "@/@types/user";
 import SignInForm from "@/app/components/SignInForm";
+import { loginUser } from "@/app/services/userService";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export default function SignInPage() {
+  const [user, setUser] = useState<UserType | null>(null);
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const router = useRouter();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    
+    const res = await loginUser(user, confirmPassword)
+    if (!res) {
+      alert("Error at login. Try again!");
+    } else {
+      router.push("edit-profile");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl">Login.</h1>
-      <form className="loginForm">
-        <SignInForm />
-        <button className="w-50 -mb-4">entrar</button>
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <SignInForm
+          user={user}
+          onChangeUser={setUser}
+          confirmPassword={confirmPassword}
+          onConfirmPassword={setConfirmPassword}
+        />
 
         <p>
           Não tem uma conta?{" "}

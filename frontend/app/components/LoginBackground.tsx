@@ -10,6 +10,7 @@ function LoginBackground() {
         fill
         className="object-cover"
         priority
+        sizes="100vw, 60vw"
       />
     </div>
   )
