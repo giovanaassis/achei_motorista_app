@@ -31,7 +31,7 @@ function ProfileForm() {
   return (
     <>
       {/* PROFILE IMAGE INPUT */}
-      <div className="relative bg-black-primary rounded-full w-40 h-40 overflow-hidden flex items-center justify-center">
+      <div className="relative bg-black-primary rounded-full w-40 h-40 overflow-hidden flex items-center justify-center my-5">
         {!preview ? (
           <>
             <label
@@ -63,15 +63,15 @@ function ProfileForm() {
       {preview && (
         <label
           htmlFor="driver-profile-image"
-          className="-mt-5 bg-lightgray p-1 rounded-xs hover:bg-[#a7a7a77c] cursor-pointer"
+          className="bg-lightgray p-1 rounded-xs hover:bg-[#a7a7a77c] cursor-pointer"
         >
           Trocar imagem
         </label>
       )}
 
       {/* GENDER INPUT */}
-      <p className="text-3xl self-start -mb-3">Gênero</p>
-      <div className="flex gap-5 text-2xl self-start">
+      <p className="text-2xl self-start">Gênero</p>
+      <div className="flex gap-5 text-2xl self-start mb-5">
         {genders.map((gender) => (
           <label
             className="flex items-center justify-center gap-3 cursor-pointer"
@@ -90,7 +90,7 @@ function ProfileForm() {
       </div>
 
       {/* LOCATION INPUT */}
-      <div className="flex flex-col gap-3 text-3xl self-start">
+      <div className="flex flex-col gap-3 text-2xl self-start mb-5">
         <label htmlFor="driver-state">Estado</label>
         <select name="driver-state" id="driver-state" className="input text-xl">
           <option value="rio">Rio de Janeiro</option>
@@ -98,7 +98,7 @@ function ProfileForm() {
         </select>
       </div>
 
-      <div className="flex flex-col gap-3 text-3xl self-start">
+      <div className="flex flex-col gap-3 text-2xl self-start">
         <label htmlFor="driver-city">Cidade</label>
         <select name="driver-city" id="driver-city" className="input text-xl">
           <option value="nova-iguacu">Nova Iguaçu</option>

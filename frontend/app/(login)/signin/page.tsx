@@ -18,7 +18,7 @@ export default function SignInPage() {
     
     const res = await loginUser(user, confirmPassword)
     if (!res) {
-      alert("Error at login. Try again!");
+      alert("Something went wrong. Please try again.");
     } else {
       router.push("edit-profile");
     }

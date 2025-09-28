@@ -52,8 +52,32 @@ export const getMe = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
-    
   } catch (error) {
     console.log("Error at service getMe: ", error);
+  }
+};
+
+type newUser = {
+  id?: number;
+  name?: string;
+  email?: string;
+  currentPassword: string;
+  newPassword?: string;
+}
+
+export const updateUser = async (user: newUser) => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  if (!user.currentPassword) return;
+
+  try {
+    const res = await axios.put(`${API_URL}/users/${user.id}`, user, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log("Error at service updateUser: ", error);
   }
 };

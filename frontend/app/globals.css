@@ -46,7 +46,7 @@
   }
 
   .vehicle-input {
-    @apply flex items-center justify-center gap-5 text-gray-secondary text-2xl border-2 border-gray-secondary rounded-xl p-5 cursor-pointer opacity-75 hover:opacity-100 peer-checked:opacity-100;
+    @apply flex items-center justify-center gap-5 text-gray-secondary text-xl border-2 border-gray-secondary rounded-xl p-5 cursor-pointer opacity-75 mb-5 hover:opacity-100 peer-checked:opacity-100;
   }
 
   .availability-input {

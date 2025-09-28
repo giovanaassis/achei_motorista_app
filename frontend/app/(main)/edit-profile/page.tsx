@@ -1,20 +1,15 @@
 "use client";
 
+import { DriverType } from "@/@types/driver";
 import { UserType } from "@/@types/user";
-import { API_URL } from "@/app/axios/config";
+import ContactForm from "@/app/components/ContactForm";
+import ProfileForm from "@/app/components/ProfileForm";
+import VehicleForm from "@/app/components/VehicleForm";
 import { createDriver, getDriver } from "@/app/services/driverService";
 import { getMe } from "@/app/services/userService";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
-type DriverType = {
-  profile_image: string;
-  gender: "homem" | "mulher" | "outro";
-  phone_number: string;
-  vehicle_type: "carro" | "moto";
-  vehicle_seats: number;
-};
 
 export default function EditProfilePage() {
   const [user, setUser] = useState<UserType | null>(null);
@@ -58,11 +53,22 @@ export default function EditProfilePage() {
   }
 
   return (
-    <div>
-      <h1>Olá, {user?.name}</h1>
-      <p>Edite as informações do seu veículo e do seu perfil aqui.</p>
+    <div className="p-10 w-full">
+      <h1 className="text-3xl">Olá, {user?.name}</h1>
+      <p className="text-xl">Edite as informações do seu veículo e do seu perfil aqui.</p>
 
-      <form>{/* LEFT SIDE */}</form>
+      <form className="flex justify-between">
+        {/* LEFT SIDE */}
+       <div className="flex-1">
+         <ProfileForm />
+         <ContactForm />
+       </div>
+       {/* RIGHT SIDE */}
+       <div className="flex-1">
+        <VehicleForm />
+        <button type="submit" className="mt-10 text-2xl">salvar</button>
+       </div>
+      </form>
     </div>
   );
 }

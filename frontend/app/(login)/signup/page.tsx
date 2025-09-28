@@ -17,7 +17,7 @@ export default function SignUpPage() {
 
     const res = await registerUser(user);
     if (!res) {
-      alert("Error at register. Try again!");
+      alert("Something went wrong. Please try again.");
     } else {
       router.push("edit-profile");
     }

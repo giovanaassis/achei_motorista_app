@@ -1,3 +1,4 @@
+import { DriverProvider } from "./context/DriverContext";
 import "./globals.css";
 import { Afacad } from "next/font/google";
 
@@ -17,7 +18,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`antialiased ${afacad.className}`}
       >
-        {children}
+        <DriverProvider>{children}</DriverProvider>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ const daysWeek = [
 function VehicleForm() {
   return (
     <>
-      <p className="self-start text-3xl">Tipo de veículo</p>
+      <p className="self-start text-2xl my-5">Tipo de veículo</p>
       <div className="self-start flex gap-15">
         <label htmlFor="car">
           <input
@@ -44,12 +44,12 @@ function VehicleForm() {
         </label>
       </div>
 
-      <div className="self-start">
-        <p className="text-3xl">Quantidade de assentos no carro</p>
+      <div className="self-start mb-5">
+        <p className="text-2xl">Quantidade de assentos no carro</p>
         <QuantityInput />
       </div>
 
-      <p className="self-start text-3xl">Disponibilidade</p>
+      <p className="self-start text-2xl mb-5">Disponibilidade</p>
       <div className="self-start flex gap-4 flex-wrap">
         {daysWeek.map((day) => (
           <label htmlFor={day} key={day}>
