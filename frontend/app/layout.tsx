@@ -1,3 +1,4 @@
+import { Theme } from "@radix-ui/themes";
 import { DriverProvider } from "./context/DriverContext";
 import "./globals.css";
 import { Afacad } from "next/font/google";
@@ -18,7 +19,9 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`antialiased ${afacad.className}`}
       >
-        <DriverProvider>{children}</DriverProvider>
+        <Theme>
+          <DriverProvider>{children}</DriverProvider>
+        </Theme>
       </body>
     </html>
   );

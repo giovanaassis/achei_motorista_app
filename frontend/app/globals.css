@@ -26,6 +26,9 @@
     padding-right: 4px;
     outline: 0;
     color: var(--color-gray-secondary);
+    position: relative;
+    z-index: 9999;
+    background-color: white;
   }
 
   .icons {
@@ -83,9 +86,5 @@
 
   button:hover {
     background-color: #171717;
-  }
-
-  option {
-    font-size: .8em;
   }
 }

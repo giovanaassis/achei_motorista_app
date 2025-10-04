@@ -18,11 +18,9 @@ function Car() {
           transition={{ duration: 4, ease: "easeOut", type: "spring" }}
           className="w-[150px] h-auto absolute -top-25"
         >
-          <Image src={CarImage} alt="Carro" />
+          <Image src={CarImage} alt="Carro" priority/>
         </motion.div>
       </motion.div>
-
-      {/* CAR */}
     </>
   );
 }

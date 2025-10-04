@@ -8,8 +8,7 @@ import VehicleForm from "@/app/components/VehicleForm";
 import { createDriver, getDriver } from "@/app/services/driverService";
 import { getMe } from "@/app/services/userService";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 
 export default function EditProfilePage() {
   const [user, setUser] = useState<UserType | null>(null);
@@ -17,10 +16,10 @@ export default function EditProfilePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  const handleDriverChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setDriver((prev) => ({ ...prev!, [e.target.name]: e.target.value }));
-  };
+  // const handleDriverChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setDriver((prev) => ({ ...prev!, [e.target.name]: e.target.value }));
+  // };
 
   useEffect(() => {
     if (!localStorage.getItem("token")) router.push("/signin");
@@ -33,11 +32,9 @@ export default function EditProfilePage() {
         // GET DRIVER
         getDriver(userData.id).then((driverData) => {
           if (driverData.length > 0) {
-            console.log("Motorista já existe: ", driverData);
             setDriver(driverData[0]);
           } else {
-            // CREATE A DRIVER
-            console.log("Motorista criado");
+            // CREATE A DRIVER IF IT DOESN'T EXIST
             createDriver(userData.id).then((res) => setDriver(res));
           }
         });
