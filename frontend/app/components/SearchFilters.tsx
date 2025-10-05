@@ -1,25 +1,34 @@
 import { SearchIcon } from "lucide-react";
 import QuantityInput from "./QuantityInput";
+import LocaleInput from "./LocaleInput";
 
-function SearchFilters() {
+function SearchFilters({
+  state,
+  city,
+  changeState,
+}: {
+  state: string;
+  city: string;
+  changeState: (state: string) => void;
+}) {
   return (
     <div className="my-10 text-xl">
       {/* FIRST PART */}
       <div className="flex flex-col w-[50%] gap-5 mb-5 md:flex-row">
         <div>
-          <label htmlFor="user-state" />
-          <select className="input h-10">
-            <option value="rio">Rio de Janeiro</option>
-            <option value="sao-paulo">São Paulo</option>
-          </select>
+          <LocaleInput
+            hasState={false}
+            selectedState={state}
+            setSelectedState={changeState}
+          />
         </div>
 
         <div>
-          <label htmlFor="user-city" />
-          <select className="input h-10" id="user-city">
-            <option value="nova-iguacu">Nova Iguaçu</option>
-            <option value="caxias">Caxias</option>
-          </select>
+          <LocaleInput
+            hasState={true}
+            selectedState={state}
+            setSelectedState={changeState}
+          />
         </div>
 
         {/* SUBMIT BUTTON FOR BIG SCREENS */}

@@ -28,11 +28,9 @@ function LocaleInput({
 
   const handleChange = (value: string) => {
     if (hasState) {
-      // CITY VALUE CHANGED
-      setSelectedCity?.(value);
+      setSelectedCity?.(value); // CITY VALUE CHANGED
     } else {
-      // STATE VALUE CHANGED
-      setSelectedState(value);
+      setSelectedState(value); // STATE VALUE CHANGED
     }
   };
 
@@ -89,7 +87,7 @@ function LocaleInput({
             : cities?.map((city) => (
                 <Select.Item
                   key={city.id}
-                  value={city.name}
+                  value={String(city.id)}
                   className="flex items-center gap-3 outline-0 cursor-pointer hover:bg-lightgray pl-2 text-xl"
                 >
                   {city.name}

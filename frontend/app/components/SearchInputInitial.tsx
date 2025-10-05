@@ -8,10 +8,6 @@ function SearchInputInitial() {
   const [selectedState, setSelectedState] = useState<string>(""); // STATE ID
   const [selectedCity, setSelectedCity] = useState<string>("");
 
-  const getLocale = () => {
-    alert(`Estado é ${selectedState} e cidade é ${selectedCity}`);
-  };
-
   return (
     <div className="flex items-center flex-col">
       <div className="mt-[13%]">
@@ -37,7 +33,10 @@ function SearchInputInitial() {
         </div>
       </div>
 
-      <Link href={"/search"} className="h-0" onClick={getLocale}>
+      <Link
+        href={`/search?state_id=${selectedState}&city_id=${selectedCity}`}
+        className="h-0"
+      >
         <button className="mt-60 md:mt-30">achar motoristas</button>
       </Link>
     </div>

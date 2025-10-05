@@ -1,8 +1,16 @@
+import { DriverType } from "@/@types/driver";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FaCarSide } from "react-icons/fa";
 
-function DriverCard() {
+interface DriverCardProps {
+  driver: DriverType;
+  state?: string;
+  city?: string;
+}
+
+function DriverCard({ driver, state, city }: DriverCardProps) {
+
   return (
     <div className="border-2 border-gray-600 w-fit flex items-center justify-around p-5 gap-5 rounded-xl md:w-[70%] lg:w-[50%]">
       {/* DRIVER PROFILE IMAGE */}
@@ -11,12 +19,12 @@ function DriverCard() {
       {/* DRIVER INFO */}
       <div className="flex flex-col md:w-[250px]">
         <div className="driver-card-info">
-          <h3 className="text-2xl lg:text-3xl">Roberto Silva</h3>
+          <h3 className="text-2xl lg:text-3xl">{driver?.user?.name || "Sem nome"}</h3>
           <FaCarSide className="text-gray-primary my-2 text-2xl" />
         </div>
 
         <div className="driver-card-info text-lg">
-          <span>Nova Iguaçu</span>
+          <span>{driver.city_id.name}</span>
           <span className="text-green">Disponível agora</span>
         </div>
       </div>

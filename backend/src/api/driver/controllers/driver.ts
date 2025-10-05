@@ -21,7 +21,17 @@ export default factories.createCoreController(
       const entries = await strapi.documents("api::driver.driver").findMany({
         ...ctx.query,
       });
-      return this.transformResponse(entries);
+
+      const sanitized = await Promise.all(
+        entries.map((entry) =>
+          strapi.contentAPI.sanitize.output(
+            entry,
+            strapi.getModel("api::driver.driver")
+          )
+        )
+      );
+
+      return this.transformResponse(sanitized);
     },
 
     async findOne(ctx) {
@@ -33,7 +43,12 @@ export default factories.createCoreController(
 
       if (!entry) return ctx.notFound("Driver não encontrado");
 
-      return this.transformResponse(entry);
+      const sanitized = await strapi.contentAPI.sanitize.output(
+        entry,
+        strapi.getModel("api::driver.driver")
+      );
+
+      return this.transformResponse(sanitized);
     },
 
     async update(ctx) {
@@ -75,7 +90,16 @@ export default factories.createCoreController(
       // Sem user, retorna todos os drivers
       const drivers = await strapi.documents("api::driver.driver").findMany();
 
-      return this.transformResponse(drivers);
+      const sanitized = await Promise.all(
+        drivers.map((entry) =>
+          strapi.contentAPI.sanitize.output(
+            entry,
+            strapi.getModel("api::driver.driver")
+          )
+        )
+      );
+
+      return this.transformResponse(sanitized);
     },
   })
 );
