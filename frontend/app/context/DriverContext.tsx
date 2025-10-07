@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { DriverType } from "@/@types/driver";
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -24,4 +24,10 @@ export const DriverProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useDriverContext = () => useContext(DriverContext);
+export const useDriverContext = () => {
+  const context = useContext(DriverContext);
+  if (!context) {
+    throw new Error("useDriverContext deve ser usado dentro de um DriverProvider");
+  }
+  return context;
+};

@@ -1,8 +1,13 @@
 import { UserType } from "@/@types/user";
 import axios from "axios";
 import { API_URL } from "../axios/config";
+import { createDriver, getDriver } from "./driverService";
+import { DriverType } from "@/@types/driver";
 
-export const registerUser = async (user: UserType) => {
+export const registerUser = async (
+  user: UserType,
+  updateDriver: (driver: DriverType) => void
+) => {
   try {
     const res = await axios.post("api/auth/register", {
       ...user,
@@ -17,13 +22,20 @@ export const registerUser = async (user: UserType) => {
       { headers: { Authorization: `Bearer ${res.data.jwt}` } }
     );
 
+    // CREATE AND SAVES DRIVER
+    await createDriver(userId, updateDriver);
+
     return loggedUser.data;
   } catch (error) {
     console.log("Error at service registerUser: ", error);
   }
 };
 
-export const loginUser = async (user: UserType, confirmPassword: string) => {
+export const loginUser = async (
+  user: UserType,
+  confirmPassword: string,
+  updateDriver: (driver: DriverType) => void
+) => {
   try {
     // confirm password
     if (confirmPassword !== user.password) {
@@ -36,6 +48,8 @@ export const loginUser = async (user: UserType, confirmPassword: string) => {
       password: user?.password,
     });
     localStorage.setItem("token", res.data.jwt);
+    // SAVES EXISTING DRIVER
+    await getDriver(res.data.user.id, updateDriver);
 
     return res.data.user;
   } catch (error) {
@@ -63,7 +77,7 @@ type newUser = {
   email?: string;
   currentPassword: string;
   newPassword?: string;
-}
+};
 
 export const updateUser = async (user: newUser) => {
   const token = localStorage.getItem("token");

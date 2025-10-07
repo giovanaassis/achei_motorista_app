@@ -2,6 +2,7 @@
 
 import { UserType } from "@/@types/user";
 import SignInForm from "@/app/components/SignInForm";
+import { useDriverContext } from "@/app/context/DriverContext";
 import { loginUser } from "@/app/services/userService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,12 +12,13 @@ export default function SignInPage() {
   const [user, setUser] = useState<UserType | null>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const router = useRouter();
+  const { updateDriver } = useDriverContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    
-    const res = await loginUser(user, confirmPassword)
+
+    const res = await loginUser(user, confirmPassword, updateDriver);
     if (!res) {
       alert("Something went wrong. Please try again.");
     } else {

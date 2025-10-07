@@ -2,6 +2,7 @@
 
 import { UserType } from "@/@types/user";
 import SignUpForm from "@/app/components/SignUpForm";
+import { useDriverContext } from "@/app/context/DriverContext";
 import { registerUser } from "@/app/services/userService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,12 +11,13 @@ import { FormEvent, useState } from "react";
 export default function SignUpPage() {
   const [user, setUser] = useState<UserType | null>(null);
   const router = useRouter();
+  const { updateDriver } = useDriverContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
-    const res = await registerUser(user);
+    const res = await registerUser(user, updateDriver);
     if (!res) {
       alert("Something went wrong. Please try again.");
     } else {
