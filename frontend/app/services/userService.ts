@@ -6,7 +6,7 @@ import { DriverType } from "@/@types/driver";
 
 export const registerUser = async (
   user: UserType,
-  updateDriver: (driver: DriverType) => void
+  update: (driver: DriverType) => void
 ) => {
   try {
     const res = await axios.post("api/auth/register", {
@@ -23,7 +23,7 @@ export const registerUser = async (
     );
 
     // CREATE AND SAVES DRIVER
-    await createDriver(userId, updateDriver);
+    await createDriver(userId, update);
 
     return loggedUser.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export const registerUser = async (
 export const loginUser = async (
   user: UserType,
   confirmPassword: string,
-  updateDriver: (driver: DriverType) => void
+  update: (driver: DriverType) => void
 ) => {
   try {
     // confirm password
@@ -49,7 +49,7 @@ export const loginUser = async (
     });
     localStorage.setItem("token", res.data.jwt);
     // SAVES EXISTING DRIVER
-    await getDriver(res.data.user.id, updateDriver);
+    await getDriver(res.data.user.id, update);
 
     return res.data.user;
   } catch (error) {

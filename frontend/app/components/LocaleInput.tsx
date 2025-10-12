@@ -12,14 +12,16 @@ type InputType = {
 
 interface LocaleInputProps {
   hasState: boolean;
-  selectedState: string;
-  setSelectedState: (state: string) => void;
-  setSelectedCity?: (city: string) => void;
+  selectedState?: number;
+  selectedCity?: number;
+  setSelectedState: (state: number) => void;
+  setSelectedCity?: (city: number) => void;
 }
 
 function LocaleInput({
   hasState,
   selectedState,
+  selectedCity,
   setSelectedState,
   setSelectedCity,
 }: LocaleInputProps) {
@@ -28,9 +30,9 @@ function LocaleInput({
 
   const handleChange = (value: string) => {
     if (hasState) {
-      setSelectedCity?.(value); // CITY VALUE CHANGED
+      if (Number(value) !== selectedCity) setSelectedCity?.(Number(value)); // CITY VALUE CHANGED
     } else {
-      setSelectedState(value); // STATE VALUE CHANGED
+      if (Number(value) !== selectedState) setSelectedState(Number(value)); // STATE VALUE CHANGED
     }
   };
 
@@ -63,13 +65,36 @@ function LocaleInput({
     }
   }, [selectedState]);
 
+  const value = hasState
+    ? selectedCity
+      ? String(selectedCity)
+      : ""
+    : selectedState
+    ? String(selectedState)
+    : "";
+
+  useEffect(() => {
+    if (hasState && selectedCity) {
+      setSelectedCity?.(selectedCity);
+    }
+    if (!hasState && selectedState) {
+      setSelectedState(selectedState);
+    }
+  }, [
+    hasState,
+    selectedCity,
+    selectedState,
+    setSelectedCity,
+    setSelectedState,
+  ]);
+
   return (
     <div>
-      <Select.Root onValueChange={handleChange}>
+      <Select.Root onValueChange={handleChange} value={value}>
         <Select.Trigger
           placeholder={hasState ? "Sua cidade" : "Seu estado"}
           className="flex items-center justify-between gap-5 bg-white text-gray-secondary font-bold border-2 w-[280px] capitalize"
-        />
+        ></Select.Trigger>
         <Select.Content
           position="popper"
           className="input overflow-y-auto max-h-40"

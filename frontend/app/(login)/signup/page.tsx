@@ -11,13 +11,13 @@ import { FormEvent, useState } from "react";
 export default function SignUpPage() {
   const [user, setUser] = useState<UserType | null>(null);
   const router = useRouter();
-  const { updateDriver } = useDriverContext();
+  const { update } = useDriverContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
-    const res = await registerUser(user, updateDriver);
+    const res = await registerUser(user, update);
     if (!res) {
       alert("Something went wrong. Please try again.");
     } else {

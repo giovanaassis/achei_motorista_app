@@ -20,7 +20,7 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
           name="phone_number"
           className="input self-start p-2 text-xl"
           placeholder="Telefone"
-          value={driver?.phone_number}
+          value={driver?.phone_number || ""}
           onChange={(e) => onChangeDriver("phone_number", e.target.value)}
         />
       </div>

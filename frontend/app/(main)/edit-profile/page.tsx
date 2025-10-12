@@ -1,20 +1,15 @@
 "use client";
 
-// 3 SITUATIONS
-// 1 - User signup for the first time and create a driver. Saves context.
-// 2 - User log in and get driver. Saves context.
-// 3 - Logged user get out, calls user and driver. Saves context.
-
 import { DriverType } from "@/@types/driver";
 import { UserType } from "@/@types/user";
 import ContactForm from "@/app/components/ContactForm";
 import ProfileForm from "@/app/components/ProfileForm";
 import VehicleForm from "@/app/components/VehicleForm";
 import { useDriverContext } from "@/app/context/DriverContext";
-import { getDriver } from "@/app/services/driverService";
+import { getDriver, updateDriver } from "@/app/services/driverService";
 import { getMe } from "@/app/services/userService";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 
 export default function EditProfilePage() {
   const [user, setUser] = useState<UserType | null>(null);
@@ -22,13 +17,29 @@ export default function EditProfilePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  const { driver, updateDriver } = useDriverContext();
+  const { driver, update } = useDriverContext();
 
-  const handleDriverChange = (name: keyof DriverType, value: string) => {
-    setDriverDraft((prev) => ({
-      ...prev!,
-      [name]: value,
-    }));
+  const handleDriverChange = useCallback(
+    (name: keyof DriverType, value: string | File) => {
+      setDriverDraft((prev) => ({
+        ...prev!,
+        [name]: value,
+      }));
+    },
+    []
+  );
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (driverDraft) {
+      const res = await updateDriver(driverDraft); // UPDATES IN BACKEND
+      if (!res) {
+        alert("Something went wrong! Please, try again.");
+        return;
+      }
+      update(driverDraft); // UPDATES IN CONTEXT
+    }
+    console.log("driver atualizado: ", driver);
   };
 
   useEffect(() => {
@@ -37,7 +48,6 @@ export default function EditProfilePage() {
 
     if (driver) {
       setDriverDraft(driver);
-      console.log("tem context");
       return;
     }
 
@@ -45,17 +55,15 @@ export default function EditProfilePage() {
     getMe()
       .then((userData: UserType) => {
         setUser(userData);
-        getDriver(userData.id!, updateDriver).then((res) => setDriverDraft(res));
+        getDriver(userData.id!, update).then((res) => setDriverDraft(res));
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-  }, [driver, router, updateDriver]);
+  }, [driver, router, update]);
 
   if (loading) {
     return <h1>Carregando dados...</h1>;
   }
-
-  console.log(driver);
 
   return (
     <div className="p-10 w-full">
@@ -64,10 +72,13 @@ export default function EditProfilePage() {
         Edite as informações do seu veículo e do seu perfil aqui.
       </p>
 
-      <form className="flex justify-between">
+      <form className="flex justify-between" onSubmit={handleSubmit}>
         {/* LEFT SIDE */}
         <div className="flex-1">
-          <ProfileForm />
+          <ProfileForm
+            driver={driverDraft}
+            onChangeDriver={handleDriverChange}
+          />
           <ContactForm
             driver={driverDraft}
             onChangeDriver={handleDriverChange}

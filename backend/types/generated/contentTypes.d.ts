@@ -541,7 +541,6 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
         },
         string
       >;
-    profile_image: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     state_id: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
     updatedAt: Schema.Attribute.DateTime;

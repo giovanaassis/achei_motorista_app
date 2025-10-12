@@ -12,13 +12,13 @@ export default function SignInPage() {
   const [user, setUser] = useState<UserType | null>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const router = useRouter();
-  const { updateDriver } = useDriverContext();
+  const { update } = useDriverContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
-    const res = await loginUser(user, confirmPassword, updateDriver);
+    const res = await loginUser(user, confirmPassword, update);
     if (!res) {
       alert("Something went wrong. Please try again.");
     } else {

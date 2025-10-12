@@ -11,13 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "profile_image": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "gender": {
       "type": "enumeration",
       "required": false,

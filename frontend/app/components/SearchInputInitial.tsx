@@ -5,8 +5,8 @@ import LocaleInput from "./LocaleInput";
 import { useState } from "react";
 
 function SearchInputInitial() {
-  const [selectedState, setSelectedState] = useState<string>(""); // STATE ID
-  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedState, setSelectedState] = useState<number>(); // STATE ID
+  const [selectedCity, setSelectedCity] = useState<number>();
 
   return (
     <div className="flex items-center flex-col">
