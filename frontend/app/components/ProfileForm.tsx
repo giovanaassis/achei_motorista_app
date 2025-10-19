@@ -1,4 +1,3 @@
-
 "use client";
 
 import { DriverType } from "@/@types/driver";
@@ -22,7 +21,7 @@ const genders = [
 
 interface ProfileFormProps {
   driver: DriverType | null;
-  onChangeDriver: (name: keyof DriverType, value: string | File) => void;
+  onChangeDriver: (name: keyof DriverType, value: string | number) => void;
 }
 
 function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
@@ -47,7 +46,6 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
     if (selectedState && selectedState !== driver?.state_id) {
       onChangeDriver("state_id", String(selectedState));
     }
-    console.log("oi")
   }, [driver?.state_id, onChangeDriver, selectedState]);
 
   // UPDATES CITY

@@ -82,6 +82,7 @@
     letter-spacing: 0.1rem;
     text-transform: uppercase;
     cursor: pointer;
+    user-select: none;
   }
 
   button:hover {

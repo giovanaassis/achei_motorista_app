@@ -493,9 +493,7 @@ export interface ApiDriverSocialDriverSocial
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    social: Schema.Attribute.Enumeration<
-      ['instagram', 'facebook', 'personal-site']
-    >;
+    social: Schema.Attribute.Enumeration<['instagram', 'facebook', 'site']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

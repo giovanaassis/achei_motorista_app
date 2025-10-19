@@ -20,7 +20,7 @@ export default function SignInPage() {
 
     const res = await loginUser(user, confirmPassword, update);
     if (!res) {
-      alert("Something went wrong. Please try again.");
+      alert("Algo deu errado! Tente novamente.");
     } else {
       router.push("edit-profile");
     }

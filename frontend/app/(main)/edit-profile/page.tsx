@@ -1,5 +1,6 @@
 "use client";
 
+import { AvailabilityType } from "@/@types/availability";
 import { DriverType } from "@/@types/driver";
 import { UserType } from "@/@types/user";
 import ContactForm from "@/app/components/ContactForm";
@@ -20,7 +21,7 @@ export default function EditProfilePage() {
   const { driver, update } = useDriverContext();
 
   const handleDriverChange = useCallback(
-    (name: keyof DriverType, value: string | File) => {
+    (name: keyof DriverType, value: string | number | AvailabilityType[]) => {
       setDriverDraft((prev) => ({
         ...prev!,
         [name]: value,
@@ -34,12 +35,12 @@ export default function EditProfilePage() {
     if (driverDraft) {
       const res = await updateDriver(driverDraft); // UPDATES IN BACKEND
       if (!res) {
-        alert("Something went wrong! Please, try again.");
+        alert("Algo deu errado! Tente novamente.");
         return;
       }
       update(driverDraft); // UPDATES IN CONTEXT
+      alert("Motorista atualizado com sucesso!");
     }
-    console.log("driver atualizado: ", driver);
   };
 
   useEffect(() => {
@@ -86,7 +87,10 @@ export default function EditProfilePage() {
         </div>
         {/* RIGHT SIDE */}
         <div className="flex-1">
-          <VehicleForm />
+          <VehicleForm
+            driver={driverDraft}
+            onChangeDriver={handleDriverChange}
+          />
           <button type="submit" className="mt-10 text-2xl">
             salvar
           </button>

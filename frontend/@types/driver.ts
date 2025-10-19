@@ -1,3 +1,4 @@
+import { AvailabilityType } from "./availability";
 import { UserType } from "./user";
 
 export type DriverType = {
@@ -9,7 +10,11 @@ export type DriverType = {
   vehicle_seats?: number;
   state_id: number;
   city_id: number;
-  driver_availability: string[];
-  driver_socials: string[];
+  driver_availability: AvailabilityType[];
+  driver_socials?: {
+    social: "instagram" | "facebook" | "site";
+    url: string;
+    driver: number;
+  }[];
   user: UserType;
 };

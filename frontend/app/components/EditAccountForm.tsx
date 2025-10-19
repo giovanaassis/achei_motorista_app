@@ -29,9 +29,9 @@ function EditAccountForm() {
 
     const res = await updateUser(payload);
     if (!res) {
-      alert("Something went wrong. Please try again.");
+      alert("Algo deu errado! Tente novamente.");
     } else {
-      alert("User updated successfully!");
+      alert("Usuário atualizado com sucesso!");
       router.push("/profile");
     }
   };

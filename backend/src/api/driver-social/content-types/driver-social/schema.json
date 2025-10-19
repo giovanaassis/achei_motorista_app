@@ -23,7 +23,7 @@
       "enum": [
         "instagram",
         "facebook",
-        "personal-site"
+        "site"
       ]
     },
     "url": {

@@ -19,7 +19,7 @@ export default function SignUpPage() {
 
     const res = await registerUser(user, update);
     if (!res) {
-      alert("Something went wrong. Please try again.");
+      alert("Algo deu errado! Tente novamente.");
     } else {
       router.push("edit-profile");
     }
