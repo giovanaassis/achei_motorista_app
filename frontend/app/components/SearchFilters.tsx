@@ -1,16 +1,42 @@
+"use client";
+
 import { SearchIcon } from "lucide-react";
 import QuantityInput from "./QuantityInput";
 import LocaleInput from "./LocaleInput";
+import { DriverType } from "@/@types/driver";
+import { useCallback, useEffect, useState } from "react";
+import { InputType } from "../(main)/search/page";
 
 function SearchFilters({
   state,
   city,
-  changeState,
 }: {
-  state: string;
-  city: string;
-  changeState: (state: string) => void;
+  state?: InputType | null;
+  city?: InputType | null;
 }) {
+  const [drivers, setDrivers] = useState<DriverType | undefined>();
+  const [selectedState, setSelectedState] = useState<number>();
+  const [selectedCity, setSelectedCity] = useState<number>();
+
+  const onChangeDriver = useCallback(
+    (name: keyof DriverType, value: string | number) => {
+      setDrivers((prev) => ({
+        ...prev!,
+        [name]: value,
+      }));
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (state) {
+      setSelectedState(state.id);
+    }
+    if (city) {
+      setSelectedCity(city.id);
+    }
+  }, [city, state]);
+
   return (
     <div className="my-10 text-xl">
       {/* FIRST PART */}
@@ -18,16 +44,18 @@ function SearchFilters({
         <div>
           <LocaleInput
             hasState={false}
-            selectedState={state}
-            setSelectedState={changeState}
+            selectedState={selectedState || undefined}
+            setSelectedState={setSelectedState}
           />
         </div>
 
         <div>
           <LocaleInput
             hasState={true}
-            selectedState={state}
-            setSelectedState={changeState}
+            selectedState={selectedState || undefined}
+            setSelectedState={setSelectedCity}
+            selectedCity={selectedCity || undefined}
+            setSelectedCity={setSelectedCity || undefined}
           />
         </div>
 
@@ -60,7 +88,7 @@ function SearchFilters({
 
         <div className="self-start pt-1">
           <label htmlFor="number-seats">Quantidade de assentos:</label>
-          <QuantityInput />
+          <QuantityInput seats={2} onChangeDriver={onChangeDriver} />
         </div>
 
         {/* SUBMIT BUTTON FOR MOBILE */}

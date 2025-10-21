@@ -37,20 +37,18 @@ function LocaleInput({
   };
 
   useEffect(() => {
-    if (hasState) return;
-    // GET STATES
-    axios
-      .get(`${API_URL}/states?sort=name&pagination[pageSize]=27&fields=name`)
-      .then((res) => {
-        const data = res.data.data;
-        const statesList = data.map((state: InputType) => state);
-        setStates(statesList);
-      })
-      .catch((err) => console.log(err));
+    if (!hasState) {
+      axios
+        .get(`${API_URL}/states?sort=name&pagination[pageSize]=27&fields=name`)
+        .then((res) => {
+          setStates(res.data.data);
+        })
+        .catch(console.error);
+    }
   }, [hasState]);
 
   useEffect(() => {
-    if (selectedState) {
+    if (selectedState && hasState) {
       // GET CITIES
       axios
         .get(
@@ -63,7 +61,7 @@ function LocaleInput({
         })
         .catch((err) => console.log(err));
     }
-  }, [selectedState]);
+  }, [hasState, selectedState]);
 
   const value = hasState
     ? selectedCity
@@ -72,21 +70,6 @@ function LocaleInput({
     : selectedState
     ? String(selectedState)
     : "";
-
-  useEffect(() => {
-    if (hasState && selectedCity) {
-      setSelectedCity?.(selectedCity);
-    }
-    if (!hasState && selectedState) {
-      setSelectedState(selectedState);
-    }
-  }, [
-    hasState,
-    selectedCity,
-    selectedState,
-    setSelectedCity,
-    setSelectedState,
-  ]);
 
   return (
     <div>

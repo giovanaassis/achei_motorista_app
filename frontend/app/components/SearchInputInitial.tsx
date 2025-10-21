@@ -6,7 +6,9 @@ import { useState } from "react";
 
 function SearchInputInitial() {
   const [selectedState, setSelectedState] = useState<number>(); // STATE ID
-  const [selectedCity, setSelectedCity] = useState<number>();
+  const [selectedCity, setSelectedCity] = useState<number>(); // CITY ID
+
+  console.log(selectedCity)
 
   return (
     <div className="flex items-center flex-col">
@@ -28,6 +30,7 @@ function SearchInputInitial() {
             hasState={true}
             selectedState={selectedState}
             setSelectedState={setSelectedState}
+            selectedCity={selectedCity}
             setSelectedCity={setSelectedCity}
           />
         </div>
