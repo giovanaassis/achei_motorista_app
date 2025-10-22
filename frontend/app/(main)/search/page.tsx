@@ -98,8 +98,6 @@ export default function SearchPage() {
           <DriverCard
             key={driver.id}
             driver={driver}
-            state={filteredState?.name}
-            city={filteredCity?.name}
           />
         ))}
       </div>

@@ -10,18 +10,20 @@ interface QuantityInputProps {
 }
 
 function QuantityInput({ seats, onChangeDriver }: QuantityInputProps) {
-  const [numberSeats, setNumberSeats] = useState<number>(seats || 2);
+  const [numberSeats, setNumberSeats] = useState<number | undefined>(seats);
 
   const increaseSeats = (isIncreasing: boolean) => {
-    if (isIncreasing) {
-      setNumberSeats((prev) => prev + 1);
+    if (numberSeats === undefined) {
+      setNumberSeats(2);
+    } else if (isIncreasing) {
+      setNumberSeats(numberSeats + 1);
     } else {
-      setNumberSeats((prev) => (prev > 2 ? prev - 1 : prev));
+      setNumberSeats(numberSeats > 2 ? numberSeats - 1 : undefined);
     }
   };
 
   useEffect(() => {
-    onChangeDriver("vehicle_seats", numberSeats);
+    onChangeDriver("vehicle_seats", numberSeats!);
   }, [numberSeats, onChangeDriver]);
 
   return (
@@ -31,7 +33,7 @@ function QuantityInput({ seats, onChangeDriver }: QuantityInputProps) {
         id="number-seats"
         className="text-2xl font-bold text-black select-none"
       >
-        {numberSeats}
+        {numberSeats ?? 2}
       </span>
       <PlusIcon className="icons" onClick={() => increaseSeats(true)} />
     </div>

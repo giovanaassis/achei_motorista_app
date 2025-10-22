@@ -3,13 +3,7 @@ import Link from "next/link";
 import { FaCarSide } from "react-icons/fa";
 import { DriverCardType } from "../(main)/search/page";
 
-interface DriverCardProps {
-  driver: DriverCardType;
-  state?: string;
-  city?: string;
-}
-
-function DriverCard({ driver, state, city }: DriverCardProps) {
+function DriverCard({ driver }: { driver: DriverCardType }) {
   return (
     <div className="border-2 border-gray-600 w-fit flex items-center justify-around p-5 gap-5 rounded-xl md:w-[70%] lg:w-[50%]">
       {/* DRIVER PROFILE IMAGE */}

@@ -27,7 +27,6 @@
     outline: 0;
     color: var(--color-gray-secondary);
     position: relative;
-    z-index: 9999;
     background-color: white;
   }
 
