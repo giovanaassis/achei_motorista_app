@@ -43,8 +43,7 @@ function SearchFilters({
   const handleSearch = () => {
     const params = new URLSearchParams();
 
-    if (selectedState && selectedCity)
-      params.append("state_id", String(selectedState));
+    if (selectedState) params.append("state_id", String(selectedState));
     if (selectedCity) params.append("city_id", String(selectedCity));
     if (driver?.vehicle_type)
       params.append("vehicle_type", driver.vehicle_type);

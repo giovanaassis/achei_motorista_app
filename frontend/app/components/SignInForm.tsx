@@ -17,7 +17,7 @@ function SignInForm({
     <>
       <input
         type="text"
-        id="driver-email"
+        id="email"
         placeholder="E-mail"
         className="input p-2 text-xl"
         value={user?.email || ""}
@@ -26,9 +26,10 @@ function SignInForm({
 
       <input
         type="password"
-        id="driver-password"
+        id="password"
         placeholder="Senha"
         className="input p-2 text-xl"
+        autoComplete="off"
         value={user?.password || ""}
         onChange={(e) => onChangeUser({ ...user!, password: e.target.value })}
       />
@@ -38,6 +39,7 @@ function SignInForm({
         id="confirm-password"
         placeholder="Confirma a senha"
         className="input p-2 text-xl"
+        autoComplete="off"
         value={confirmPassword}
         onChange={(e) => onConfirmPassword(e.target.value)}
       />

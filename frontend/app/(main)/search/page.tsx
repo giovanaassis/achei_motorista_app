@@ -40,7 +40,7 @@ export default function SearchPage() {
 
       try {
         const res = await axios.get(
-          `${API_URL}/drivers?${query.toString()}&populate[user][fields]=name&populate[state_id][fields]=name&populate[city_id][fields]=name`
+          `${API_URL}/drivers?${query.toString()}&populate[user][fields]=name&populate[state_id][fields]=name&populate[city_id][fields]=name&populate=driver_availability`
         );
         setDrivers(res.data.data);
 
@@ -95,10 +95,7 @@ export default function SearchPage() {
           <p>Nenhum motorista encontrado.</p>
         )}
         {drivers?.map((driver) => (
-          <DriverCard
-            key={driver.id}
-            driver={driver}
-          />
+          <DriverCard key={driver.id} driver={driver} />
         ))}
       </div>
     </section>
