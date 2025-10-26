@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 
 export type DriverCardType = DriverType & {
   city_id: { id: number; name: string };
+  state_id: { id: number; name: string };
 };
 
 export type InputType = {

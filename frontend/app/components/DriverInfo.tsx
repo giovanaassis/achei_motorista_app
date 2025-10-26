@@ -1,12 +1,25 @@
 import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { DriverCardType } from "../(main)/search/page";
 
-function DriverInfo() {
+function DriverInfo({ driver }: { driver: DriverCardType | undefined }) {
+  if (!driver) {
+    return <p>Buscando dados do motorista.</p>;
+  }
+
+  const {
+    user,
+    city_id,
+    vehicle_seats,
+    vehicle_type,
+    gender,
+    driver_availability,
+  } = driver;
+
   return (
-    <div className="flex gap-10 flex-col lg:flex-row lg:gap-30">
-      <div className="flex flex-col items-center gap-5">
-        <div className="w-50 h-50 rounded-full bg-gray-700"></div>
-        <h2 className="text-3xl">Roberto Silva</h2>
+    <div className="flex gap-10 flex-col lg:flex-row lg:gap-30 capitalize">
+      <div className="flex flex-col items-center gap-10">
+        <h2 className="text-5xl">{user?.name || "Sem nome"}</h2>
         <div className="flex flex-col gap-5 justify-center items-center">
           <Link href={"/edit-profile"}>
             <button className="bg-blue-700 hover:bg-blue-800 text-lg">
@@ -25,19 +38,22 @@ function DriverInfo() {
       <div className="flex flex-col text-center gap-5 lg:text-left">
         <div className="flex flex-col items-center gap-3 lg:flex-row">
           <FaMapMarkerAlt className="text-gray-primary" />
-          <span>Nova Iguaçu, Brasil</span>
+          <span>{city_id?.name || "Cidade indefinida"}</span>
         </div>
         <div className="flex flex-col gap-5">
-          <span>Gênero: Homem</span>
-          <span>Carro: 4 assentos</span>
+          <span>Gênero: {gender || "indefinido"}</span>
+          {vehicle_type === "carro" && (
+            <span>Carro: {vehicle_seats} assentos</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-3">
           <p className="mb-5">Disponível em:</p>
-          <span className="badge">Segunda-feira</span>
-          <span className="badge">Quarta-feira</span>
-          <span className="badge">Sexta</span>
-          <span className="badge">Sábado</span>
+          {driver_availability.map((day) => (
+            <span className="badge" key={day.id}>
+              {day.name}
+            </span>
+          ))}
         </div>
       </div>
     </div>
