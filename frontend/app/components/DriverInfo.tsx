@@ -2,7 +2,13 @@ import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { DriverCardType } from "../(main)/search/page";
 
-function DriverInfo({ driver }: { driver: DriverCardType | undefined }) {
+function DriverInfo({
+  driver,
+  isOwner,
+}: {
+  driver: DriverCardType | undefined;
+  isOwner: boolean;
+}) {
   if (!driver) {
     return <p>Buscando dados do motorista.</p>;
   }
@@ -20,19 +26,23 @@ function DriverInfo({ driver }: { driver: DriverCardType | undefined }) {
     <div className="flex gap-10 flex-col lg:flex-row lg:gap-30 capitalize">
       <div className="flex flex-col items-center gap-10">
         <h2 className="text-5xl">{user?.name || "Sem nome"}</h2>
-        <div className="flex flex-col gap-5 justify-center items-center">
-          <Link href={"/edit-profile"}>
-            <button className="bg-blue-700 hover:bg-blue-800 text-lg">
-              editar perfil
-            </button>
-          </Link>
+        {isOwner ? (
+          <div className="flex flex-col gap-5 justify-center items-center">
+            <Link href={"/edit-profile"}>
+              <button className="bg-blue-700 hover:bg-blue-800 text-lg">
+                editar perfil
+              </button>
+            </Link>
 
-          <Link href={"/edit-account"}>
-            <button className="bg-blue-700 hover:bg-blue-800 text-lg w-40">
-              editar conta
-            </button>
-          </Link>
-        </div>
+            <Link href={"/edit-account"}>
+              <button className="bg-blue-700 hover:bg-blue-800 text-lg w-40">
+                editar conta
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <p className="text-gray-400 italic">Perfil público</p>
+        )}
       </div>
 
       <div className="flex flex-col text-center gap-5 lg:text-left">
