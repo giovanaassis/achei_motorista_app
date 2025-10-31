@@ -11,6 +11,7 @@ export async function POST(req: Request) {
       identifier,
       password,
     });
+    
     return NextResponse.json(user.data);
   } catch (error: any) {
     return NextResponse.json(`Error at login: ${error}`);

@@ -4,7 +4,7 @@ import { FaCarSide } from "react-icons/fa";
 import { FaMotorcycle } from "react-icons/fa";
 import QuantityInput from "./QuantityInput";
 import { DriverType } from "@/@types/driver";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import React from "react";
 import { AvailabilityType } from "@/@types/availability";
 
@@ -27,37 +27,24 @@ interface VehicleFormProps {
 }
 
 function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
-  const [availability, setAvailability] = useState<AvailabilityType[]>(
-    driver?.driver_availability || []
-  );
+  const availability: AvailabilityType[] = driver?.driver_availability || [];
 
   const handleAvailabilityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    setAvailability((prev) => {
-      if (checked) {
-        if (!prev.some((a) => a.name === value)) {
-          return [...prev, { name: value }];
-        }
-        return prev;
+    let next: AvailabilityType[];
+
+    if (checked) {
+      if (!availability.some((a) => a.name === value)) {
+        next = [...availability, { name: value }];
       } else {
-        return prev.filter((a) => a.name !== value);
+        next = availability;
       }
-    });
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      onChangeDriver("driver_availability", availability);
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [availability, onChangeDriver]);
-
-  useEffect(() => {
-    if (driver?.driver_availability) {
-      setAvailability(driver.driver_availability);
+    } else {
+      next = availability.filter((a) => a.name !== value);
     }
-  }, [driver?.driver_availability]);
+
+    onChangeDriver("driver_availability", next);
+  };
 
   return (
     <>
@@ -125,4 +112,4 @@ function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
   );
 }
 
-export default React.memo(VehicleForm);
+export default VehicleForm;

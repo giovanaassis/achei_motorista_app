@@ -22,7 +22,7 @@ export default function SignInPage() {
     if (!res) {
       alert("Algo deu errado! Tente novamente.");
     } else {
-      router.push("edit-profile");
+      router.push(`/edit-profile`);
     }
   };
 

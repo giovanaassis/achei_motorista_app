@@ -50,7 +50,7 @@ export const loginUser = async (
     localStorage.setItem("token", res.data.jwt);
     // SAVES EXISTING DRIVER
     await getDriver(res.data.user.id, update);
- 
+
     return res.data.user;
   } catch (error) {
     console.log("Error at service loginUser: ", error);

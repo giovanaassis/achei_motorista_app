@@ -52,7 +52,9 @@ function DriverInfo({
         </div>
         <div className="flex flex-col gap-5">
           <span>Gênero: {gender || "indefinido"}</span>
-          {vehicle_type === "carro" && (
+          {vehicle_type === "moto" ? (
+            <span>Moto</span>
+          ) : (
             <span>Carro: {vehicle_seats} assentos</span>
           )}
         </div>

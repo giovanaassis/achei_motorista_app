@@ -43,12 +43,19 @@ export default function EditProfilePage() {
     }
   };
 
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    window.dispatchEvent(new Event("storage"));
+    router.push("search");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) router.push("signin");
 
     if (driver) {
       setDriverDraft(driver);
+      setLoading(false);
       return;
     }
 
@@ -56,7 +63,9 @@ export default function EditProfilePage() {
     getMe()
       .then((userData: UserType) => {
         setUser(userData);
-        getDriver(userData.id!, update).then((res) => setDriverDraft(res));
+        getDriver(userData.id!, update).then((res) => {
+          setDriverDraft(res);
+        });
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -73,7 +82,10 @@ export default function EditProfilePage() {
         Edite as informações do seu veículo e do seu perfil aqui.
       </p>
 
-      <form className="flex justify-between" onSubmit={handleSubmit}>
+      <form
+        className="flex justify-between flex-col md:flex-row"
+        onSubmit={handleSubmit}
+      >
         {/* LEFT SIDE */}
         <div className="flex-1">
           <ProfileForm
@@ -91,9 +103,18 @@ export default function EditProfilePage() {
             driver={driverDraft}
             onChangeDriver={handleDriverChange}
           />
-          <button type="submit" className="mt-10 text-2xl">
-            salvar
-          </button>
+          <div className="flex gap-5">
+            <button type="submit" className="mt-10 text-2xl">
+              salvar
+            </button>
+            <button
+              type="button"
+              className="bg-white text-black border-2 mt-10 text-xl hover:bg-black-primary hover:text-white transition-colors duration-100"
+              onClick={handleLogout}
+            >
+              sair da conta
+            </button>
+          </div>
         </div>
       </form>
     </div>

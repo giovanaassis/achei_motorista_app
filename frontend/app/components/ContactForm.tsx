@@ -2,6 +2,7 @@
 "use client";
 
 import { DriverType } from "@/@types/driver";
+import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
@@ -53,6 +54,7 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
         <input
           type="text"
           name="phone_number"
+          id="phone_number"
           className="input self-start p-2 text-xl"
           placeholder="Telefone"
           value={driver?.phone_number || ""}
@@ -74,6 +76,12 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
             value={socials.instagram}
             onChange={(e) => handleChange(e.target.value, "instagram")}
           />
+          <aside
+            className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
+            title="Digite seu nome de usuário."
+          >
+            <AlertCircle />
+          </aside>
         </div>
         <div className="self-start relative -mb-3">
           <FaFacebook className="text-3xl text-gray-secondary absolute top-2 left-2 opacity-75" />
@@ -85,6 +93,12 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
             value={socials.facebook}
             onChange={(e) => handleChange(e.target.value, "facebook")}
           />
+          <aside
+            className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
+            title="Cole o link da sua página do Facebook."
+          >
+            <AlertCircle />
+          </aside>
         </div>
         <div className="self-start relative">
           <IoIosGlobe className="text-3xl text-gray-secondary absolute top-2 left-2 opacity-75" />

@@ -14,15 +14,17 @@ export const getDriver = async (
     const res = await axios.get(
       `${API_URL}/drivers?filters[user][id][$eq]=${userId}&populate=*`
     );
-    if (res) {
+    if (res.data.data.length > 0) {
       const driver = res.data.data[0];
+      console.log("driver", driver);
       driver.state_id = driver?.state_id?.id;
       driver.city_id = driver?.city_id?.id;
       update(driver);
       return driver;
+    } else {
+      const driver = createDriver(userId, update);
+      return driver;
     }
-
-    return;
   } catch (error) {
     console.log("Error at service getDriver: ", error);
   }
@@ -66,14 +68,12 @@ export const updateDriver = async (driver: DriverType) => {
 
   try {
     let availabilitiesId: number[] | undefined = [];
-    if (driver_availability) {
+    if (driver_availability.length > 0) {
       availabilitiesId = await updateDriverAvailability(
         driver_availability,
         token
       );
     }
-
-    console.log(driverData);
 
     const res = await axios.put(
       `${API_URL}/drivers/${driver.documentId}`,
@@ -87,7 +87,6 @@ export const updateDriver = async (driver: DriverType) => {
       }
     );
 
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log("Error at service updateDriver: ", error);

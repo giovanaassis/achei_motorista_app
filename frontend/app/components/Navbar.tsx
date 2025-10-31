@@ -2,10 +2,24 @@
 
 import { MenuIcon, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDriverContext } from "../context/DriverContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [userLogged, setUserLogged] = useState<boolean>(false);
+  const { driver } = useDriverContext();
+
+  useEffect(() => {
+    const checkToken = () => {
+      const token = localStorage.getItem("token");
+      setUserLogged(!!token);
+    };
+
+    checkToken();
+    window.addEventListener("storage", checkToken);
+    return () => window.removeEventListener("storage", checkToken);
+  }, []);
 
   return (
     <nav className="flex items-center justify-between py-5 px-10">
@@ -14,12 +28,21 @@ function Navbar() {
       </div>
 
       <div className="hidden md:block">
-        <span className="underline-animation mr-10 text-xl tracking-widest">
-          Encontrar motoristas
-        </span>
-        <Link href={"/signup"}>
-          <button>cadastre-se como motorista</button>
+        <Link href={"/search"}>
+          <span className="underline-animation mr-10 text-xl tracking-widest">
+            Encontrar motoristas
+          </span>
         </Link>
+
+        {userLogged ? (
+          <Link href={`/profile/${driver?.id}`}>
+            <button>Ver perfil</button>
+          </Link>
+        ) : (
+          <Link href={"/signup"}>
+            <button>cadastre-se como motorista</button>
+          </Link>
+        )}
       </div>
 
       {/* MENU MOBILE */}
