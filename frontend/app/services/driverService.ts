@@ -16,7 +16,6 @@ export const getDriver = async (
     );
     if (res.data.data.length > 0) {
       const driver = res.data.data[0];
-      console.log("driver", driver);
       driver.state_id = driver?.state_id?.id;
       driver.city_id = driver?.city_id?.id;
       update(driver);

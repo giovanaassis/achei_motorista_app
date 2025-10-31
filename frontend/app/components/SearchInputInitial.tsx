@@ -8,8 +8,6 @@ function SearchInputInitial() {
   const [selectedState, setSelectedState] = useState<number>(); // STATE ID
   const [selectedCity, setSelectedCity] = useState<number>(); // CITY ID
 
-  console.log(selectedCity)
-
   return (
     <div className="flex items-center flex-col">
       <div className="mt-[13%]">
