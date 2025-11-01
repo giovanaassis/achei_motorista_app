@@ -5,7 +5,7 @@ export default [
   {
     name: "strapi::cors",
     config: {
-      origin: ["http://localhost:3000"],
+      origin: ["https://achei-motorista-app.vercel.app/"],
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],
       credentials: true,
