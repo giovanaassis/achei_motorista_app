@@ -5,10 +5,12 @@ export default [
   {
     name: "strapi::cors",
     config: {
-      origin: ["https://achei-motorista-app.vercel.app/"],
+      enabled: true,
+      origin: ["https://achei-motorista-app.vercel.app"],
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       headers: ["Content-Type", "Authorization", "Origin", "Accept"],
       credentials: true,
+      keepHeaderOnError: true,
     },
   },
   "strapi::poweredBy",
