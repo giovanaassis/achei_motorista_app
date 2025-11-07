@@ -1,10 +1,10 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FaCarSide, FaMotorcycle } from "react-icons/fa";
-import { DriverCardType } from "../(main)/search/page";
 import { checkAvailability } from "@/lib/checkAvailability";
+import { DriverType } from "@/@types/driver";
 
-function DriverCard({ driver }: { driver: DriverCardType }) {
+function DriverCard({ driver }: { driver: DriverType }) {
   return (
     <div className="border-2 border-gray-600 w-[80%] md:w-fit flex items-center justify-around p-5 gap-10 rounded-xl">
       {/* DRIVER INFO */}
@@ -21,7 +21,7 @@ function DriverCard({ driver }: { driver: DriverCardType }) {
         </div>
 
         <div className="driver-card-info text-lg">
-          <span>{driver?.city_id?.name || "Pendente"}</span>
+          <span>{driver?.city || "Pendente"}</span>
           {checkAvailability(driver) ? (
             <span className="text-green">Disponível agora</span>
           ) : (

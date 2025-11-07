@@ -8,22 +8,12 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export type DriverCardType = DriverType & {
-  city_id: { id: number; name: string };
-  state_id: { id: number; name: string };
-};
-
-export type InputType = {
-  id: number;
-  name: string;
-};
-
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
-  const [drivers, setDrivers] = useState<DriverCardType[] | undefined>();
-  const [filteredState, setFilteredState] = useState<InputType | undefined>();
-  const [filteredCity, setFilteredCity] = useState<InputType | undefined>();
+  const [drivers, setDrivers] = useState<DriverType[] | undefined>();
+  const [filteredState, setFilteredState] = useState<string | undefined>();
+  const [filteredCity, setFilteredCity] = useState<string | undefined>();
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -41,27 +31,18 @@ export default function SearchPage() {
 
       try {
         const res = await axios.get(
-          `${API_URL}/drivers?${query.toString()}&populate[user][fields]=name&populate[state_id][fields]=name&populate[city_id][fields]=name&populate=driver_availability`
+          `${API_URL}/drivers?${query.toString()}&populate[user][fields]=name&populate=driver_availability`
         );
         setDrivers(res.data.data);
 
         // GET STATE AND CITY NAME
-        const state_id = searchParams.get("state_id");
-        const city_id = searchParams.get("city_id");
+        const state = searchParams.get("state");
+        const city = searchParams.get("city");
 
-        if (state_id !== "" && state_id !== "undefined" && state_id !== null) {
-          const stateRes = await axios.get(
-            `${API_URL}/states?filters[id][$eq]=${state_id}`
-          );
-          setFilteredState(stateRes.data.data[0]);
-        }
-
-        if (city_id !== "" && city_id !== "undefined" && city_id !== null) {
-          const cityRes = await axios.get(
-            `${API_URL}/cities?filters[id][$eq]=${city_id}`
-          );
-          setFilteredCity(cityRes.data.data[0]);
-        }
+        if (state) setFilteredState(state);
+        else setFilteredState(undefined);
+        if (city && state) setFilteredCity(city);
+        else setFilteredCity(undefined);
       } catch (error) {
         console.log("Error at fetchDrivers: ", error);
       } finally {
@@ -70,18 +51,14 @@ export default function SearchPage() {
     };
 
     fetchDrivers();
-  }, [searchParams]);
+  }, [filteredCity, filteredState, searchParams]);
 
   return (
     <section className="text-black-primary pl-10 py-10 w-[90%]">
       {filteredCity ? (
-        <h1 className="text-3xl">
-          Motoristas em &quot;{filteredCity.name}&quot;
-        </h1>
+        <h1 className="text-3xl">Motoristas em &quot;{filteredCity}&quot;</h1>
       ) : filteredState ? (
-        <h1 className="text-3xl">
-          Motoristas em &quot;{filteredState.name}&quot;
-        </h1>
+        <h1 className="text-3xl">Motoristas em &quot;{filteredState}&quot;</h1>
       ) : (
         <h1 className="text-3xl">Todos os Motoristas</h1>
       )}

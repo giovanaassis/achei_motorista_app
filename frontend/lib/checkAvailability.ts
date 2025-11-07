@@ -1,6 +1,7 @@
-import { DriverCardType } from "@/app/(main)/search/page";
+import { DriverType } from "@/@types/driver";
 
-export const checkAvailability = (driver: DriverCardType) => {
+
+export const checkAvailability = (driver: DriverType) => {
   const { driver_availability } = driver;
   const days = [
     "domingo",
