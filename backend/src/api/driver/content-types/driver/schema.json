@@ -20,16 +20,6 @@
         "outro"
       ]
     },
-    "state_id": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::state.state"
-    },
-    "city_id": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::city.city"
-    },
     "phone_number": {
       "type": "biginteger",
       "required": false,
@@ -75,6 +65,14 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "mappedBy": "driver"
+    },
+    "state": {
+      "type": "string",
+      "minLength": 3
+    },
+    "city": {
+      "type": "string",
+      "minLength": 3
     }
   }
 }
