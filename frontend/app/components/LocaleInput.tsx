@@ -1,21 +1,15 @@
 "use client";
 
 import { Select } from "@radix-ui/themes";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_URL } from "../axios/config";
-
-type InputType = {
-  id: number;
-  name: string;
-};
+import states from "@/data/states.json";
 
 interface LocaleInputProps {
   hasState: boolean;
-  selectedState?: number;
-  selectedCity?: number;
-  setSelectedState: (state: number) => void;
-  setSelectedCity?: (city: number) => void;
+  selectedState?: string;
+  selectedCity?: string;
+  setSelectedState?: (state: string) => void;
+  setSelectedCity?: (city: string) => void;
 }
 
 function LocaleInput({
@@ -25,51 +19,32 @@ function LocaleInput({
   setSelectedState,
   setSelectedCity,
 }: LocaleInputProps) {
-  const [states, setStates] = useState<InputType[]>();
-  const [cities, setCities] = useState<InputType[]>();
+  const [cities, setCities] = useState<string[]>();
 
   const handleChange = (value: string) => {
     if (hasState) {
-      if (Number(value) !== selectedCity) setSelectedCity?.(Number(value)); // CITY VALUE CHANGED
+      if (value !== selectedCity) setSelectedCity?.(value); // CITY VALUE CHANGED
     } else {
-      if (Number(value) !== selectedState) setSelectedState(Number(value)); // STATE VALUE CHANGED
+      if (value !== selectedState) {
+        setSelectedState?.(value);
+        setSelectedCity?.("");
+      } // STATE VALUE CHANGED
     }
   };
 
   useEffect(() => {
-    if (!hasState) {
-      axios
-        .get(`${API_URL}/states?sort=name&pagination[pageSize]=27&fields=name`)
-        .then((res) => {
-          setStates(res.data.data);
-        })
-        .catch(console.error);
-    }
-  }, [hasState]);
-
-  useEffect(() => {
-    if (selectedState && hasState) {
-      // GET CITIES
-      axios
-        .get(
-          `${API_URL}/cities?sort=name&filters[state_id][$eq]=${selectedState}&pagination[limit]=100`
-        )
-        .then((res) => {
-          const data = res.data.data;
-          const citiesList = data.map((city: InputType) => city);
-          setCities(citiesList);
-        })
-        .catch((err) => console.log(err));
+    if (hasState) {
+      if (selectedState) {
+        const selectedCities =
+          states.find((state) => state.state === selectedState)?.cities ?? [];
+        setCities(selectedCities);
+      } else {
+        setCities([]);
+      }
     }
   }, [hasState, selectedState]);
 
-  const value = hasState
-    ? selectedCity
-      ? String(selectedCity)
-      : ""
-    : selectedState
-    ? String(selectedState)
-    : "";
+  const value = hasState ? selectedCity ?? "" : selectedState ?? "";
 
   return (
     <div>
@@ -82,23 +57,23 @@ function LocaleInput({
           position="popper"
           className="input overflow-y-auto max-h-40"
         >
-          {!hasState && states
+          {!hasState
             ? states.map((state) => (
                 <Select.Item
                   key={state.id}
-                  value={String(state.id)}
+                  value={state.state}
                   className="flex items-center gap-3 outline-0 cursor-pointer hover:bg-lightgray pl-2 text-xl"
                 >
-                  {state.name}
+                  {state.state}
                 </Select.Item>
               ))
-            : cities?.map((city) => (
+            : cities?.map((city, index) => (
                 <Select.Item
-                  key={city.id}
-                  value={String(city.id)}
+                  key={index + 1}
+                  value={city}
                   className="flex items-center gap-3 outline-0 cursor-pointer hover:bg-lightgray pl-2 text-xl"
                 >
-                  {city.name}
+                  {city}
                 </Select.Item>
               ))}
         </Select.Content>
