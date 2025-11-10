@@ -5,8 +5,8 @@ import LocaleInput from "./LocaleInput";
 import { useState } from "react";
 
 function SearchInputInitial() {
-  const [selectedState, setSelectedState] = useState<number>(); // STATE ID
-  const [selectedCity, setSelectedCity] = useState<number>(); // CITY ID
+  const [selectedState, setSelectedState] = useState<string>();
+  const [selectedCity, setSelectedCity] = useState<string>();
 
   return (
     <div className="flex items-center flex-col">
@@ -35,7 +35,7 @@ function SearchInputInitial() {
       </div>
 
       <Link
-        href={`/search?state_id=${selectedState}&city_id=${selectedCity}`}
+        href={`/search?state=${selectedState}&city=${selectedCity}`}
         className="h-0"
       >
         <button className="mt-60 md:mt-30">achar motoristas</button>

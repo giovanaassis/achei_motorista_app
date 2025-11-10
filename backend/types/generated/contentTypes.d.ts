@@ -444,32 +444,6 @@ export interface ApiCalendarDayCalendarDay extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCityCity extends Struct.CollectionTypeSchema {
-  collectionName: 'cities';
-  info: {
-    displayName: 'City';
-    pluralName: 'cities';
-    singularName: 'city';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    state_id: Schema.Attribute.Relation<'manyToOne', 'api::state.state'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiDriverSocialDriverSocial
   extends Struct.CollectionTypeSchema {
   collectionName: 'driver_socials';
@@ -512,7 +486,10 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    city_id: Schema.Attribute.Relation<'oneToOne', 'api::city.city'>;
+    city: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -540,7 +517,10 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
         string
       >;
     publishedAt: Schema.Attribute.DateTime;
-    state_id: Schema.Attribute.Relation<'oneToOne', 'api::state.state'>;
+    state: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -556,34 +536,6 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
         number
       >;
     vehicle_type: Schema.Attribute.Enumeration<['carro', 'moto']>;
-  };
-}
-
-export interface ApiStateState extends Struct.CollectionTypeSchema {
-  collectionName: 'states';
-  info: {
-    displayName: 'State';
-    pluralName: 'states';
-    singularName: 'state';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    cities: Schema.Attribute.Relation<'oneToMany', 'api::city.city'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::state.state'> &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
   };
 }
 
@@ -1102,10 +1054,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::calendar-day.calendar-day': ApiCalendarDayCalendarDay;
-      'api::city.city': ApiCityCity;
       'api::driver-social.driver-social': ApiDriverSocialDriverSocial;
       'api::driver.driver': ApiDriverDriver;
-      'api::state.state': ApiStateState;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

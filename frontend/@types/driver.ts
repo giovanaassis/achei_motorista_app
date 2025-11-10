@@ -8,8 +8,8 @@ export type DriverType = {
   phone_number: string;
   vehicle_type: "carro" | "moto";
   vehicle_seats?: number;
-  state_id: number;
-  city_id: number;
+  state: string;
+  city: string;
   driver_availability: AvailabilityType[];
   driver_socials?: {
     social: "instagram" | "facebook" | "site";

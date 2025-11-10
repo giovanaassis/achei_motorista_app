@@ -1,0 +1,279 @@
+[
+  {
+    "id": 1,
+    "state": "Acre",
+    "cities": [
+      "Rio Branco",
+      "Cruzeiro do Sul",
+      "Sena Madureira",
+      "Tarauacá",
+      "Feijó"
+    ]
+  },
+  {
+    "id": 2,
+    "state": "Alagoas",
+    "cities": [
+      "Maceió",
+      "Arapiraca",
+      "Palmeira dos Índios",
+      "Rio Largo",
+      "Penedo"
+    ]
+  },
+  {
+    "id": 3,
+    "state": "Amapá",
+    "cities": [
+      "Macapá",
+      "Santana",
+      "Laranjal do Jari",
+      "Oiapoque",
+      "Porto Grande"
+    ]
+  },
+  {
+    "id": 4,
+    "state": "Amazonas",
+    "cities": ["Manaus", "Parintins", "Itacoatiara", "Manacapuru", "Tefé"]
+  },
+  {
+    "id": 5,
+    "state": "Bahia",
+    "cities": [
+      "Salvador",
+      "Feira de Santana",
+      "Vitória da Conquista",
+      "Itabuna",
+      "Ilhéus",
+      "Juazeiro",
+      "Lauro de Freitas"
+    ]
+  },
+  {
+    "id": 6,
+    "state": "Ceará",
+    "cities": [
+      "Fortaleza",
+      "Caucaia",
+      "Juazeiro do Norte",
+      "Maracanaú",
+      "Sobral",
+      "Crato"
+    ]
+  },
+  {
+    "id": 7,
+    "state": "Distrito Federal",
+    "cities": ["Brasília", "Taguatinga", "Ceilândia", "Gama", "Planaltina"]
+  },
+  {
+    "id": 8,
+    "state": "Espírito Santo",
+    "cities": [
+      "Vitória",
+      "Vila Velha",
+      "Serra",
+      "Cariacica",
+      "Linhares",
+      "Colatina"
+    ]
+  },
+  {
+    "id": 9,
+    "state": "Goiás",
+    "cities": [
+      "Goiânia",
+      "Aparecida de Goiânia",
+      "Anápolis",
+      "Rio Verde",
+      "Luziânia",
+      "Catalão"
+    ]
+  },
+  {
+    "id": 10,
+    "state": "Maranhão",
+    "cities": ["São Luís", "Imperatriz", "Timon", "Caxias", "Codó"]
+  },
+  {
+    "id": 11,
+    "state": "Mato Grosso",
+    "cities": [
+      "Cuiabá",
+      "Várzea Grande",
+      "Rondonópolis",
+      "Sinop",
+      "Tangará da Serra"
+    ]
+  },
+  {
+    "id": 12,
+    "state": "Mato Grosso do Sul",
+    "cities": [
+      "Campo Grande",
+      "Dourados",
+      "Três Lagoas",
+      "Corumbá",
+      "Ponta Porã"
+    ]
+  },
+  {
+    "id": 13,
+    "state": "Minas Gerais",
+    "cities": [
+      "Belo Horizonte",
+      "Uberlândia",
+      "Contagem",
+      "Juiz de Fora",
+      "Betim",
+      "Montes Claros",
+      "Uberaba",
+      "Governador Valadares"
+    ]
+  },
+  {
+    "id": 14,
+    "state": "Pará",
+    "cities": [
+      "Belém",
+      "Ananindeua",
+      "Santarém",
+      "Marabá",
+      "Castanhal",
+      "Parauapebas"
+    ]
+  },
+  {
+    "id": 15,
+    "state": "Paraíba",
+    "cities": ["João Pessoa", "Campina Grande", "Patos", "Santa Rita", "Bayeux"]
+  },
+  {
+    "id": 16,
+    "state": "Paraná",
+    "cities": [
+      "Curitiba",
+      "Londrina",
+      "Maringá",
+      "Ponta Grossa",
+      "Cascavel",
+      "Foz do Iguaçu",
+      "Guarapuava"
+    ]
+  },
+  {
+    "id": 17,
+    "state": "Pernambuco",
+    "cities": [
+      "Recife",
+      "Jaboatão dos Guararapes",
+      "Olinda",
+      "Caruaru",
+      "Petrolina",
+      "Garanhuns"
+    ]
+  },
+  {
+    "id": 18,
+    "state": "Piauí",
+    "cities": ["Teresina", "Parnaíba", "Picos", "Floriano", "Piripiri"]
+  },
+  {
+    "id": 19,
+    "state": "Rio de Janeiro",
+    "cities": [
+      "Rio de Janeiro",
+      "São Gonçalo",
+      "Duque de Caxias",
+      "Nova Iguaçu",
+      "Niterói",
+      "Campos dos Goytacazes",
+      "Petrópolis"
+    ]
+  },
+  {
+    "id": 20,
+    "state": "Rio Grande do Norte",
+    "cities": ["Natal", "Mossoró", "Parnamirim", "Caicó", "Currais Novos"]
+  },
+  {
+    "id": 21,
+    "state": "Rio Grande do Sul",
+    "cities": [
+      "Porto Alegre",
+      "Caxias do Sul",
+      "Pelotas",
+      "Canoas",
+      "Santa Maria",
+      "Novo Hamburgo",
+      "Gravataí"
+    ]
+  },
+  {
+    "id": 22,
+    "state": "Rondônia",
+    "cities": ["Porto Velho", "Ji-Paraná", "Ariquemes", "Cacoal", "Vilhena"]
+  },
+  {
+    "id": 23,
+    "state": "Roraima",
+    "cities": [
+      "Boa Vista",
+      "Rorainópolis",
+      "Caracaraí",
+      "Alto Alegre",
+      "Mucajaí"
+    ]
+  },
+  {
+    "id": 24,
+    "state": "Santa Catarina",
+    "cities": [
+      "Florianópolis",
+      "Joinville",
+      "Blumenau",
+      "Chapecó",
+      "Itajaí",
+      "Criciúma",
+      "Lages"
+    ]
+  },
+  {
+    "id": 25,
+    "state": "São Paulo",
+    "cities": [
+      "São Paulo",
+      "Campinas",
+      "Santos",
+      "São Bernardo do Campo",
+      "Guarulhos",
+      "Osasco",
+      "Sorocaba",
+      "Ribeirão Preto",
+      "São José dos Campos"
+    ]
+  },
+  {
+    "id": 26,
+    "state": "Sergipe",
+    "cities": [
+      "Aracaju",
+      "Nossa Senhora do Socorro",
+      "Lagarto",
+      "Itabaiana",
+      "Estância"
+    ]
+  },
+  {
+    "id": 27,
+    "state": "Tocantins",
+    "cities": [
+      "Palmas",
+      "Araguaína",
+      "Gurupi",
+      "Porto Nacional",
+      "Paraíso do Tocantins"
+    ]
+  }
+]

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { DriverCardType } from "../(main)/search/page";
+import { DriverType } from "@/@types/driver";
 
 function DriverInfo({
   driver,
   isOwner,
 }: {
-  driver: DriverCardType | undefined;
+  driver: DriverType | undefined;
   isOwner: boolean;
 }) {
   if (!driver) {
@@ -15,7 +15,7 @@ function DriverInfo({
 
   const {
     user,
-    city_id,
+    city,
     vehicle_seats,
     vehicle_type,
     gender,
@@ -48,7 +48,7 @@ function DriverInfo({
       <div className="flex flex-col text-center gap-5 lg:text-left">
         <div className="flex flex-col items-center gap-3 lg:flex-row">
           <FaMapMarkerAlt className="text-gray-primary" />
-          <span>{city_id?.name || "Cidade indefinida"}</span>
+          <span>{city || "Cidade indefinida"}</span>
         </div>
         <div className="flex flex-col gap-5">
           <span>Gênero: {gender || "indefinido"}</span>

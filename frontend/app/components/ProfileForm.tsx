@@ -25,35 +25,33 @@ interface ProfileFormProps {
 }
 
 function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
-  const [selectedState, setSelectedState] = useState<number | undefined>(
-    driver?.state_id
+  const [selectedState, setSelectedState] = useState<string | undefined>(
+    driver?.state
   );
-  const [selectedCity, setSelectedCity] = useState<number | undefined>(
-    driver?.city_id
+  const [selectedCity, setSelectedCity] = useState<string | undefined>(
+    driver?.city
   );
 
   useEffect(() => {
-    if (driver?.state_id) {
-      setSelectedState(driver.state_id);
+    if (driver) {
+      setSelectedState(driver.state ?? undefined);
+      setSelectedCity(driver.city ?? undefined);
     }
-    if (driver?.city_id) {
-      setSelectedCity(driver.city_id);
-    }
-  }, [driver?.city_id, driver?.state_id]);
+  }, [driver]);
 
   // UPDATES STATE
   useEffect(() => {
-    if (selectedState && selectedState !== driver?.state_id) {
-      onChangeDriver("state_id", String(selectedState));
+    if (selectedState && selectedState !== driver?.state) {
+      onChangeDriver("state", String(selectedState));
     }
-  }, [driver?.state_id, onChangeDriver, selectedState]);
+  }, [driver?.state, onChangeDriver, selectedState]);
 
   // UPDATES CITY
   useEffect(() => {
-    if (selectedCity && selectedCity !== driver?.city_id) {
-      onChangeDriver("city_id", String(selectedCity));
+    if (selectedCity && selectedCity !== driver?.city) {
+      onChangeDriver("city", String(selectedCity));
     }
-  }, [driver?.city_id, onChangeDriver, selectedCity]);
+  }, [driver?.city, onChangeDriver, selectedCity]);
 
   return (
     <>
@@ -131,7 +129,6 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
         <LocaleInput
           hasState={true}
           selectedState={selectedState}
-          setSelectedState={setSelectedState}
           selectedCity={selectedCity}
           setSelectedCity={setSelectedCity}
         />

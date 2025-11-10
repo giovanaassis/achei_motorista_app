@@ -7,12 +7,12 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@/app/axios/config";
-import { DriverCardType } from "../../search/page";
 import { getMe } from "@/app/services/userService";
+import { DriverType } from "@/@types/driver";
 
 export default function ProfilePage() {
   const { id } = useParams();
-  const [selectedDriver, setSelectedDriver] = useState<DriverCardType>();
+  const [selectedDriver, setSelectedDriver] = useState<DriverType>();
   const [isOwner, setIsOwner] = useState<boolean>(false);
 
   const facebook = selectedDriver?.driver_socials?.find(
@@ -49,13 +49,13 @@ export default function ProfilePage() {
         }
 
         const res = await axios.get(
-          `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=city_id&populate[2]=driver_availability&populate[3]=driver_socials`
+          `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_availability&populate[2]=driver_socials`
         );
 
         if (res.data.data.length > 0) {
           setSelectedDriver(res.data.data[0]);
           const driverId = res.data.data[0]?.user?.id;
-          if (driverId === userId) {
+          if (driverId && driverId === userId) {
             setIsOwner(true);
           }
         } else {

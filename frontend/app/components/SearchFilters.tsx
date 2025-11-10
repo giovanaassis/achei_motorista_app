@@ -5,7 +5,6 @@ import QuantityInput from "./QuantityInput";
 import LocaleInput from "./LocaleInput";
 import { DriverType } from "@/@types/driver";
 import { useCallback, useEffect, useState } from "react";
-import { InputType } from "../(main)/search/page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -13,12 +12,12 @@ function SearchFilters({
   state,
   city,
 }: {
-  state?: InputType | null;
-  city?: InputType | null;
+  state?: string | null;
+  city?: string | null;
 }) {
   const [driver, setDriver] = useState<DriverType | undefined>();
-  const [selectedState, setSelectedState] = useState<number>();
-  const [selectedCity, setSelectedCity] = useState<number>();
+  const [selectedState, setSelectedState] = useState<string>();
+  const [selectedCity, setSelectedCity] = useState<string>();
   const router = useRouter();
 
   const onChangeDriver = useCallback(
@@ -33,18 +32,23 @@ function SearchFilters({
 
   useEffect(() => {
     if (state) {
-      setSelectedState(state.id);
+      setSelectedState(state);
     }
     if (city) {
-      setSelectedCity(city.id);
+      setSelectedCity(city);
     }
   }, [city, state]);
+
+  const handleStateChange = (newState: string) => {
+    setSelectedState(newState);
+    setSelectedCity(undefined);
+  };
 
   const handleSearch = () => {
     const params = new URLSearchParams();
 
-    if (selectedState) params.append("state_id", String(selectedState));
-    if (selectedCity) params.append("city_id", String(selectedCity));
+    if (selectedState) params.append("state", selectedState);
+    if (selectedCity && selectedState) params.append("city", selectedCity);
     if (driver?.vehicle_type)
       params.append("vehicle_type", driver.vehicle_type);
     if (driver?.gender) params.append("gender", driver.gender);
@@ -70,7 +74,7 @@ function SearchFilters({
           <LocaleInput
             hasState={false}
             selectedState={selectedState || undefined}
-            setSelectedState={setSelectedState}
+            setSelectedState={handleStateChange}
           />
         </div>
 
@@ -78,7 +82,7 @@ function SearchFilters({
           <LocaleInput
             hasState={true}
             selectedState={selectedState || undefined}
-            setSelectedState={setSelectedCity}
+            setSelectedState={setSelectedState}
             selectedCity={selectedCity || undefined}
             setSelectedCity={setSelectedCity || undefined}
           />
@@ -100,7 +104,7 @@ function SearchFilters({
             <select
               className="input h-10 mt-4 w-30"
               id="vehicle"
-              value={driver?.vehicle_type}
+              value={driver?.vehicle_type || ""}
               onChange={(e) => onChangeDriver("vehicle_type", e.target.value)}
             >
               <option value="">Todos</option>
@@ -114,7 +118,7 @@ function SearchFilters({
             <select
               className="input h-10 mt-4 w-30"
               id="gender"
-              value={driver?.gender}
+              value={driver?.gender || ""}
               onChange={(e) => onChangeDriver("gender", e.target.value)}
             >
               <option value="">Todos</option>
