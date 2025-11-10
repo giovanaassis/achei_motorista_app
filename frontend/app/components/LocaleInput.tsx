@@ -7,9 +7,9 @@ import states from "@/data/states.json";
 interface LocaleInputProps {
   hasState: boolean;
   selectedState?: string;
-  selectedCity?: string;
+  selectedCity?: string | undefined;
   setSelectedState?: (state: string) => void;
-  setSelectedCity?: (city: string) => void;
+  setSelectedCity?: (city?: string) => void;
 }
 
 function LocaleInput({
@@ -27,7 +27,7 @@ function LocaleInput({
     } else {
       if (value !== selectedState) {
         setSelectedState?.(value);
-        setSelectedCity?.("");
+        setSelectedCity?.(undefined);
       } // STATE VALUE CHANGED
     }
   };
