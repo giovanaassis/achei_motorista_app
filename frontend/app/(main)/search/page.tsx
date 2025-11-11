@@ -11,9 +11,26 @@ import { useEffect, useState } from "react";
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingMessage, setLoadingMessage] = useState<string>(
+    "Carregando motoristas..."
+  );
   const [drivers, setDrivers] = useState<DriverType[] | undefined>();
   const [filteredState, setFilteredState] = useState<string | undefined>();
   const [filteredCity, setFilteredCity] = useState<string | undefined>();
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (loading) {
+      setLoadingMessage("Carregando motoristas...");
+
+      timer = setTimeout(() => {
+        setLoadingMessage(
+          "Pode demorar um pouco ao iniciar. Aguarde alguns instantes..."
+        );
+      }, 5000);
+    }
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -68,7 +85,7 @@ export default function SearchPage() {
 
       {/* DRIVERS SECTION */}
       <div className="my-15 flex flex-col gap-10">
-        {loading && <p>Carregando motoristas...</p>}
+        {loading && <p>{loadingMessage}</p>}
         {!loading && drivers?.length === 0 && (
           <p>Nenhum motorista encontrado.</p>
         )}
