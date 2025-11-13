@@ -2,8 +2,8 @@
 
 import { DriverType } from "@/@types/driver";
 import { API_URL } from "@/app/axios/config";
-import DriverCard from "@/app/components/DriverCard";
-import SearchFilters from "@/app/components/SearchFilters";
+import DriverCard from "@/app/_components/DriverCard";
+import SearchFilters from "@/app/_components/SearchFilters";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

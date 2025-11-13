@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Car from "../components/Car";
-import MenuInitial from "../components/MenuInitial";
-import SearchInputInitial from "../components/SearchInputInitial";
+import Car from "./_components/Car";
+import MenuInitial from "./_components/MenuInitial";
+import SearchInputInitial from "./_components/SearchInputInitial";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -40,4 +40,3 @@ export default function Home() {
     </div>
   );
 }
-

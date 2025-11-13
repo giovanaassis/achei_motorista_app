@@ -3,9 +3,9 @@
 import { AvailabilityType } from "@/@types/availability";
 import { DriverType } from "@/@types/driver";
 import { UserType } from "@/@types/user";
-import ContactForm from "@/app/components/ContactForm";
-import ProfileForm from "@/app/components/ProfileForm";
-import VehicleForm from "@/app/components/VehicleForm";
+import ContactForm from "@/app/_components/ContactForm";
+import ProfileForm from "@/app/_components/ProfileForm";
+import VehicleForm from "@/app/_components/VehicleForm";
 import { useDriverContext } from "@/app/context/DriverContext";
 import { getDriver, updateDriver } from "@/app/services/driverService";
 import { getMe } from "@/app/services/userService";

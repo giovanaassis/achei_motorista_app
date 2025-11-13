@@ -1,7 +1,7 @@
-import GoBackButton from "../components/GoBackButton";
-import LoginBackground from "../components/LoginBackground";
+import GoBackButton from "../_components/GoBackButton";
+import LoginBackground from "../_components/LoginBackground";
 
-export default function RootLayout({
+export default function LoginLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

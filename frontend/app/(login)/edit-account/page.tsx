@@ -1,4 +1,4 @@
-import EditAccountForm from "@/app/components/EditAccountForm";
+import EditAccountForm from "@/app/_components/EditAccountForm";
 
 export default function EditAccountPage() {
   return (

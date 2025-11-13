@@ -1,6 +1,6 @@
 import { Theme } from "@radix-ui/themes";
-import { DriverProvider } from "./context/DriverContext";
-import "./globals.css";
+import { DriverProvider } from "@/app/context/DriverContext";
+import "@/app/globals.css";
 import { Afacad } from "next/font/google";
 
 const afacad = Afacad({

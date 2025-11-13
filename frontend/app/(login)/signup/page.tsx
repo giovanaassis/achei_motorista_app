@@ -1,7 +1,7 @@
 "use client";
 
 import { UserType } from "@/@types/user";
-import SignUpForm from "@/app/components/SignUpForm";
+import SignUpForm from "@/app/_components/SignUpForm";
 import { useDriverContext } from "@/app/context/DriverContext";
 import { registerUser } from "@/app/services/userService";
 import Link from "next/link";

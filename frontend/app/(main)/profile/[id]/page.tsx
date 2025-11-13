@@ -2,7 +2,7 @@
 
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-import DriverInfo from "@/app/components/DriverInfo";
+import DriverInfo from "@/app/_components/DriverInfo";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
