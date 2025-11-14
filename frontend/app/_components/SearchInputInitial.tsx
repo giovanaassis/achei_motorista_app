@@ -35,7 +35,7 @@ function SearchInputInitial() {
       </div>
 
       <Link
-        href={`/search?state=${selectedState}&city=${selectedCity}`}
+        href={`/search?state=${selectedState || ""}&city=${selectedCity || ""}`}
         className="h-0"
       >
         <button className="mt-60 md:mt-30">achar motoristas</button>
