@@ -63,7 +63,7 @@ function SearchFilters({
     setSelectedState(undefined);
     setSelectedCity(undefined);
     setDriver(undefined);
-    router.push("search");
+    router.push("/search");
   };
 
   return (
@@ -73,7 +73,7 @@ function SearchFilters({
         <div>
           <LocaleInput
             hasState={false}
-            selectedState={selectedState || undefined}
+            selectedState={selectedState}
             setSelectedState={handleStateChange}
           />
         </div>
@@ -81,16 +81,16 @@ function SearchFilters({
         <div>
           <LocaleInput
             hasState={true}
-            selectedState={selectedState || undefined}
+            selectedState={selectedState}
             setSelectedState={setSelectedState}
-            selectedCity={selectedCity || undefined}
-            setSelectedCity={setSelectedCity || undefined}
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
           />
         </div>
 
         {/* SUBMIT BUTTON FOR BIG SCREENS */}
-        <Link href={`search${handleSearch()}`}>
-          <button type="submit" className="w-10 hidden md:block md:mt-1">
+        <Link href={`/search${handleSearch()}`}>
+          <button type="button" className="w-10 hidden md:block md:mt-1">
             <SearchIcon />
           </button>
         </Link>
@@ -135,8 +135,8 @@ function SearchFilters({
         </div>
 
         {/* SUBMIT BUTTON FOR MOBILE */}
-        <Link href={`search${handleSearch()}`}>
-          <button type="submit" className="w-[50%] md:hidden">
+        <Link href={`/search${handleSearch()}`}>
+          <button type="button" className="w-[50%] md:hidden">
             buscar
           </button>
         </Link>
