@@ -1,17 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { DriverType } from "@/@types/driver";
+import { useEffect, useState } from "react";
+import { getMe } from "../../../services/userService";
+import { UserType } from "@/@types/user";
 
-function DriverInfo({
-  driver,
-  isOwner,
-}: {
-  driver: DriverType | undefined;
-  isOwner: boolean;
-}) {
-  if (!driver) {
-    return <p>Buscando dados do motorista.</p>;
-  }
+function DriverInfo({ driver }: { driver: DriverType }) {
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const currentUser: UserType = await getMe();
+      if (!currentUser) return;
+      const userId = currentUser.id;
+
+      if (driver.user.id === userId) {
+        setIsOwner(true);
+      }
+    };
+    checkUser().finally(() => setLoading(false));
+  }, [driver.user.id]);
 
   const {
     user,
@@ -21,6 +32,10 @@ function DriverInfo({
     gender,
     driver_availability,
   } = driver;
+
+  if (loading) {
+    return <div>Carregando dados...</div>;
+  }
 
   return (
     <div className="flex gap-10 flex-col lg:flex-row lg:gap-30 capitalize">
