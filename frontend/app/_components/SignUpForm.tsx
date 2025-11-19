@@ -1,42 +1,34 @@
-import { UserType } from "@/@types/user";
-
-interface SignUpFormProps {
-  user: UserType | null;
-  onChangeUser: (user: UserType) => void;
-}
-
-function SignUpForm({user, onChangeUser}: SignUpFormProps) {
+function SignUpForm() {
   return (
     <>
       <input
         type="text"
-        id="driver-name"
+        id="username"
+        name="username"
         placeholder="Nome"
         className="input p-2 text-xl"
-        value={user?.username || ""}
-        onChange={(e) => onChangeUser({ ...user!, username: e.target.value })}
       />
 
       <input
         type="email"
-        id="driver-email"
+        id="email"
+        name="email"
         placeholder="E-mail"
         className="input p-2 text-xl"
-        value={user?.email || ""}
-        onChange={(e) => onChangeUser({ ...user!, email: e.target.value })}
       />
 
       <input
         type="password"
-        id="driver-password"
+        id="password"
+        name="password"
         placeholder="Senha"
         className="input p-2 text-xl"
         autoComplete="off"
-        value={user?.password || ""}
-        onChange={(e) => onChangeUser({ ...user!, password: e.target.value })}
       />
 
-      <button className="w-50 -mb-4" type="submit">criar conta</button>
+      <button className="w-50 -mb-4" type="submit">
+        criar conta
+      </button>
     </>
   );
 }

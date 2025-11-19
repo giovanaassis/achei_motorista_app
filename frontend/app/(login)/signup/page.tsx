@@ -1,36 +1,14 @@
-"use client";
-
-import { UserType } from "@/@types/user";
 import SignUpForm from "@/app/_components/SignUpForm";
-import { useDriverContext } from "@/app/context/DriverContext";
-import { registerUser } from "@/app/services/userService";
+import { signup } from "@/app/actions/auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
 
 export default function SignUpPage() {
-  const [user, setUser] = useState<UserType | null>(null);
-  const router = useRouter();
-  const { update } = useDriverContext();
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-
-    const res = await registerUser(user, update);
-    if (!res) {
-      alert("Algo deu errado! Tente novamente.");
-    } else {
-      router.push("edit-profile");
-    }
-  };
-
   return (
     <div className="flex flex-col items-center justify-center">
       {/* SIGNUP FORM */}
       <h1 className="text-4xl">Crie uma conta.</h1>
-      <form className="loginForm" onSubmit={handleSubmit}>
-        <SignUpForm user={user} onChangeUser={setUser} />
+      <form className="loginForm" action={signup}>
+        <SignUpForm />
 
         <p>
           Já tem uma conta?{" "}
