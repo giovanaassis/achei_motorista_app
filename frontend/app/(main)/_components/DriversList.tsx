@@ -1,6 +1,6 @@
 import { DriverType } from "@/@types/driver";
 import { API_URL } from "@/app/axios/config";
-import DriverCard from "./DriverCard";
+import DriverCard from "@/app/(main)/_components/DriverCard";
 
 async function DriversList({ query }: { query: string }) {
   const res = await fetch(

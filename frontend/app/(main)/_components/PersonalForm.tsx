@@ -1,8 +1,8 @@
 "use client";
 
 import { DriverType } from "@/@types/driver";
-import { useEffect, useState } from "react";
-import LocaleInput from "./LocaleInput";
+import { useState } from "react";
+import LocaleInput from "@/app/_components/LocaleInput";
 
 const genders = [
   {
@@ -19,39 +19,16 @@ const genders = [
   },
 ];
 
-interface ProfileFormProps {
-  driver: DriverType | null;
-  onChangeDriver: (name: keyof DriverType, value: string | number) => void;
-}
-
-function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
+function PersonalForm({ driver }: { driver?: DriverType }) {
   const [selectedState, setSelectedState] = useState<string | undefined>(
     driver?.state
   );
   const [selectedCity, setSelectedCity] = useState<string | undefined>(
     driver?.city
   );
-
-  useEffect(() => {
-    if (driver) {
-      setSelectedState(driver.state ?? undefined);
-      setSelectedCity(driver.city ?? undefined);
-    }
-  }, [driver]);
-
-  // UPDATES STATE
-  useEffect(() => {
-    if (selectedState && selectedState !== driver?.state) {
-      onChangeDriver("state", String(selectedState));
-    }
-  }, [driver?.state, onChangeDriver, selectedState]);
-
-  // UPDATES CITY
-  useEffect(() => {
-    if (selectedCity && selectedCity !== driver?.city) {
-      onChangeDriver("city", String(selectedCity));
-    }
-  }, [driver?.city, onChangeDriver, selectedCity]);
+  const [driverGender, setDriverGender] = useState<string | undefined>(
+    driver?.gender
+  );
 
   return (
     <>
@@ -107,8 +84,8 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
               name="gender"
               value={gender}
               className={`peer hidden`}
-              checked={driver?.gender === gender}
-              onChange={(e) => onChangeDriver("gender", e.target.value)}
+              checked={driverGender === gender}
+              onChange={(e) => setDriverGender(e.target.value)}
             />
             <div className="w-5 h-5 rounded-full border-2 border-gray-secondary peer-checked:bg-gray-secondary transition"></div>
             <span>{name}</span>
@@ -118,6 +95,7 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
 
       {/* LOCATION INPUT */}
       <div className="flex flex-col gap-3 text-2xl self-start mb-5">
+        <input hidden name="state" defaultValue={selectedState} />
         <LocaleInput
           hasState={false}
           selectedState={selectedState}
@@ -126,6 +104,7 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
       </div>
 
       <div className="flex flex-col gap-3 text-2xl self-start">
+        <input hidden name="city" defaultValue={selectedCity} />
         <LocaleInput
           hasState={true}
           selectedState={selectedState}
@@ -137,4 +116,4 @@ function ProfileForm({ driver, onChangeDriver }: ProfileFormProps) {
   );
 }
 
-export default ProfileForm;
+export default PersonalForm;

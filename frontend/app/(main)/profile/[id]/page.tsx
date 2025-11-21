@@ -1,9 +1,10 @@
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-import DriverInfo from "@/app/(main)/profile/_components/DriverInfo";
+
 import { API_URL } from "@/app/axios/config";
 import { DriverType } from "@/@types/driver";
-import WhatsappButton from "../_components/WhatsappButton";
+import WhatsappButton from "../../_components/WhatsappButton";
+import DriverInfo from "../../_components/DriverInfo";
 
 export default async function ProfilePage({
   params,

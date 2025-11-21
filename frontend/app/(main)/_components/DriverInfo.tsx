@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { DriverType } from "@/@types/driver";
 import { useEffect, useState } from "react";
-import { getMe } from "../../../services/userService";
+import { getMe } from "@/app/services/userService";
 import { UserType } from "@/@types/user";
 
 function DriverInfo({ driver }: { driver: DriverType }) {

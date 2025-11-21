@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { DriverType } from "@/@types/driver";
@@ -8,12 +7,7 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
 import { IoIosGlobe } from "react-icons/io";
 
-interface ContactFormProps {
-  driver: DriverType | null;
-  onChangeDriver: (name: keyof DriverType, value: string) => void;
-}
-
-function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
+function ContactForm({ driver }: { driver?: DriverType }) {
   const [socials, setSocials] = useState({
     instagram: "",
     facebook: "",
@@ -21,29 +15,16 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
   });
 
   useEffect(() => {
-    if (driver?.driver_socials) {
-      setSocials({
-        instagram:
-          driver.driver_socials.find((s) => s.social === "instagram")?.url ||
-          "",
-        facebook:
-          driver.driver_socials.find((s) => s.social === "facebook")?.url || "",
-        site: driver.driver_socials.find((s) => s.social === "site")?.url || "",
-      });
-    }
+    if (!driver?.driver_socials) return;
+
+    setSocials({
+      instagram:
+        driver.driver_socials.find((s) => s.social === "instagram")?.url || "",
+      facebook:
+        driver.driver_socials.find((s) => s.social === "facebook")?.url || "",
+      site: driver.driver_socials.find((s) => s.social === "site")?.url || "",
+    });
   }, [driver]);
-
-  function handleChange(value: string, social: keyof typeof socials) {
-    const updated = { ...socials, [social]: value };
-    setSocials(updated);
-
-    const formatted = Object.entries(updated)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, url]) => url.trim() !== "")
-      .map(([social, url]) => ({ social, url }));
-
-    onChangeDriver("driver_socials", formatted as any);
-  }
 
   return (
     <>
@@ -57,8 +38,7 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
           id="phone_number"
           className="input self-start p-2 text-xl"
           placeholder="Telefone"
-          value={driver?.phone_number || ""}
-          onChange={(e) => onChangeDriver("phone_number", e.target.value)}
+          defaultValue={driver?.phone_number}
         />
       </div>
 
@@ -71,10 +51,10 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
           <input
             type="text"
             id="instagram"
+            name="instagram"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="instagram"
-            value={socials.instagram}
-            onChange={(e) => handleChange(e.target.value, "instagram")}
+            defaultValue={socials.instagram}
           />
           <aside
             className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
@@ -88,10 +68,10 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
           <input
             type="text"
             id="facebook"
+            name="facebook"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="facebook"
-            value={socials.facebook}
-            onChange={(e) => handleChange(e.target.value, "facebook")}
+            defaultValue={socials.facebook}
           />
           <aside
             className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
@@ -105,10 +85,10 @@ function ContactForm({ driver, onChangeDriver }: ContactFormProps) {
           <input
             type="text"
             id="site"
+            name="site"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="site pessoal"
-            value={socials.site}
-            onChange={(e) => handleChange(e.target.value, "site")}
+            defaultValue={socials.site}
           />
         </div>
       </div>

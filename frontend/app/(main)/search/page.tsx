@@ -1,7 +1,7 @@
 import { DriverType } from "@/@types/driver";
 import SearchFilters from "@/app/_components/SearchFilters";
 import { Suspense } from "react";
-import DriversList from "./_components/DriversList";
+import DriversList from "../_components/DriversList";
 
 export default async function SearchPage({
   searchParams,
