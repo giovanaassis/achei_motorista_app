@@ -424,7 +424,6 @@ export interface ApiCalendarDayCalendarDay extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    drivers: Schema.Attribute.Relation<'manyToMany', 'api::driver.driver'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -493,10 +492,7 @@ export interface ApiDriverDriver extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    driver_availability: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::calendar-day.calendar-day'
-    >;
+    driver_availability: Schema.Attribute.JSON;
     driver_socials: Schema.Attribute.Relation<
       'oneToMany',
       'api::driver-social.driver-social'

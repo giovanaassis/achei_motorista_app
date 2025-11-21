@@ -16,12 +16,6 @@
       "maxLength": 20,
       "required": true,
       "unique": true
-    },
-    "drivers": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::driver.driver",
-      "inversedBy": "driver_availability"
     }
   }
 }
