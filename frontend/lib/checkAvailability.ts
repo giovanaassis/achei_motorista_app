@@ -1,6 +1,5 @@
 import { DriverType } from "@/@types/driver";
 
-
 export const checkAvailability = (driver: DriverType) => {
   const { driver_availability } = driver;
   const days = [
@@ -16,5 +15,5 @@ export const checkAvailability = (driver: DriverType) => {
 
   if (!driver_availability) return false;
 
-  return driver_availability.some((day) => today === day.name);
+  return driver_availability.some((day) => today === day);
 };

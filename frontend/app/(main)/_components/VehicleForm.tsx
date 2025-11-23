@@ -5,7 +5,6 @@ import { FaMotorcycle } from "react-icons/fa";
 import QuantityInput from "@/app/_components/QuantityInput";
 import { DriverType } from "@/@types/driver";
 import { ChangeEvent, useState } from "react";
-import { AvailabilityType } from "@/@types/availability";
 
 const daysWeek = [
   "segunda-feira",
@@ -18,7 +17,7 @@ const daysWeek = [
 ];
 
 function VehicleForm({ driver }: { driver?: DriverType }) {
-  const [availability, setAvailability] = useState<AvailabilityType[]>(
+  const [availability, setAvailability] = useState<string[]>(
     driver?.driver_availability || []
   );
   const [vehicle, setVehicle] = useState<string | undefined>(
@@ -27,16 +26,16 @@ function VehicleForm({ driver }: { driver?: DriverType }) {
 
   const handleAvailabilityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    let next: AvailabilityType[];
+    let next: string[];
 
     if (checked) {
-      if (!availability.some((a) => a.name === value)) {
-        next = [...availability, { name: value }];
+      if (!availability.some((a) => a === value)) {
+        next = [...availability, value];
       } else {
         next = availability;
       }
     } else {
-      next = availability.filter((a) => a.name !== value);
+      next = availability.filter((a) => a !== value);
     }
 
     setAvailability(next);
@@ -97,7 +96,7 @@ function VehicleForm({ driver }: { driver?: DriverType }) {
               className="peer hidden"
               value={day}
               onChange={handleAvailabilityChange}
-              checked={availability.some((a) => a.name === day)}
+              checked={availability.some((a) => a === day)}
             />
             <span className="availability-input">{day}</span>
           </label>

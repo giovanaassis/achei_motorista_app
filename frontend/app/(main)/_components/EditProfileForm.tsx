@@ -2,8 +2,6 @@
 
 import { DriverType } from "@/@types/driver";
 import ContactForm from "@/app/(main)/_components/ContactForm";
-
-import { createDriver, updateDriver } from "@/app/actions/driverActions";
 import { useTransition } from "react";
 import PersonalForm from "./PersonalForm";
 import VehicleForm from "./VehicleForm";
@@ -11,30 +9,18 @@ import VehicleForm from "./VehicleForm";
 function EditProfileForm({
   driver,
   isUpdating,
+  handleSubmitAction,
 }: {
   driver?: DriverType;
   isUpdating: boolean;
+  handleSubmitAction: (data: FormData) => void;
 }) {
   const [isPending, startTransition] = useTransition();
-
-  const handleSubmit = (formData: FormData) => {
-    startTransition(async () => {
-      let response;
-      if (isUpdating) {
-        response = await updateDriver(formData);
-      } else {
-        response = await createDriver(formData);
-      }
-      if (response.success) {
-        alert("Motorista atualizado!");
-      }
-    });
-  };
 
   return (
     <form
       className="flex justify-between flex-col md:flex-row"
-      action={handleSubmit}
+      action={(formData) => startTransition(() => handleSubmitAction(formData))}
     >
       {/* LEFT SIDE */}
       <div className="flex-1">

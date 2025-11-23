@@ -4,7 +4,7 @@ import DriverCard from "@/app/(main)/_components/DriverCard";
 
 async function DriversList({ query }: { query: string }) {
   const res = await fetch(
-    `${API_URL}/drivers?${query}&populate[user][fields]=name&populate=driver_availability`
+    `${API_URL}/drivers?populate[user][fields]=name&${query}`
   );
 
   const drivers: DriverType[] = (await res.json()).data;

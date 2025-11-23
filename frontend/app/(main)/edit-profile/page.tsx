@@ -2,6 +2,7 @@ import { DriverType } from "@/@types/driver";
 import { API_URL } from "@/app/axios/config";
 import { verifySession } from "@/lib/session";
 import EditProfileForm from "../_components/EditProfileForm";
+import { createDriver, updateDriver } from "@/app/actions/driverActions";
 
 export default async function EditProfilePage() {
   // CHECK AUTH
@@ -21,13 +22,33 @@ export default async function EditProfilePage() {
     driver = data[0];
   }
 
+  const handleSubmit = async (formData: FormData) => {
+    "use server";
+
+    let response;
+    if (isUpdating) {
+      formData.append("driverId", session.documentId);
+      response = await updateDriver(formData);
+    } else {
+      formData.append("user", session.id);
+      response = await createDriver(formData);
+    }
+    if (response.success) {
+      console.log("Motorista atualizado!");
+    }
+  };
+
   return (
     <div className="p-10 w-full">
       <h1 className="text-3xl">Olá, {session.name}</h1>
       <p className="text-xl">
         Edite as informações do seu veículo e do seu perfil aqui.
       </p>
-      <EditProfileForm driver={driver} isUpdating={isUpdating} />
+      <EditProfileForm
+        driver={driver}
+        isUpdating={isUpdating}
+        handleSubmitAction={handleSubmit}
+      />
     </div>
   );
 }
