@@ -26,8 +26,8 @@ export default async function EditProfilePage() {
     "use server";
 
     let response;
-    if (isUpdating) {
-      formData.append("driverId", session.documentId);
+    if (isUpdating && driver) {
+      formData.append("driverId", driver.documentId);
       response = await updateDriver(formData);
     } else {
       formData.append("user", session.id);

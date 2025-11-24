@@ -7,16 +7,18 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
 import { IoIosGlobe } from "react-icons/io";
 
+type SocialType = {
+  instagram?: string;
+  facebook?: string;
+  site?: string;
+};
+
 function ContactForm({ driver }: { driver?: DriverType }) {
-  const [socials, setSocials] = useState({
-    instagram: "",
-    facebook: "",
-    site: "",
-  });
+  const [socials, setSocials] = useState<SocialType>();
 
   useEffect(() => {
     if (!driver?.driver_socials) return;
-
+    
     setSocials({
       instagram:
         driver.driver_socials.find((s) => s.social === "instagram")?.url || "",
@@ -54,7 +56,7 @@ function ContactForm({ driver }: { driver?: DriverType }) {
             name="instagram"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="instagram"
-            defaultValue={socials.instagram}
+            defaultValue={socials?.instagram}
           />
           <aside
             className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
@@ -71,7 +73,7 @@ function ContactForm({ driver }: { driver?: DriverType }) {
             name="facebook"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="facebook"
-            defaultValue={socials.facebook}
+            defaultValue={socials?.facebook}
           />
           <aside
             className="text-gray-900 float-right mt-3 pl-2 cursor-pointer"
@@ -88,7 +90,7 @@ function ContactForm({ driver }: { driver?: DriverType }) {
             name="site"
             className="input p-2 pl-12 text-xl bg-transparent"
             placeholder="site pessoal"
-            defaultValue={socials.site}
+            defaultValue={socials?.site}
           />
         </div>
       </div>

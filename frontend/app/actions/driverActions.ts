@@ -2,6 +2,7 @@
 
 import { SocialType } from "@/@types/social";
 import { API_URL } from "../axios/config";
+import { createSocials, updateSocials } from "./socialActions";
 
 export async function createDriver(formData: FormData) {
   try {
@@ -10,7 +11,7 @@ export async function createDriver(formData: FormData) {
     const { instagram, facebook, site, ...driver } = rawData;
     const payload = { ...driver, driver_availability };
 
-    // CREATES DRIVER
+    // CREATE DRIVER
     const res = await fetch(`${API_URL}/drivers`, {
       method: "POST",
       headers: {
@@ -34,23 +35,23 @@ export async function createDriver(formData: FormData) {
       socials.push({
         social: "instagram",
         url: String(instagram),
-        driver: "n852z15qvbwx2i7hptqhby3f",
+        driver: createdDriver.data.documentId,
       });
     if (facebook)
       socials.push({
         social: "facebook",
         url: String(facebook),
-        driver: "n852z15qvbwx2i7hptqhby3f",
+        driver: createdDriver.data.documentId,
       });
     if (site)
       socials.push({
         social: "site",
         url: String(site),
-        driver: "n852z15qvbwx2i7hptqhby3f",
+        driver: createdDriver.data.documentId,
       });
 
     if (socials.length > 0) {
-      updateSocials(socials);
+      createSocials(socials);
     }
 
     return { success: true };
@@ -66,56 +67,39 @@ export async function updateDriver(formData: FormData) {
     const driver_availability = formData.getAll("driver_availability");
     const { instagram, facebook, site, driverId, ...driver } = rawData;
     const payload = { ...driver, driver_availability };
-    console.log("rawdata", rawData);
 
-    // const res = await fetch(`${API_URL}/drivers/${driverId}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.API_KEY}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(payload),
-    // });
+    // UPDATE DRIVER
+    const res = await fetch(`${API_URL}/drivers/${driverId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${process.env.API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-    // if (!res.ok) {
-    //   throw new Error();
-    // }
+    if (!res.ok) {
+      throw new Error();
+    }
+
+    // UPDATE SOCIALS
+    if (instagram) {
+      await updateSocials(
+        "instagram",
+        instagram.toString(),
+        driverId.toString()
+      );
+    }
+    if (facebook) {
+      await updateSocials("facebook", facebook.toString(), driverId.toString());
+    }
+    if (site) {
+      await updateSocials("site", site.toString(), driverId.toString());
+    }
 
     return { success: true };
   } catch (error) {
     console.log("Error at updating driver: ", error);
     return { success: false };
-  }
-}
-
-export async function updateSocials(socials: SocialType[]) {
-  try {
-    const results = await Promise.all(
-      socials.map(async (social) => {
-        const res = await fetch(`${API_URL}/driver-socials`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ data: social }),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(
-            `Erro ao criar social ${social.social}: ${JSON.stringify(data)}`
-          );
-        }
-
-        return data;
-      })
-    );
-
-    return results;
-  } catch (error) {
-    console.error("Error at updateSocials:", error);
-    throw error;
   }
 }

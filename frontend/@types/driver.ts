@@ -3,7 +3,7 @@ import { UserType } from "./user";
 
 export type DriverType = {
   id: number;
-  documentId: number;
+  documentId: string;
   gender: "homem" | "mulher" | "outro";
   phone_number: string;
   vehicle_type: "carro" | "moto";
