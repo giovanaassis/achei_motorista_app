@@ -24,14 +24,17 @@ function DriverInfo({ driver }: { driver: DriverType }) {
     checkUser().finally(() => setLoading(false));
   }, [driver.user.id]);
 
-  const {
-    user,
-    city,
-    vehicle_seats,
-    vehicle_type,
-    gender,
-    driver_availability,
-  } = driver;
+  const { user, city, vehicle_seats, vehicle_type, gender } = driver;
+  const formatAvailability = (availability: undefined | string | string[]) => {
+    const clean = (value: string) => value.replace(/^"|"$/g, "").trim();
+    if (!availability) return [];
+
+    if (Array.isArray(availability)) return availability.map(clean);
+
+    if (typeof availability === "string") return [clean(availability)];
+  };
+
+  const availability = formatAvailability(driver.driver_availability);
 
   if (loading) {
     return <div>Carregando dados...</div>;
@@ -76,9 +79,9 @@ function DriverInfo({ driver }: { driver: DriverType }) {
 
         <div className="flex flex-col gap-3">
           <p className="mb-5">Disponível em:</p>
-          {driver_availability.map((day) => (
-            <span className="badge" key={day.id}>
-              {day.name}
+          {availability?.map((day) => (
+            <span className="badge" key={day}>
+              {day}
             </span>
           ))}
         </div>

@@ -14,7 +14,7 @@ export default async function ProfilePage({
   const { id } = await params;
 
   const res = await fetch(
-    `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_availability&populate[2]=driver_socials`
+    `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_socials`
   );
 
   const data = await res.json();

@@ -30,6 +30,7 @@ function DriverCard({ driver }: { driver: DriverType }) {
         </div>
       </div>
 
+
       {/* ARROW ICON */}
       <Link href={`/profile/${driver.id}`}>
         <ArrowRight className="rounded-full w-8 h-8 hover:bg-gray-500 transition duration-200 cursor-pointer" />
