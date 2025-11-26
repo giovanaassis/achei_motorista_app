@@ -1,4 +1,4 @@
-import Navbar from "../_components/Navbar";
+import Header from "../_components/Header";
 
 export default function MainLayout({
   children,
@@ -7,7 +7,7 @@ export default function MainLayout({
 }>) {
   return (
     <main>
-      <Navbar />
+      <Header />
       <div className="mt-20 md:mt-30">{children}</div>
     </main>
   );

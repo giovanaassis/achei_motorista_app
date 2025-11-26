@@ -5,22 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDriverContext } from "../context/DriverContext";
 
-function Navbar() {
+function Navbar({ userLogged }: { userLogged: boolean }) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [userLogged, setUserLogged] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const { driver } = useDriverContext();
-
-  useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem("token");
-      setUserLogged(!!token);
-    };
-
-    checkToken();
-    window.addEventListener("storage", checkToken);
-    return () => window.removeEventListener("storage", checkToken);
-  }, []);
 
   useEffect(() => {
     // TO ADD THE SHADOW WHEN SCROLL
@@ -28,6 +16,7 @@ function Navbar() {
       setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
