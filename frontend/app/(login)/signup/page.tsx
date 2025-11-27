@@ -1,5 +1,5 @@
 import SignUpForm from "@/app/_components/SignUpForm";
-import { signup } from "@/app/actions/auth";
+import { signup } from "@/app/_actions/auth";
 import Link from "next/link";
 
 export default function SignUpPage() {

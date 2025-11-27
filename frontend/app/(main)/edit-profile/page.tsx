@@ -2,7 +2,11 @@ import { DriverType } from "@/@types/driver";
 import { API_URL } from "@/app/axios/config";
 import { verifySession } from "@/lib/session";
 import EditProfileForm from "../_components/EditProfileForm";
-import { createDriver, updateDriver } from "@/app/actions/driverActions";
+import {
+  createDriver,
+  getDriver,
+  updateDriver,
+} from "@/app/_actions/driverActions";
 
 export default async function EditProfilePage() {
   // CHECK AUTH
@@ -34,7 +38,7 @@ export default async function EditProfilePage() {
       response = await createDriver(formData);
     }
     if (response.success) {
-      console.log("Motorista atualizado!");
+      getDriver(response.driverId);
     }
   };
 

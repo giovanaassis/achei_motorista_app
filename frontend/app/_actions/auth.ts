@@ -21,7 +21,7 @@ export async function signup(formData: FormData) {
   });
   const result = await res.json();
 
-  // SAVES TOKEN ON COOKIES
+  // SAVE TOKEN ON COOKIES
   (await cookies()).set("token", result.jwt, {
     httpOnly: true,
     secure: true,

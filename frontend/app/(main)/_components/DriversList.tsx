@@ -1,13 +1,19 @@
 import { DriverType } from "@/@types/driver";
-import { API_URL } from "@/app/axios/config";
 import DriverCard from "@/app/(main)/_components/DriverCard";
+import { http } from "@/app/api/http";
+import { getErrorMessage } from "@/lib/getErrorMessage";
 
 async function DriversList({ query }: { query: string }) {
-  const res = await fetch(
-    `${API_URL}/drivers?populate[user][fields]=name&${query}`
-  );
+  const res = await http(`drivers?populate[user][fields]=name&${query}`, "GET");
 
-  const drivers: DriverType[] = (await res.json()).data;
+  if (!res.ok) {
+    const data = await res.json();
+    return <span>{getErrorMessage(data.error.status)}</span>;
+  }
+
+  const data = await res.json();
+  const drivers: DriverType[] = data.data;
+
   if (!drivers || drivers.length === 0) {
     return <p className="text-xl mt-10">Nenhum motorista encontrado.</p>;
   }

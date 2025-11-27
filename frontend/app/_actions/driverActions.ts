@@ -29,32 +29,34 @@ export async function createDriver(formData: FormData) {
       return { message: "Deu erro" };
     }
 
+    const documentId = createdDriver.data.documentId;
+
     // CREATE SOCIALS
     const socials: SocialType[] = [];
     if (instagram)
       socials.push({
         social: "instagram",
         url: String(instagram),
-        driver: createdDriver.data.documentId,
+        driver: documentId,
       });
     if (facebook)
       socials.push({
         social: "facebook",
         url: String(facebook),
-        driver: createdDriver.data.documentId,
+        driver: documentId,
       });
     if (site)
       socials.push({
         social: "site",
         url: String(site),
-        driver: createdDriver.data.documentId,
+        driver: documentId,
       });
 
     if (socials.length > 0) {
       createSocials(socials);
     }
 
-    return { success: true };
+    return { success: true, driverId: documentId };
   } catch (error) {
     console.log("Error at creating driver: ", error);
     return { success: false };
@@ -101,5 +103,22 @@ export async function updateDriver(formData: FormData) {
   } catch (error) {
     console.log("Error at updating driver: ", error);
     return { success: false };
+  }
+}
+
+export async function getDriver(documentId: string) {
+  try {
+    const res = await fetch(`${API_URL}/drivers/${documentId}`, {
+      headers: { Authorization: `Bearer ${process.env.API_KEY}` },
+    });
+    const driver = await res.json();
+
+    if (!res.ok) {
+      return;
+    }
+
+    return driver;
+  } catch (error) {
+    console.log("Error at getDriver", error);
   }
 }
