@@ -1,124 +1,124 @@
 "use server";
 
 import { SocialType } from "@/@types/social";
-import { API_URL } from "../axios/config";
 import { createSocials, updateSocials } from "./socialActions";
+import { http } from "../api/http";
+import { getErrorMessage } from "@/lib/getErrorMessage";
 
 export async function createDriver(formData: FormData) {
-  try {
-    const rawData = Object.fromEntries(formData);
-    const driver_availability = formData.getAll("driver_availability");
-    const { instagram, facebook, site, ...driver } = rawData;
-    const payload = { ...driver, driver_availability };
+  const rawData = Object.fromEntries(formData);
+  const driver_availability = formData.getAll("driver_availability");
+  const { instagram, facebook, site, ...driver } = rawData;
+  const payload = { ...driver, driver_availability };
 
-    // CREATE DRIVER
-    const res = await fetch(`${API_URL}/drivers`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    const createdDriver = await res.json();
-
-    // VALIDATE ERRORS
-    if (createdDriver.error) {
-      const { status, details } = createdDriver.error;
-      console.log(`Error ${status}`, details);
-      return { message: "Deu erro" };
-    }
-
-    const documentId = createdDriver.data.documentId;
-
-    // CREATE SOCIALS
-    const socials: SocialType[] = [];
-    if (instagram)
-      socials.push({
-        social: "instagram",
-        url: String(instagram),
-        driver: documentId,
-      });
-    if (facebook)
-      socials.push({
-        social: "facebook",
-        url: String(facebook),
-        driver: documentId,
-      });
-    if (site)
-      socials.push({
-        social: "site",
-        url: String(site),
-        driver: documentId,
-      });
-
-    if (socials.length > 0) {
-      createSocials(socials);
-    }
-
-    return { success: true, driverId: documentId };
-  } catch (error) {
-    console.log("Error at creating driver: ", error);
-    return { success: false };
+  // CREATE DRIVER
+  const res = await http("drivers", "POST", payload);
+  if (!res.ok) {
+    const data = await res.json();
+    return { success: false, message: getErrorMessage(data.error.status) };
   }
+
+  const createdDriver = await res.json();
+  const documentId = createdDriver.data.documentId;
+
+  // CREATE SOCIALS
+  const socials: SocialType[] = [];
+  if (instagram)
+    socials.push({
+      social: "instagram",
+      url: String(instagram),
+      driver: documentId,
+    });
+  if (facebook)
+    socials.push({
+      social: "facebook",
+      url: String(facebook),
+      driver: documentId,
+    });
+  if (site)
+    socials.push({
+      social: "site",
+      url: String(site),
+      driver: documentId,
+    });
+
+  if (socials.length > 0) {
+    const socialsRes = await createSocials(socials);
+    if (!socialsRes.success) {
+      return {
+        success: false,
+        message: "Houve um erro com suas redes socias.",
+      };
+    }
+  }
+
+  return {
+    success: true,
+    driverId: createdDriver.data.id,
+    message: "Atualizado com sucesso",
+  };
 }
 
 export async function updateDriver(formData: FormData) {
-  try {
-    const rawData = Object.fromEntries(formData);
-    const driver_availability = formData.getAll("driver_availability");
-    const { instagram, facebook, site, driverId, ...driver } = rawData;
-    const payload = { ...driver, driver_availability };
+  const rawData = Object.fromEntries(formData);
+  const driver_availability = formData.getAll("driver_availability");
+  const { instagram, facebook, site, documentId, ...driver } = rawData;
+  const payload = { ...driver, driver_availability };
 
-    // UPDATE DRIVER
-    const res = await fetch(`${API_URL}/drivers/${driverId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+  // UPDATE DRIVER
+  const res = await http(`drivers/${documentId}`, "PUT", payload);
 
-    if (!res.ok) {
-      throw new Error();
-    }
-
-    // UPDATE SOCIALS
-    if (instagram) {
-      await updateSocials(
-        "instagram",
-        instagram.toString(),
-        driverId.toString()
-      );
-    }
-    if (facebook) {
-      await updateSocials("facebook", facebook.toString(), driverId.toString());
-    }
-    if (site) {
-      await updateSocials("site", site.toString(), driverId.toString());
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.log("Error at updating driver: ", error);
-    return { success: false };
+  if (!res.ok) {
+    const data = await res.json();
+    return { success: false, message: getErrorMessage(data.error.status) };
   }
-}
 
-export async function getDriver(documentId: string) {
-  try {
-    const res = await fetch(`${API_URL}/drivers/${documentId}`, {
-      headers: { Authorization: `Bearer ${process.env.API_KEY}` },
-    });
-    const driver = await res.json();
-
-    if (!res.ok) {
-      return;
+  // UPDATE SOCIALS
+  if (instagram) {
+    const instaRes = await updateSocials(
+      "instagram",
+      instagram.toString(),
+      documentId.toString()
+    );
+    if (!instaRes?.success) {
+      return {
+        success: false,
+        message: "Houve um erro com suas redes sociais",
+      };
     }
-
-    return driver;
-  } catch (error) {
-    console.log("Error at getDriver", error);
   }
+  if (facebook) {
+    const faceRes = await updateSocials(
+      "facebook",
+      facebook.toString(),
+      documentId.toString()
+    );
+    if (!faceRes?.success) {
+      return {
+        success: false,
+        message: "Houve um erro com suas redes sociais",
+      };
+    }
+  }
+  if (site) {
+    const siteRes = await updateSocials(
+      "site",
+      site.toString(),
+      documentId.toString()
+    );
+    if (!siteRes?.success) {
+      return {
+        success: false,
+        message: "Houve um erro com suas redes sociais",
+      };
+    }
+  }
+
+  const updatedDriver = await res.json();
+
+  return {
+    success: true,
+    driverId: updatedDriver.data.id,
+    message: "Atualizado com sucesso",
+  };
 }

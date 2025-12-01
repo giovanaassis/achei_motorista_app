@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_URL } from "../axios/config";
 
-export async function http(url: string, method: string, body?: string) {
+export async function http(url: string, method: string, body?: any) {
   const res = await fetch(`${API_URL}/${url}`, {
     method: method,
     headers: {

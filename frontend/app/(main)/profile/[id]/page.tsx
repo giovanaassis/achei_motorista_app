@@ -1,10 +1,12 @@
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-
-import { API_URL } from "@/app/axios/config";
 import { DriverType } from "@/@types/driver";
 import WhatsappButton from "../../_components/WhatsappButton";
 import DriverInfo from "../../_components/DriverInfo";
+import { http } from "@/app/api/http";
+import { getErrorMessage } from "@/lib/getErrorMessage";
+import { cookies } from "next/headers";
+import { API_URL } from "@/app/axios/config";
 
 export default async function ProfilePage({
   params,
@@ -13,12 +15,38 @@ export default async function ProfilePage({
 }) {
   const { id } = await params;
 
-  const res = await fetch(
-    `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_socials`
+  const res = await http(
+    `drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_socials`,
+    "GET"
   );
+
+  if (!res.ok) {
+    const data = await res.json();
+    return <span>{getErrorMessage(data.error.status)}</span>;
+  }
 
   const data = await res.json();
   const driver: DriverType = data.data[0];
+
+  // CHECK IF IT IS THE AUTHENTICATED USER
+  let isOwner: boolean = false;
+  const token = (await cookies()).get("token")?.value;
+  const res2 = await fetch(`${API_URL}/users/me`, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+
+  if (!res2.ok) {
+    const data = await res2.json();
+    return <span>{getErrorMessage(data.error.status)}</span>;
+  }
+
+  const data2 = await res2.json();
+  const userAuthenticated = data2;
+
+  if (driver.user.id === userAuthenticated?.id) {
+    isOwner = true;
+  }
 
   const facebook = driver?.driver_socials?.find(
     (s) => s.social === "facebook"
@@ -35,7 +63,7 @@ export default async function ProfilePage({
   return (
     <section className="flex flex-col items-center justify-center py-10 text-2xl text-black-primary lg:flex-row lg:justify-around lg:items-start">
       {/* DRIVER INFO */}
-      <DriverInfo driver={driver} />
+      <DriverInfo driver={driver} isOwner={isOwner} />
 
       {/* DRIVER CONTACT */}
       <div className="flex flex-col items-center mt-15 lg:items-start lg:mt-0">

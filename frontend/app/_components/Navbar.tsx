@@ -19,6 +19,28 @@ function Navbar({ userLogged }: { userLogged: boolean }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const menuLinks = () => {
+    if (driver?.id)
+      return (
+        <Link href={`/profile/${driver.id}`}>
+          <button>Ver perfil</button>
+        </Link>
+      );
+
+    if (userLogged)
+      return (
+        <Link href="/edit-profile">
+          <button>Termine seu cadastro</button>
+        </Link>
+      );
+
+    return (
+      <Link href="/signup">
+        <button>Cadastre-se como motorista</button>
+      </Link>
+    );
+  };
+
   return (
     <nav
       className={`flex items-center justify-between py-5 px-10 fixed w-full top-0 bg-white z-50 ${
@@ -36,15 +58,7 @@ function Navbar({ userLogged }: { userLogged: boolean }) {
           </span>
         </Link>
 
-        {userLogged ? (
-          <Link href={`/profile/${driver?.id}`}>
-            <button>Ver perfil</button>
-          </Link>
-        ) : (
-          <Link href={"/signup"}>
-            <button>cadastre-se como motorista</button>
-          </Link>
-        )}
+        {menuLinks()}
       </div>
 
       {/* MENU MOBILE */}
@@ -60,15 +74,7 @@ function Navbar({ userLogged }: { userLogged: boolean }) {
           <Link href={`/search`}>
             <button>encontrar motoristas</button>
           </Link>
-          {userLogged ? (
-            <Link href={`/profile/${driver?.id}`}>
-              <button>Ver perfil</button>
-            </Link>
-          ) : (
-            <Link href={"/signup"}>
-              <button>cadastre-se como motorista</button>
-            </Link>
-          )}
+          {menuLinks()}
         </div>
       )}
     </nav>

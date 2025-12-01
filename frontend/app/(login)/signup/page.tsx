@@ -1,14 +1,21 @@
+"use client";
+
 import SignUpForm from "@/app/_components/SignUpForm";
 import { signup } from "@/app/_actions/auth";
 import Link from "next/link";
+import { useActionState } from "react";
+
+const initialState = { message: "" };
 
 export default function SignUpPage() {
+  const [state, formAction, pending] = useActionState(signup, initialState);
+
   return (
     <div className="flex flex-col items-center justify-center">
       {/* SIGNUP FORM */}
       <h1 className="text-4xl">Crie uma conta.</h1>
-      <form className="loginForm" action={signup}>
-        <SignUpForm />
+      <form className="loginForm" action={formAction}>
+        <SignUpForm pending={pending} />
 
         <p>
           Já tem uma conta?{" "}
@@ -16,6 +23,7 @@ export default function SignUpPage() {
             <span className="underline cursor-pointer">Faça login</span>
           </Link>
         </p>
+        {state?.message && <p>{state.message}</p>}
       </form>
     </div>
   );

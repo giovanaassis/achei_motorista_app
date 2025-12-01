@@ -1,4 +1,4 @@
-function SignUpForm() {
+function SignUpForm({ pending }: { pending: boolean }) {
   return (
     <>
       <input
@@ -26,7 +26,7 @@ function SignUpForm() {
         autoComplete="off"
       />
 
-      <button className="w-50 -mb-4" type="submit">
+      <button className="w-50 -mb-4" type="submit" disabled={pending}>
         criar conta
       </button>
     </>

@@ -10,8 +10,14 @@ type DriverContextType = {
 
 const DriverContext = createContext<DriverContextType | undefined>(undefined);
 
-export const DriverProvider = ({ children }: { children: ReactNode }) => {
-  const [driver, setDriver] = useState<DriverType | null>(null);
+export const DriverProvider = ({
+  children,
+  initialDriver,
+}: {
+  children: ReactNode;
+  initialDriver: DriverType | null;
+}) => {
+  const [driver, setDriver] = useState<DriverType | null>(initialDriver);
 
   const update = (value: DriverType) => {
     setDriver(value);

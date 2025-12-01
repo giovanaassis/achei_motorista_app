@@ -2,34 +2,55 @@
 
 import { DriverType } from "@/@types/driver";
 import ContactForm from "@/app/(main)/_components/ContactForm";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import PersonalForm from "./PersonalForm";
 import VehicleForm from "./VehicleForm";
+import FeedbackMessage from "./FeedbackMessage";
+import { useDriverContext } from "@/app/context/DriverContext";
+
+interface EditProfileFormProps {
+  driver?: DriverType;
+  isUpdating: boolean;
+  handleSubmitAction: (
+    data: FormData
+  ) => Promise<{ success: boolean; message: string; driver?: DriverType }>;
+}
 
 function EditProfileForm({
   driver,
   isUpdating,
   handleSubmitAction,
-}: {
-  driver?: DriverType;
-  isUpdating: boolean;
-  handleSubmitAction: (data: FormData) => void;
-}) {
+}: EditProfileFormProps) {
   const [isPending, startTransition] = useTransition();
+  const [isSuccess, setIsSuccess] = useState<boolean>();
+  const [message, setMessage] = useState<string>("");
+  const { update } = useDriverContext();
 
   return (
     <form
       className="flex justify-between flex-col md:flex-row"
-      action={(formData) => startTransition(() => handleSubmitAction(formData))}
+      action={(formData) =>
+        startTransition(async () => {
+          const result = await handleSubmitAction(formData);
+          setIsSuccess(result.success);
+          setMessage(result.message);
+          if (result.driver) {
+            update(result.driver);
+          }
+        })
+      }
     >
       {/* LEFT SIDE */}
       <div className="flex-1">
+        {isSuccess !== undefined && (
+          <FeedbackMessage isSuccess={isSuccess} message={message} />
+        )}
         <PersonalForm driver={driver} />
         <ContactForm driver={driver} />
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex-1">
+      <div className="flex-1 mt-5">
         <VehicleForm driver={driver} />
         <div className="flex gap-5">
           <button type="submit" className="mt-10 text-2xl">
