@@ -2,7 +2,7 @@ import { DriverType } from "@/@types/driver";
 import { API_URL } from "@/app/axios/config";
 import { verifySession } from "@/lib/session";
 import EditProfileForm from "../_components/EditProfileForm";
-import { createDriver, updateDriver } from "@/app/_actions/driverActions";
+import { createDriver, updateDriver } from "@/app/_actions/driver";
 import { http } from "@/app/api/http";
 
 export default async function EditProfilePage() {
