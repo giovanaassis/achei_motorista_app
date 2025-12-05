@@ -31,21 +31,22 @@ export default async function ProfilePage({
   // CHECK IF IT IS THE AUTHENTICATED USER
   let isOwner: boolean = false;
   const token = (await cookies()).get("token")?.value;
-  const res2 = await fetch(`${API_URL}/users/me`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  });
+  if (token) {
+    const res2 = await fetch(`${API_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
 
-  if (!res2.ok) {
-    const data = await res2.json();
-    return <span>{getErrorMessage(data.error.status)}</span>;
-  }
+    if (!res2.ok) {
+      const data = await res2.json();
+      return <span>{getErrorMessage(data.error.status)}</span>;
+    }
 
-  const data2 = await res2.json();
-  const userAuthenticated = data2;
-
-  if (driver.user.id === userAuthenticated?.id) {
-    isOwner = true;
+    const data2 = await res2.json();
+    const userAuthenticated = data2;
+    if (driver.user.id === userAuthenticated?.id) {
+      isOwner = true;
+    }
   }
 
   const facebook = driver?.driver_socials?.find(
