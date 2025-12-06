@@ -21,8 +21,7 @@ export default async function ProfilePage({
   );
 
   if (!res.ok) {
-    const data = await res.json();
-    return <span>{getErrorMessage(data.error.status)}</span>;
+    return <span>{getErrorMessage(res.status)}</span>;
   }
 
   const data = await res.json();
@@ -38,8 +37,7 @@ export default async function ProfilePage({
     });
 
     if (!res2.ok) {
-      const data = await res2.json();
-      return <span>{getErrorMessage(data.error.status)}</span>;
+      return <span>{getErrorMessage(res2.status)}</span>;
     }
 
     const data2 = await res2.json();

@@ -14,8 +14,7 @@ export async function createDriver(formData: FormData) {
   // CREATE DRIVER
   const res = await http("drivers", "POST", payload);
   if (!res.ok) {
-    const data = await res.json();
-    return { success: false, message: getErrorMessage(data.error.status) };
+    return { success: false, message: getErrorMessage(res.status) };
   }
 
   const createdDriver = await res.json();
@@ -69,8 +68,7 @@ export async function updateDriver(formData: FormData) {
   const res = await http(`drivers/${documentId}`, "PUT", payload);
 
   if (!res.ok) {
-    const data = await res.json();
-    return { success: false, message: getErrorMessage(data.error.status) };
+    return { success: false, message: getErrorMessage(res.status) };
   }
 
   // UPDATE SOCIALS

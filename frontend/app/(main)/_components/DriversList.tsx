@@ -7,8 +7,7 @@ async function DriversList({ query }: { query: string }) {
   const res = await http(`drivers?populate[user][fields]=name&${query}`, "GET");
 
   if (!res.ok) {
-    const data = await res.json();
-    return <span>{getErrorMessage(data.error.status)}</span>;
+    return <span>{getErrorMessage(res.status)}</span>;
   }
 
   const data = await res.json();

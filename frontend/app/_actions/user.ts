@@ -42,6 +42,7 @@ export async function updateUser(userId: number, formData: FormData) {
     });
 
     if (!res2.ok) {
+    // REFACTOR THE ERRORS MESSAGES
       return { success: false, message: getErrorMessage(res2.status) };
     }
   }

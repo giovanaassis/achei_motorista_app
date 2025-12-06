@@ -24,8 +24,7 @@ export async function signup(prevState: any, formData: FormData) {
     cache: "no-store",
   });
   if (!res.ok) {
-    const data = await res.json();
-    return { message: getErrorMessage(data.error.status) };
+    return { message: getErrorMessage(res.status) };
   }
 
   const result = await res.json();
@@ -42,8 +41,7 @@ export async function signup(prevState: any, formData: FormData) {
   });
 
   if (!res2.ok) {
-    const data = await res.json();
-    return { message: getErrorMessage(data.error.status) };
+    return { message: getErrorMessage(res2.status) };
   }
 
   // SAVE TOKEN ON COOKIES
@@ -77,9 +75,7 @@ export async function signin(prevState: any, formData: FormData) {
   });
 
   if (!res.ok) {
-    const data = await res.json();
-    console.log("error", data);
-    return { message: getErrorMessage(data.error.status) };
+    return { message: getErrorMessage(res.status) };
   }
 
   const data = await res.json();
@@ -91,8 +87,7 @@ export async function signin(prevState: any, formData: FormData) {
     "GET"
   );
   if (!res2.ok) {
-    const data = await res2.json();
-    return { message: getErrorMessage(data.error.status) };
+    return { message: getErrorMessage(res2.status) };
   }
 
   // SAVE TOKEN ON COOKIES
