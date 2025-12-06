@@ -42,8 +42,6 @@ function EditAccountForm({ user, handleSubmitAction }: EditAccountFormProps) {
         defaultValue={user.email}
       />
 
-      {/* STILL NEED TO VERIFY AND UPDATE THE PASSWORD */}
-
       <input
         type="password"
         name="password"

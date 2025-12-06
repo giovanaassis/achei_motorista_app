@@ -1,18 +1,25 @@
 "use client";
 
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function QuantityInput({ seats }: { seats?: number }) {
-  const [numberSeats, setNumberSeats] = useState<number>(seats || 2);
+interface QuantityInputProps {
+  seats?: number;
+  onChangeSeats?: (value: number) => void;
+}
+
+function QuantityInput({ seats, onChangeSeats }: QuantityInputProps) {
+  const [numberSeats, setNumberSeats] = useState<number>(seats ?? 2);
+
+  useEffect(() => {
+    setNumberSeats(seats ?? 2);
+  }, [seats]);
 
   const handleSeats = (isIncreasing: boolean) => {
-    if (!isIncreasing && numberSeats > 2) {
-      setNumberSeats((prev) => prev - 1);
-    }
-    if (isIncreasing) {
-      setNumberSeats((prev) => prev + 1);
-    }
+    const next = isIncreasing ? numberSeats + 1 : Math.max(2, numberSeats - 1);
+
+    setNumberSeats(next);
+    onChangeSeats?.(next);
   };
 
   return (

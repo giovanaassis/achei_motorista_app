@@ -131,7 +131,10 @@ function SearchFilters({
 
         <div className="self-start pt-1">
           <p>Quantidade de assentos:</p>
-          <QuantityInput seats={driver?.vehicle_seats} />
+          <QuantityInput
+            seats={driver?.vehicle_seats}
+            onChangeSeats={(value) => onChangeDriver("vehicle_seats", value)}
+          />
         </div>
 
         {/* SUBMIT BUTTON FOR MOBILE */}

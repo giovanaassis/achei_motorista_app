@@ -47,7 +47,7 @@ function Navbar({ userLogged }: { userLogged: boolean }) {
         isScrolled ? "shadow-md" : ""
       }`}
     >
-      <div className="text-4xl md:text-7xl text-black-primary">
+      <div className="text-4xl md:text-7xl text-black-primary select-none">
         AcheiMotorista
       </div>
 
