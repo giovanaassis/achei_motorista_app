@@ -58,11 +58,13 @@ export default async function EditProfilePage() {
       <p className="text-xl mb-5">
         Edite as informações do seu veículo e do seu perfil aqui.
       </p>
-      <EditProfileForm
-        driver={driver}
-        isUpdating={isUpdating}
-        handleSubmitAction={handleSubmit}
-      />
+      <section>
+        <EditProfileForm
+          driver={driver}
+          isUpdating={isUpdating}
+          handleSubmitAction={handleSubmit}
+        />
+      </section>
     </div>
   );
 }

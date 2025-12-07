@@ -24,7 +24,18 @@ function EditProfileForm({
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setIsSuccess] = useState<boolean>();
   const [message, setMessage] = useState<string>("");
-  const { update } = useDriverContext();
+  const { update, clear } = useDriverContext();
+
+  const handleLogout = async () => {
+    const res = await fetch("/api/auth/logout", { method: "POST" });
+    const data = await res.json();
+    if (data.success) {
+      clear();
+      window.location.href = "/search";
+    } else {
+      alert(data.message);
+    }
+  };
 
   return (
     <form
@@ -64,8 +75,8 @@ function EditProfileForm({
           </button>
           <button
             type="button"
-            className="bg-white text-black border-2 mt-10 text-xl hover:bg-black-primary hover:text-white transition-colors duration-100"
-            // onClick={handleLogout}
+            className="bg-white text-black-primary border-2  mt-10 text-xl hover:bg-black-primary hover:text-white transition-colors duration-150"
+            onClick={handleLogout}
           >
             sair da conta
           </button>
