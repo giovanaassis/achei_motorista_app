@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { API_URL } from "../axios/config";
 import { getErrorMessage } from "@/lib/getErrorMessage";
+import { http } from "../api/http";
 
 export async function updateUser(userId: number, formData: FormData) {
   const rawData = Object.fromEntries(formData);
@@ -47,4 +48,20 @@ export async function updateUser(userId: number, formData: FormData) {
   }
 
   return { success: true };
+}
+
+export async function deleteUser(formData: FormData) {
+  const userId = formData.get("userId") as string;
+  const driverDocumentId = formData.get("driverDocumentId") as string;
+
+  const res = await http(`users/${userId}`, "DELETE");
+  const res2 = await http(`drivers/${driverDocumentId}`, "DELETE");
+  if (!res.ok || !res2.ok) {
+    return { success: false, executed: true };
+  }
+
+  const cookiesStore = await cookies();
+  cookiesStore.delete("token");
+
+  return { success: true, executed: true };
 }

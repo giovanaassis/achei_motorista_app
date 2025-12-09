@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { DriverType } from "@/@types/driver";
+import DeleteAccountForm from "./DeleteAccountForm";
 
-function DriverInfo({
+async function DriverInfo({
   driver,
   isOwner,
 }: {
@@ -32,12 +33,15 @@ function DriverInfo({
                 editar perfil
               </button>
             </Link>
-
             <Link href={"/edit-account"}>
               <button className="bg-blue-700 hover:bg-blue-800 text-lg w-40">
                 editar conta
               </button>
             </Link>
+            <DeleteAccountForm
+              userId={driver.user.id}
+              driverDocumentId={driver.documentId}
+            />
           </div>
         ) : (
           <p className="text-gray-400 italic">Perfil público</p>
