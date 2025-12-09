@@ -1,78 +1,68 @@
-"use client";
-
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-import DriverInfo from "@/app/_components/DriverInfo";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_URL } from "@/app/axios/config";
-import { getMe } from "@/app/services/userService";
 import { DriverType } from "@/@types/driver";
+import WhatsappButton from "../../_components/WhatsappButton";
+import DriverInfo from "../../_components/DriverInfo";
+import { http } from "@/app/api/http";
+import { getErrorMessage } from "@/lib/getErrorMessage";
+import { cookies } from "next/headers";
+import { API_URL } from "@/app/axios/config";
 
-export default function ProfilePage() {
-  const { id } = useParams();
-  const [selectedDriver, setSelectedDriver] = useState<DriverType>();
-  const [isOwner, setIsOwner] = useState<boolean>(false);
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ id: number }>;
+}) {
+  const { id } = await params;
 
-  const facebook = selectedDriver?.driver_socials?.find(
+  const res = await http(
+    `drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_socials`,
+    "GET"
+  );
+
+  if (!res.ok) {
+    return <span>{getErrorMessage(res.status)}</span>;
+  }
+
+  const data = await res.json();
+  const driver: DriverType = data.data[0];
+
+  // CHECK IF IT IS THE AUTHENTICATED USER
+  let isOwner: boolean = false;
+  const token = (await cookies()).get("token")?.value;
+  if (token) {
+    const res2 = await fetch(`${API_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+
+    if (!res2.ok) {
+      return <span>{getErrorMessage(res2.status)}</span>;
+    }
+
+    const data2 = await res2.json();
+    const userAuthenticated = data2;
+    if (driver.user.id === userAuthenticated?.id) {
+      isOwner = true;
+    }
+  }
+
+  const facebook = driver?.driver_socials?.find(
     (s) => s.social === "facebook"
   )?.url;
-  const instagram = selectedDriver?.driver_socials?.find(
+  const instagram = driver?.driver_socials?.find(
     (s) => s.social === "instagram"
   )?.url;
-  const site = selectedDriver?.driver_socials?.find(
-    (s) => s.social === "site"
-  )?.url;
+  const site = driver?.driver_socials?.find((s) => s.social === "site")?.url;
 
-  const handleWhatsappMessage = () => {
-    if (!selectedDriver?.phone_number) {
-      alert("Esse motorista não tem contato de telefone.");
-      return;
-    }
-    const message =
-      "Olá, tudo bem? Vim do site AcheiMotorista e gostaria de agendar uma viagem particular!";
-    const url = `https://wa.me/55${
-      selectedDriver?.phone_number
-    }?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener");
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        let userId;
-        if (token) {
-          const data = await getMe();
-          userId = data.id;
-        }
-
-        const res = await axios.get(
-          `${API_URL}/drivers?filters[id][$eq]=${id}&populate[0]=user&populate[1]=driver_availability&populate[2]=driver_socials`
-        );
-
-        if (res.data.data.length > 0) {
-          setSelectedDriver(res.data.data[0]);
-          const driverId = res.data.data[0]?.user?.id;
-          if (driverId && driverId === userId) {
-            setIsOwner(true);
-          }
-        } else {
-          alert("Erro ao buscar motorista!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
+  if (!driver) {
+    return <p>Buscando dados do motorista.</p>;
+  }
 
   return (
     <section className="flex flex-col items-center justify-center py-10 text-2xl text-black-primary lg:flex-row lg:justify-around lg:items-start">
       {/* DRIVER INFO */}
-      <DriverInfo driver={selectedDriver} isOwner={isOwner} />
+      <DriverInfo driver={driver} isOwner={isOwner} />
 
       {/* DRIVER CONTACT */}
       <div className="flex flex-col items-center mt-15 lg:items-start lg:mt-0">
@@ -92,7 +82,7 @@ export default function ProfilePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {site ? `Site de ${selectedDriver.user.name}` : "Não tem site"}
+              {site ? `Site de ${driver.user.name}` : "Não tem site"}
             </a>
           </div>
           <div className="flex gap-5 items-center">
@@ -107,9 +97,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <button className="self-center" onClick={handleWhatsappMessage}>
-          agenda sua viagem agora
-        </button>
+        <WhatsappButton phone_number={driver.phone_number} />
       </div>
     </section>
   );

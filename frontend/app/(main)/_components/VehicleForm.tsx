@@ -2,11 +2,9 @@
 
 import { FaCarSide } from "react-icons/fa";
 import { FaMotorcycle } from "react-icons/fa";
-import QuantityInput from "./QuantityInput";
+import QuantityInput from "@/app/_components/QuantityInput";
 import { DriverType } from "@/@types/driver";
-import { ChangeEvent } from "react";
-import React from "react";
-import { AvailabilityType } from "@/@types/availability";
+import { ChangeEvent, useState } from "react";
 
 const daysWeek = [
   "segunda-feira",
@@ -18,32 +16,29 @@ const daysWeek = [
   "domingo",
 ];
 
-interface VehicleFormProps {
-  driver: DriverType | null;
-  onChangeDriver: (
-    name: keyof DriverType,
-    value: string | AvailabilityType[] | number
-  ) => void;
-}
-
-function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
-  const availability: AvailabilityType[] = driver?.driver_availability || [];
+function VehicleForm({ driver }: { driver?: DriverType }) {
+  const [availability, setAvailability] = useState<string[]>(
+    driver?.driver_availability || []
+  );
+  const [vehicle, setVehicle] = useState<string | undefined>(
+    driver?.vehicle_type
+  );
 
   const handleAvailabilityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    let next: AvailabilityType[];
+    let next: string[];
 
     if (checked) {
-      if (!availability.some((a) => a.name === value)) {
-        next = [...availability, { name: value }];
+      if (!availability.some((a) => a === value)) {
+        next = [...availability, value];
       } else {
         next = availability;
       }
     } else {
-      next = availability.filter((a) => a.name !== value);
+      next = availability.filter((a) => a !== value);
     }
 
-    onChangeDriver("driver_availability", next);
+    setAvailability(next);
   };
 
   return (
@@ -53,11 +48,12 @@ function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
         <label htmlFor="car">
           <input
             type="radio"
-            name="driver-vehicle"
+            name="vehicle_type"
             id="car"
             className="peer hidden"
-            checked={driver?.vehicle_type === "carro"}
-            onChange={() => onChangeDriver("vehicle_type", "carro")}
+            checked={vehicle === "carro"}
+            value="carro"
+            onChange={(e) => setVehicle(e.target.value)}
           />
           <div className="vehicle-input">
             <FaCarSide />
@@ -68,11 +64,12 @@ function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
         <label htmlFor="motocycle">
           <input
             type="radio"
-            name="driver-vehicle"
+            name="vehicle_type"
             id="motocycle"
             className="peer hidden"
-            checked={driver?.vehicle_type === "moto"}
-            onChange={() => onChangeDriver("vehicle_type", "moto")}
+            checked={vehicle === "moto"}
+            value="moto"
+            onChange={(e) => setVehicle(e.target.value)}
           />
           <div className="vehicle-input">
             <FaMotorcycle />
@@ -81,13 +78,10 @@ function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
         </label>
       </div>
 
-      {driver?.vehicle_type === "carro" && (
+      {vehicle === "carro" && (
         <div className="self-start mb-5">
           <p className="text-2xl">Quantidade de assentos no carro</p>
-          <QuantityInput
-            seats={driver?.vehicle_seats}
-            onChangeDriver={onChangeDriver}
-          />
+          <QuantityInput seats={driver?.vehicle_seats} />
         </div>
       )}
 
@@ -97,12 +91,12 @@ function VehicleForm({ driver, onChangeDriver }: VehicleFormProps) {
           <label htmlFor={day} key={day}>
             <input
               type="checkbox"
-              name="driver-availability"
+              name="driver_availability"
               id={day}
               className="peer hidden"
               value={day}
               onChange={handleAvailabilityChange}
-              checked={availability.some((a) => a.name === day)}
+              checked={availability.some((a) => a === day)}
             />
             <span className="availability-input">{day}</span>
           </label>

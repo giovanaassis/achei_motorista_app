@@ -5,22 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDriverContext } from "../context/DriverContext";
 
-function Navbar() {
+function Navbar({ userLogged }: { userLogged: boolean }) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [userLogged, setUserLogged] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const { driver } = useDriverContext();
-
-  useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem("token");
-      setUserLogged(!!token);
-    };
-
-    checkToken();
-    window.addEventListener("storage", checkToken);
-    return () => window.removeEventListener("storage", checkToken);
-  }, []);
 
   useEffect(() => {
     // TO ADD THE SHADOW WHEN SCROLL
@@ -28,7 +16,30 @@ function Navbar() {
       setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const menuLinks = () => {
+    if (driver?.id)
+      return (
+        <Link href={`/profile/${driver.id}`}>
+          <button>Ver perfil</button>
+        </Link>
+      );
+
+    if (userLogged)
+      return (
+        <Link href="/edit-profile">
+          <button>Termine seu cadastro</button>
+        </Link>
+      );
+
+    return (
+      <Link href="/signup">
+        <button>Cadastre-se como motorista</button>
+      </Link>
+    );
+  };
 
   return (
     <nav
@@ -36,7 +47,7 @@ function Navbar() {
         isScrolled ? "shadow-md" : ""
       }`}
     >
-      <div className="text-4xl md:text-7xl text-black-primary">
+      <div className="text-4xl md:text-7xl text-black-primary select-none">
         AcheiMotorista
       </div>
 
@@ -47,15 +58,7 @@ function Navbar() {
           </span>
         </Link>
 
-        {userLogged ? (
-          <Link href={`/profile/${driver?.id}`}>
-            <button>Ver perfil</button>
-          </Link>
-        ) : (
-          <Link href={"/signup"}>
-            <button>cadastre-se como motorista</button>
-          </Link>
-        )}
+        {menuLinks()}
       </div>
 
       {/* MENU MOBILE */}
@@ -71,15 +74,7 @@ function Navbar() {
           <Link href={`/search`}>
             <button>encontrar motoristas</button>
           </Link>
-          {userLogged ? (
-            <Link href={`/profile/${driver?.id}`}>
-              <button>Ver perfil</button>
-            </Link>
-          ) : (
-            <Link href={"/signup"}>
-              <button>cadastre-se como motorista</button>
-            </Link>
-          )}
+          {menuLinks()}
         </div>
       )}
     </nav>

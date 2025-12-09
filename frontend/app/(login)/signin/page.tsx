@@ -1,41 +1,31 @@
 "use client";
 
-import { UserType } from "@/@types/user";
+import { signin } from "@/app/_actions/auth";
 import SignInForm from "@/app/_components/SignInForm";
 import { useDriverContext } from "@/app/context/DriverContext";
-import { loginUser } from "@/app/services/userService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useActionState, useEffect } from "react";
+
+const initialState = { message: "", driver: undefined };
 
 export default function SignInPage() {
-  const [user, setUser] = useState<UserType | null>(null);
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const router = useRouter();
+  const [state, formAction, pending] = useActionState(signin, initialState);
   const { update } = useDriverContext();
+  const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-
-    const res = await loginUser(user, confirmPassword, update);
-    if (!res) {
-      alert("Algo deu errado! Tente novamente.");
-    } else {
-      router.push(`/edit-profile`);
+  useEffect(() => {
+    if (state.driver) {
+      update(state.driver);
+      router.push(`/profile/${state.driver.id}`);
     }
-  };
+  }, [router, state.driver, update]);
 
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl">Login.</h1>
-      <form className="loginForm" onSubmit={handleSubmit}>
-        <SignInForm
-          user={user}
-          onChangeUser={setUser}
-          confirmPassword={confirmPassword}
-          onConfirmPassword={setConfirmPassword}
-        />
+      <form className="loginForm" action={formAction}>
+        <SignInForm pending={pending} />
 
         <p>
           Não tem uma conta?{" "}
@@ -43,6 +33,7 @@ export default function SignInPage() {
             <span className="underline cursor-pointer">Cadastre-se</span>
           </Link>
         </p>
+        {state?.message && <p>{state.message}</p>}
       </form>
     </div>
   );

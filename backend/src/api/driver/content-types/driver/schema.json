@@ -49,10 +49,7 @@
       "min": 2
     },
     "driver_availability": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::calendar-day.calendar-day",
-      "mappedBy": "drivers"
+      "type": "json"
     },
     "driver_socials": {
       "type": "relation",

@@ -1,0 +1,67 @@
+"use server";
+
+import { cookies } from "next/headers";
+import { API_URL } from "../axios/config";
+import { getErrorMessage } from "@/lib/getErrorMessage";
+import { http } from "../api/http";
+
+export async function updateUser(userId: number, formData: FormData) {
+  const rawData = Object.fromEntries(formData);
+  const token = (await cookies()).get("token")?.value;
+
+  // UPDATE NAME AND EMAIL
+  const res = await fetch(`${API_URL}/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: rawData.name,
+      email: rawData.email,
+      username: rawData.email,
+    }),
+  });
+
+  if (!res.ok) {
+    return { success: false, message: getErrorMessage(res.status) };
+  }
+
+  // UPDATE PASSWORD
+  if (rawData.new_password) {
+    const res2 = await fetch(`${API_URL}/auth/change-password`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        currentPassword: rawData.password,
+        password: rawData.new_password,
+        passwordConfirmation: rawData.new_password,
+      }),
+    });
+
+    if (!res2.ok) {
+      return { success: false, message: getErrorMessage(res2.status) };
+    }
+  }
+
+  return { success: true };
+}
+
+export async function deleteUser(formData: FormData) {
+  const userId = formData.get("userId") as string;
+  const driverDocumentId = formData.get("driverDocumentId") as string;
+
+  const res = await http(`users/${userId}`, "DELETE");
+  const res2 = await http(`drivers/${driverDocumentId}`, "DELETE");
+  if (!res.ok || !res2.ok) {
+    return { success: false, executed: true };
+  }
+
+  const cookiesStore = await cookies();
+  cookiesStore.delete("token");
+
+  return { success: true, executed: true };
+}

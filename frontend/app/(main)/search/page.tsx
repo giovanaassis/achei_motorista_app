@@ -1,74 +1,26 @@
-"use client";
-
 import { DriverType } from "@/@types/driver";
-import { API_URL } from "@/app/axios/config";
-import DriverCard from "@/app/_components/DriverCard";
 import SearchFilters from "@/app/_components/SearchFilters";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
+import DriversList from "../_components/DriversList";
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [loadingMessage, setLoadingMessage] = useState<string>(
-    "Carregando motoristas..."
-  );
-  const [drivers, setDrivers] = useState<DriverType[] | undefined>();
-  const [filteredState, setFilteredState] = useState<string | undefined>();
-  const [filteredCity, setFilteredCity] = useState<string | undefined>();
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) {
+  const filters = Object.entries(await searchParams).map((params) => {
+    return { key: params[0] as keyof DriverType, value: params[1] };
+  });
+  const query = new URLSearchParams();
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (loading) {
-      setLoadingMessage("Carregando motoristas...");
+  if (filters.length > 0) {
+    filters.forEach(({ key, value }) => {
+      query.append(`filters[${key}][$eq]`, value);
+    });
+  }
 
-      timer = setTimeout(() => {
-        setLoadingMessage(
-          "Pode demorar um pouco ao iniciar. Aguarde alguns instantes..."
-        );
-      }, 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [loading]);
-
-  useEffect(() => {
-    const fetchDrivers = async () => {
-      setLoading(true);
-      const params = Object.fromEntries(searchParams.entries());
-
-      const query = new URLSearchParams();
-      if (params) {
-        Object.entries(params).forEach(([key, value]) => {
-          if (value !== "undefined" && value !== "") {
-            query.append(`filters[${key}][$eq]`, value);
-          }
-        });
-      }
-
-      try {
-        const res = await axios.get(
-          `${API_URL}/drivers?${query.toString()}&populate[user][fields]=name&populate=driver_availability`
-        );
-        setDrivers(res.data.data);
-
-        // GET STATE AND CITY NAME
-        const state = searchParams.get("state");
-        const city = searchParams.get("city");
-
-        if (state) setFilteredState(state);
-        else setFilteredState(undefined);
-        if (city && state) setFilteredCity(city);
-        else setFilteredCity(undefined);
-      } catch (error) {
-        console.log("Error at fetchDrivers: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDrivers();
-  }, [filteredCity, filteredState, searchParams]);
+  const filteredState = filters.find((filter) => filter.key === "state")?.value;
+  const filteredCity = filters.find((filter) => filter.key === "city")?.value;
 
   return (
     <section className="text-black-primary pl-10 py-10 w-[90%]">
@@ -84,15 +36,11 @@ export default function SearchPage() {
       <SearchFilters state={filteredState} city={filteredCity} />
 
       {/* DRIVERS SECTION */}
-      <div className="my-15 flex flex-col gap-10">
-        {loading && <p>{loadingMessage}</p>}
-        {!loading && drivers?.length === 0 && (
-          <p>Nenhum motorista encontrado.</p>
-        )}
-        {drivers?.map((driver) => (
-          <DriverCard key={driver.id} driver={driver} />
-        ))}
-      </div>
+      <Suspense
+        fallback={<div className="text-xl mt-10">Carregando motoristas...</div>}
+      >
+        <DriversList query={query.toString()} />
+      </Suspense>
     </section>
   );
 }

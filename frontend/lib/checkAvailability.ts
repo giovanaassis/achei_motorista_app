@@ -1,8 +1,7 @@
 import { DriverType } from "@/@types/driver";
 
-
 export const checkAvailability = (driver: DriverType) => {
-  const { driver_availability } = driver;
+  let { driver_availability } = driver;
   const days = [
     "domingo",
     "segunda-feira",
@@ -15,6 +14,9 @@ export const checkAvailability = (driver: DriverType) => {
   const today = days[new Date().getDay()];
 
   if (!driver_availability) return false;
+  if (typeof driver_availability === "string") {
+    driver_availability = [driver_availability];
+  }
 
-  return driver_availability.some((day) => today === day.name);
+  return driver_availability.some((day) => today === day);
 };
