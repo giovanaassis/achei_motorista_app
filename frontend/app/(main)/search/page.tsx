@@ -37,7 +37,12 @@ export default async function SearchPage({
 
       {/* DRIVERS SECTION */}
       <Suspense
-        fallback={<div className="text-xl mt-10">Carregando motoristas...</div>}
+        fallback={
+          <div className="text-xl mt-10">
+            Carregando motoristas. (Pode demorar um pouco ao iniciar. Aguarde
+            alguns instantes...)
+          </div>
+        }
       >
         <DriversList query={query.toString()} />
       </Suspense>
