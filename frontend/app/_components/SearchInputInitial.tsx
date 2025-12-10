@@ -1,12 +1,25 @@
 "use client";
 
-import Link from "next/link";
 import LocaleInput from "./LocaleInput";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function SearchInputInitial() {
   const [selectedState, setSelectedState] = useState<string>();
   const [selectedCity, setSelectedCity] = useState<string>();
+  const router = useRouter();
+
+  const handleQuery = () => {
+    const query = new URLSearchParams();
+    if (selectedState) {
+      query.append("state", selectedState);
+    }
+    if (selectedCity) {
+      query.append("city", selectedCity);
+    }
+
+    router.push(`/search?${query.toString()}`);
+  };
 
   return (
     <div className="flex items-center flex-col">
@@ -34,12 +47,9 @@ function SearchInputInitial() {
         </div>
       </div>
 
-      <Link
-        href={`/search?state=${selectedState || ""}&city=${selectedCity || ""}`}
-        className="h-0"
-      >
-        <button className="mt-60 md:mt-30">achar motoristas</button>
-      </Link>
+      <button className="mt-60 md:mt-30" onClick={handleQuery}>
+        achar motoristas
+      </button>
     </div>
   );
 }
