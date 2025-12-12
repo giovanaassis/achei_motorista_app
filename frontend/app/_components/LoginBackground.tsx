@@ -1,5 +1,5 @@
-import LoginImage from "@/public/login-bg.jpg"
-import Image from "next/image"
+import LoginImage from "@/public/login-bg.png";
+import Image from "next/image";
 
 function LoginBackground() {
   return (
@@ -13,7 +13,7 @@ function LoginBackground() {
         sizes="100vw, 60vw"
       />
     </div>
-  )
+  );
 }
 
-export default LoginBackground
+export default LoginBackground;
