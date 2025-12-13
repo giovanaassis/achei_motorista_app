@@ -2,7 +2,7 @@ import { Theme } from "@radix-ui/themes";
 import { DriverProvider } from "@/app/context/DriverContext";
 import "@/app/globals.css";
 import { Afacad } from "next/font/google";
-import { API_URL } from "./axios/config";
+import { API_URL } from "./config/env";
 import { verifySession } from "@/lib/session";
 import { DriverType } from "@/@types/driver";
 

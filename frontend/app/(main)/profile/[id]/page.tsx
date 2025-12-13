@@ -6,7 +6,7 @@ import DriverInfo from "../../_components/DriverInfo";
 import { http } from "@/app/api/http";
 import { getErrorMessage } from "@/lib/getErrorMessage";
 import { cookies } from "next/headers";
-import { API_URL } from "@/app/axios/config";
+import { API_URL } from "@/app/config/env";
 
 export default async function ProfilePage({
   params,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { API_URL } from "../axios/config";
+import { API_URL } from "../config/env";
 
 export async function http(url: string, method: string, body?: any) {
   const res = await fetch(`${API_URL}/${url}`, {

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { API_URL } from "../axios/config";
+import { API_URL } from "../config/env";
 import { getErrorMessage } from "@/lib/getErrorMessage";
 import { http } from "../api/http";
 
