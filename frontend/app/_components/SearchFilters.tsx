@@ -3,7 +3,7 @@
 import { SearchIcon } from "lucide-react";
 import QuantityInput from "./QuantityInput";
 import LocaleInput from "./LocaleInput";
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

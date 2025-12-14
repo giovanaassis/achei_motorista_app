@@ -3,7 +3,7 @@
 import { FaCarSide } from "react-icons/fa";
 import { FaMotorcycle } from "react-icons/fa";
 import QuantityInput from "@/app/_components/QuantityInput";
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 import { ChangeEvent, useState } from "react";
 
 const daysWeek = [

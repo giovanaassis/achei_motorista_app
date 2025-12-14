@@ -1,6 +1,6 @@
 "use server";
 
-import { SocialType } from "@/@types/social";
+import { SocialType } from "@/app/@types/social";
 import { createSocials, updateSocials } from "./social";
 import { http } from "../api/http";
 import { getErrorMessage } from "@/lib/getErrorMessage";

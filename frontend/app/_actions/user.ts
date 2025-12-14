@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { API_URL } from "../config/env";
 import { getErrorMessage } from "@/lib/getErrorMessage";
 import { http } from "../api/http";
-import { SocialType } from "@/@types/social";
+import { SocialType } from "@/app/@types/social";
 import { deleteSocials } from "./social";
 
 export async function updateUser(userId: number, formData: FormData) {

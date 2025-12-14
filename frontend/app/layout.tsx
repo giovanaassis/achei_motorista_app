@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import { Afacad } from "next/font/google";
 import { API_URL } from "./config/env";
 import { verifySession } from "@/lib/session";
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 
 const afacad = Afacad({
   weight: ["500", "600", "700"],

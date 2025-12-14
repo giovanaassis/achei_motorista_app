@@ -6,7 +6,7 @@ import { API_URL } from "../config/env";
 import { redirect } from "next/navigation";
 import { getErrorMessage } from "@/lib/getErrorMessage";
 import { http } from "../api/http";
-import { UserType } from "@/@types/user";
+import { UserType } from "@/app/@types/user";
 
 export async function signup(prevState: any, formData: FormData) {
   const rawData = Object.fromEntries(formData);

@@ -1,24 +1,24 @@
 "use client";
 
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
 import { IoIosGlobe } from "react-icons/io";
 
-type SocialType = {
+type DriverSocialType = {
   instagram?: string;
   facebook?: string;
   site?: string;
 };
 
 function ContactForm({ driver }: { driver?: DriverType }) {
-  const [socials, setSocials] = useState<SocialType>();
+  const [socials, setSocials] = useState<DriverSocialType>();
 
   useEffect(() => {
     if (!driver?.driver_socials) return;
-    
+
     setSocials({
       instagram:
         driver.driver_socials.find((s) => s.social === "instagram")?.url || "",

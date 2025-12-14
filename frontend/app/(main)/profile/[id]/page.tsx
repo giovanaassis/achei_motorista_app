@@ -1,6 +1,6 @@
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 import WhatsappButton from "../../_components/WhatsappButton";
 import DriverInfo from "../../_components/DriverInfo";
 import { http } from "@/app/api/http";

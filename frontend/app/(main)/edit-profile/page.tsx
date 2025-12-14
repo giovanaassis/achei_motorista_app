@@ -1,4 +1,4 @@
-import { DriverType } from "@/@types/driver";
+import { DriverType } from "@/app/@types/driver";
 import { API_URL } from "@/app/config/env";
 import { verifySession } from "@/lib/session";
 import EditProfileForm from "../_components/EditProfileForm";
