@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { API_URL } from "../config/env";
-import { getErrorMessage } from "@/lib/getErrorMessage";
+import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 import { http } from "../api/http";
 import { SocialType } from "@/app/@types/social";
 import { deleteSocials } from "./social";

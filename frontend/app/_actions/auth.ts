@@ -4,7 +4,7 @@
 import { cookies } from "next/headers";
 import { API_URL } from "../config/env";
 import { redirect } from "next/navigation";
-import { getErrorMessage } from "@/lib/getErrorMessage";
+import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 import { http } from "../api/http";
 import { UserType } from "@/app/@types/user";
 

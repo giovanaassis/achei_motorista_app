@@ -1,6 +1,6 @@
 import { updateUser } from "@/app/_actions/user";
 import EditAccountForm from "@/app/_components/EditAccountForm";
-import { verifySession } from "@/lib/session";
+import { verifySession } from "@/app/_utils/session";
 
 export default async function EditAccountPage() {
   const session = await verifySession();

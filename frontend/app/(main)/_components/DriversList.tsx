@@ -1,7 +1,7 @@
 import { DriverType } from "@/app/@types/driver";
 import DriverCard from "@/app/(main)/_components/DriverCard";
 import { http } from "@/app/api/http";
-import { getErrorMessage } from "@/lib/getErrorMessage";
+import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 
 async function DriversList({ query }: { query: string }) {
   const res = await http(`drivers?populate[user][fields]=name&${query}`, "GET");

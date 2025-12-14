@@ -4,7 +4,7 @@ import { DriverType } from "@/app/@types/driver";
 import WhatsappButton from "../../_components/WhatsappButton";
 import DriverInfo from "../../_components/DriverInfo";
 import { http } from "@/app/api/http";
-import { getErrorMessage } from "@/lib/getErrorMessage";
+import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 import { cookies } from "next/headers";
 import { API_URL } from "@/app/config/env";
 
