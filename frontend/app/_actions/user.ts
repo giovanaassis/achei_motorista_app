@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { API_URL } from "../config/env";
 import { getErrorMessage } from "@/lib/getErrorMessage";
 import { http } from "../api/http";
+import { SocialType } from "@/@types/social";
+import { deleteSocials } from "./social";
 
 export async function updateUser(userId: number, formData: FormData) {
   const rawData = Object.fromEntries(formData);
@@ -50,7 +52,7 @@ export async function updateUser(userId: number, formData: FormData) {
   return { success: true };
 }
 
-export async function deleteUser(formData: FormData) {
+export async function deleteUser(formData: FormData, socials?: SocialType[]) {
   const userId = formData.get("userId") as string;
   const driverDocumentId = formData.get("driverDocumentId") as string;
 
@@ -58,6 +60,11 @@ export async function deleteUser(formData: FormData) {
   const res2 = await http(`drivers/${driverDocumentId}`, "DELETE");
   if (!res.ok || !res2.ok) {
     return { success: false, executed: true };
+  }
+
+  // DELETE SOCIALS FROM USER
+  if (socials && socials?.length > 0) {
+    socials.forEach(async (s) => await deleteSocials(s.documentId));
   }
 
   const cookiesStore = await cookies();

@@ -72,3 +72,9 @@ export async function createSocials(socials: SocialType[]) {
     throw error;
   }
 }
+
+export async function deleteSocials(documentId?: string) {
+  const res = await http(`driver-socials/${documentId}`, "DELETE");
+
+  return res;
+}

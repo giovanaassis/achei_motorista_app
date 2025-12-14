@@ -12,13 +12,14 @@ function DeleteAccountForm({
   driverDocumentId?: string;
 }) {
   const [isPending, startTransition] = useTransition();
-  const { clear } = useDriverContext();
+  const { clear, driver } = useDriverContext();
 
   return (
     <form
       action={(formData) =>
         startTransition(async () => {
-          const result = await deleteUser(formData);
+          const socials = driver?.driver_socials;
+          const result = await deleteUser(formData, socials);
           if (result.success) {
             clear();
             window.location.href = "/search";
