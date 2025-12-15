@@ -1,6 +1,6 @@
 "use client";
 
-import SignUpForm from "@/app/_components/SignUpForm";
+import SignUpForm from "@/app/(login)/_components/SignUpForm";
 import { signup } from "@/app/_actions/auth";
 import Link from "next/link";
 import { useActionState } from "react";

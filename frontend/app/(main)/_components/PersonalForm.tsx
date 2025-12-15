@@ -1,6 +1,6 @@
 "use client";
 
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import { useState } from "react";
 import LocaleInput from "@/app/_components/LocaleInput";
 

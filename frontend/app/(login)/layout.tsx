@@ -1,5 +1,5 @@
-import GoBackButton from "../_components/GoBackButton";
-import LoginBackground from "../_components/LoginBackground";
+import GoBackButton from "./_components/GoBackButton";
+import LoginBackground from "./_components/LoginBackground";
 
 export default function LoginLayout({
   children,

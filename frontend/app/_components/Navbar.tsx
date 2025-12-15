@@ -3,7 +3,7 @@
 import { MenuIcon, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useDriverContext } from "../context/DriverContext";
+import { useDriverContext } from "../_context/DriverContext";
 
 function Navbar({ userLogged }: { userLogged: boolean }) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);

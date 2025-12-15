@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import DeleteAccountForm from "./DeleteAccountForm";
 
 async function DriverInfo({

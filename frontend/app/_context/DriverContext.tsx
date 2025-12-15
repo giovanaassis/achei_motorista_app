@@ -1,6 +1,6 @@
 "use client";
 
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type DriverContextType = {

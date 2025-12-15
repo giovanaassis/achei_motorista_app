@@ -1,12 +1,12 @@
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io";
 import { CgWebsite } from "react-icons/cg";
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import WhatsappButton from "../../_components/WhatsappButton";
 import DriverInfo from "../../_components/DriverInfo";
-import { http } from "@/app/api/http";
+import { http } from "@/app/_api/http";
 import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 import { cookies } from "next/headers";
-import { API_URL } from "@/app/config/env";
+import { API_URL } from "@/app/_config/env";
 
 export default async function ProfilePage({
   params,

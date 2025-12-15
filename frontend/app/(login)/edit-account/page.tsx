@@ -1,5 +1,5 @@
 import { updateUser } from "@/app/_actions/user";
-import EditAccountForm from "@/app/_components/EditAccountForm";
+import EditAccountForm from "@/app/(login)/_components/EditAccountForm";
 import { verifySession } from "@/app/_utils/session";
 
 export default async function EditAccountPage() {

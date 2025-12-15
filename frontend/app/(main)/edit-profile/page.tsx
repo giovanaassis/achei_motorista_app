@@ -1,9 +1,9 @@
-import { DriverType } from "@/app/@types/driver";
-import { API_URL } from "@/app/config/env";
+import { DriverType } from "@/app/_types/driver";
+import { API_URL } from "@/app/_config/env";
 import { verifySession } from "@/app/_utils/session";
 import EditProfileForm from "../_components/EditProfileForm";
 import { createDriver, updateDriver } from "@/app/_actions/driver";
-import { http } from "@/app/api/http";
+import { http } from "@/app/_api/http";
 
 export default async function EditProfilePage() {
   // CHECK AUTH

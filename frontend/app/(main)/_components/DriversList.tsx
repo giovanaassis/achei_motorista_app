@@ -1,6 +1,6 @@
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import DriverCard from "@/app/(main)/_components/DriverCard";
-import { http } from "@/app/api/http";
+import { http } from "@/app/_api/http";
 import { getErrorMessage } from "@/app/_utils/getErrorMessage";
 
 async function DriversList({ query }: { query: string }) {

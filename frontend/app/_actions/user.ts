@@ -1,10 +1,10 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { API_URL } from "../config/env";
+import { API_URL } from "../_config/env";
 import { getErrorMessage } from "@/app/_utils/getErrorMessage";
-import { http } from "../api/http";
-import { SocialType } from "@/app/@types/social";
+import { http } from "../_api/http";
+import { SocialType } from "@/app/_types/social";
 import { deleteSocials } from "./social";
 
 export async function updateUser(userId: number, formData: FormData) {

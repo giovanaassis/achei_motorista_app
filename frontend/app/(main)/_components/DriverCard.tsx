@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FaCarSide, FaMotorcycle } from "react-icons/fa";
 import { checkAvailability } from "@/app/_utils/checkAvailability";
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 
 function DriverCard({ driver }: { driver: DriverType }) {
   return (

@@ -2,11 +2,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { API_URL } from "../config/env";
+import { API_URL } from "../_config/env";
 import { redirect } from "next/navigation";
 import { getErrorMessage } from "@/app/_utils/getErrorMessage";
-import { http } from "../api/http";
-import { UserType } from "@/app/@types/user";
+import { http } from "../_api/http";
+import { UserType } from "@/app/_types/user";
 
 export async function signup(prevState: any, formData: FormData) {
   const rawData = Object.fromEntries(formData);

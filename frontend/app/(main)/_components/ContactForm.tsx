@@ -1,6 +1,6 @@
 "use client";
 
-import { DriverType } from "@/app/@types/driver";
+import { DriverType } from "@/app/_types/driver";
 import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiFillInstagram } from "react-icons/ai";
