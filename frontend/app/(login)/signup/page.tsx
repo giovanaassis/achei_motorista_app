@@ -15,7 +15,7 @@ export default function SignUpPage() {
       {/* SIGNUP FORM */}
       <h1 className="text-4xl">Crie uma conta.</h1>
       <form className="loginForm" action={formAction}>
-        <SignUpForm pending={pending} />
+        <SignUpForm pending={pending} state={state} />
 
         <p>
           Já tem uma conta?{" "}
@@ -24,7 +24,6 @@ export default function SignUpPage() {
           </Link>
         </p>
         {state?.message && <p>{state.message}</p>}
-        {state.errors?.username && <p>{state.errors.username}</p>}
       </form>
     </div>
   );

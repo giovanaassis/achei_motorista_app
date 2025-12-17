@@ -1,4 +1,12 @@
-function SignUpForm({ pending }: { pending: boolean }) {
+import { FormState } from "@/lib/definitions";
+
+function SignUpForm({
+  pending,
+  state,
+}: {
+  pending: boolean;
+  state: FormState;
+}) {
   return (
     <>
       <input
@@ -8,6 +16,9 @@ function SignUpForm({ pending }: { pending: boolean }) {
         placeholder="Nome"
         className="input p-2 text-xl"
       />
+      {state?.errors?.username && (
+        <p className="text-red -my-5">{state.errors.username}</p>
+      )}
 
       <input
         type="email"
@@ -16,6 +27,9 @@ function SignUpForm({ pending }: { pending: boolean }) {
         placeholder="E-mail"
         className="input p-2 text-xl"
       />
+      {state?.errors?.email && (
+        <p className="text-red -my-5">{state.errors.email}</p>
+      )}
 
       <input
         type="password"
@@ -25,6 +39,9 @@ function SignUpForm({ pending }: { pending: boolean }) {
         className="input p-2 text-xl"
         autoComplete="off"
       />
+      {state?.errors?.password && (
+        <p className="text-red -my-5">{state.errors.password}</p>
+      )}
 
       <button className="w-50 -mb-4" type="submit" disabled={pending}>
         criar conta

@@ -21,7 +21,7 @@ export async function signup(state: FormState, formData: FormData) {
   });
 
   if (!validatedFields.success) {
-    console.log("valida error");
+    console.log("validate error");
     const errors = z.flattenError(validatedFields.error).fieldErrors;
     return { errors };
   }
