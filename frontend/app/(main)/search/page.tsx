@@ -1,4 +1,4 @@
-import { DriverType } from "@/app/_types/driver";
+import { DriverType } from "@/app/types/driver";
 import SearchFilters from "@/app/(main)/_components/SearchFilters";
 import { Suspense } from "react";
 import DriversList from "../_components/DriversList";

@@ -1,8 +1,8 @@
 "use client";
 
-import { DriverType } from "@/app/_types/driver";
+import { DriverType } from "@/app/types/driver";
 import { useState } from "react";
-import LocaleInput from "@/app/_components/LocaleInput";
+import LocaleInput from "@/app/components/LocaleInput";
 
 const genders = [
   {

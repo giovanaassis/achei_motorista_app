@@ -2,14 +2,29 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { API_URL } from "../_config/env";
+import { API_URL } from "../config/env";
 import { redirect } from "next/navigation";
-import { getErrorMessage } from "@/app/_utils/getErrorMessage";
-import { http } from "../_api/http";
-import { UserType } from "@/app/_types/user";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
+import { http } from "../api/http";
+import { UserType } from "@/app/types/user";
+import { FormState, SignupFormSchema } from "@/lib/definitions";
+import * as z from "zod";
 
-export async function signup(prevState: any, formData: FormData) {
+export async function signup(state: FormState, formData: FormData) {
   const rawData = Object.fromEntries(formData);
+
+  // VALIDATE FORM FIELDS
+  const validatedFields = SignupFormSchema.safeParse({
+    username: rawData.username,
+    email: rawData.email,
+    password: rawData.password,
+  });
+
+  if (!validatedFields.success) {
+    console.log("valida error");
+    const errors = z.flattenError(validatedFields.error).fieldErrors;
+    return { errors };
+  }
 
   const data = {
     username: rawData.email,

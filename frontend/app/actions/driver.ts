@@ -1,9 +1,9 @@
 "use server";
 
-import { SocialType } from "@/app/_types/social";
+import { SocialType } from "@/app/types/social";
 import { createSocials, updateSocials } from "./social";
-import { http } from "../_api/http";
-import { getErrorMessage } from "@/app/_utils/getErrorMessage";
+import { http } from "../api/http";
+import { getErrorMessage } from "@/app/utils/getErrorMessage";
 
 export async function createDriver(formData: FormData) {
   const rawData = Object.fromEntries(formData);

@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/_config/env";
+import { API_URL } from "@/app/config/env";
 import { cookies } from "next/headers";
 
 export async function verifySession() {

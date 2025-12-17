@@ -1,7 +1,7 @@
 "use server";
 
-import { SocialType } from "@/app/_types/social";
-import { http } from "../_api/http";
+import { SocialType } from "@/app/types/social";
+import { http } from "../api/http";
 
 export async function updateSocials(social: string, url: string, id: string) {
   try {

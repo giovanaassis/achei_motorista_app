@@ -1,7 +1,7 @@
 "use client";
 
-import { deleteUser } from "@/app/_actions/user";
-import { useDriverContext } from "@/app/_context/DriverContext";
+import { deleteUser } from "@/app/actions/user";
+import { useDriverContext } from "@/app/context/DriverContext";
 import { useTransition } from "react";
 
 function DeleteAccountForm({

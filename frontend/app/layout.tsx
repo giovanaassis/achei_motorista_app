@@ -1,10 +1,10 @@
 import { Theme } from "@radix-ui/themes";
-import { DriverProvider } from "@/app/_context/DriverContext";
+import { DriverProvider } from "@/app/context/DriverContext";
 import "@/app/globals.css";
 import { Afacad } from "next/font/google";
-import { API_URL } from "./_config/env";
-import { verifySession } from "@/app/_utils/session";
-import { DriverType } from "@/app/_types/driver";
+import { API_URL } from "./config/env";
+import { verifySession } from "@/app/utils/session";
+import { DriverType } from "@/app/types/driver";
 
 const afacad = Afacad({
   weight: ["500", "600", "700"],

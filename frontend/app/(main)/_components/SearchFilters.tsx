@@ -1,9 +1,9 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
-import QuantityInput from "@/app/_components/QuantityInput";
-import LocaleInput from "@/app/_components/LocaleInput";
-import { DriverType } from "@/app/_types/driver";
+import QuantityInput from "@/app/components/QuantityInput";
+import LocaleInput from "@/app/components/LocaleInput";
+import { DriverType } from "@/app/types/driver";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

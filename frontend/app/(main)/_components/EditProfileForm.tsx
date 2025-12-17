@@ -1,12 +1,12 @@
 "use client";
 
-import { DriverType } from "@/app/_types/driver";
+import { DriverType } from "@/app/types/driver";
 import ContactForm from "@/app/(main)/_components/ContactForm";
 import { useState, useTransition } from "react";
 import PersonalForm from "./PersonalForm";
 import VehicleForm from "./VehicleForm";
 import FeedbackMessage from "./FeedbackMessage";
-import { useDriverContext } from "@/app/_context/DriverContext";
+import { useDriverContext } from "@/app/context/DriverContext";
 
 interface EditProfileFormProps {
   driver?: DriverType;

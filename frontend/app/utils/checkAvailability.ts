@@ -1,4 +1,4 @@
-import { DriverType } from "@/app/_types/driver";
+import { DriverType } from "@/app/types/driver";
 
 export const checkAvailability = (driver: DriverType) => {
   let { driver_availability } = driver;

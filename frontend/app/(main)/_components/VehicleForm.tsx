@@ -2,8 +2,8 @@
 
 import { FaCarSide } from "react-icons/fa";
 import { FaMotorcycle } from "react-icons/fa";
-import QuantityInput from "@/app/_components/QuantityInput";
-import { DriverType } from "@/app/_types/driver";
+import QuantityInput from "@/app/components/QuantityInput";
+import { DriverType } from "@/app/types/driver";
 import { ChangeEvent, useState } from "react";
 
 const daysWeek = [

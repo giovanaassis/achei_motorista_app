@@ -1,7 +1,7 @@
 "use client";
 
 import SignUpForm from "@/app/(login)/_components/SignUpForm";
-import { signup } from "@/app/_actions/auth";
+import { signup } from "@/app/actions/auth";
 import Link from "next/link";
 import { useActionState } from "react";
 
@@ -24,6 +24,7 @@ export default function SignUpPage() {
           </Link>
         </p>
         {state?.message && <p>{state.message}</p>}
+        {state.errors?.username && <p>{state.errors.username}</p>}
       </form>
     </div>
   );

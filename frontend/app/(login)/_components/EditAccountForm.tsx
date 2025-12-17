@@ -1,6 +1,6 @@
 "use client";
 
-import { UserType } from "@/app/_types/user";
+import { UserType } from "@/app/types/user";
 import { useState, useTransition } from "react";
 
 interface EditAccountFormProps {
