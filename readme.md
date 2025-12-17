@@ -24,7 +24,6 @@
 - Next.js (React)
 - TypeScript
 - TailwindCSS
-- Axios
 
 ### **Backend (CMS)**
 
