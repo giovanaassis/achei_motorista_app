@@ -7,23 +7,21 @@ import { redirect } from "next/navigation";
 import { getErrorMessage } from "@/app/utils/getErrorMessage";
 import { http } from "../api/http";
 import { UserType } from "@/app/types/user";
-import { FormState, SignupFormSchema } from "@/lib/definitions";
-import * as z from "zod";
+import { FormState, SignupFields, SignupFormSchema } from "@/lib/definitions";
+import { validateForm } from "../utils/validateForm";
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(
+  state: FormState<SignupFields>,
+  formData: FormData
+) {
   const rawData = Object.fromEntries(formData);
 
   // VALIDATE FORM FIELDS
-  const validatedFields = SignupFormSchema.safeParse({
-    username: rawData.username,
-    email: rawData.email,
-    password: rawData.password,
-  });
+  const validation = validateForm(SignupFormSchema, rawData);
 
-  if (!validatedFields.success) {
-    console.log("validate error");
-    const errors = z.flattenError(validatedFields.error).fieldErrors;
-    return { errors };
+  if (!validation.success) {
+    console.log("errors", validation.errors);
+    return { errors: validation.errors };
   }
 
   const data = {

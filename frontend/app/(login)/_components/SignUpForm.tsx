@@ -1,11 +1,11 @@
-import { FormState } from "@/lib/definitions";
+import { FormState, SignupFields } from "@/lib/definitions";
 
 function SignUpForm({
   pending,
   state,
 }: {
   pending: boolean;
-  state: FormState;
+  state: FormState<SignupFields>;
 }) {
   return (
     <>
@@ -39,9 +39,12 @@ function SignUpForm({
         className="input p-2 text-xl"
         autoComplete="off"
       />
-      {state?.errors?.password && (
-        <p className="text-red -my-5">{state.errors.password}</p>
-      )}
+      {state?.errors?.password &&
+        state.errors.password.map((err: string) => (
+          <p key={err} className="text-red -my-5">
+            {err}
+          </p>
+        ))}
 
       <button className="w-50 -mb-4" type="submit" disabled={pending}>
         criar conta

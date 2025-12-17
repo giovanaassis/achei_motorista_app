@@ -10,13 +10,11 @@ export const SignupFormSchema = z.object({
     .trim(),
 });
 
-export type FormState =
+export type SignupFields = z.infer<typeof SignupFormSchema>;
+
+export type FormState<T extends Record<string, unknown>> =
   | {
-      errors?: {
-        username?: string[];
-        email?: string[];
-        password?: string[];
-      };
+      errors?: Partial<Record<keyof T, string[]>>;
       message?: string;
     }
   | undefined;
