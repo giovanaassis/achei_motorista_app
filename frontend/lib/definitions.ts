@@ -10,7 +10,12 @@ export const SignupFormSchema = z.object({
     .trim(),
 });
 
+export const SigninFormSchema = SignupFormSchema.omit({
+  username: true,
+});
+
 export type SignupFields = z.infer<typeof SignupFormSchema>;
+export type SigninFields = z.infer<typeof SigninFormSchema>;
 
 export type FormState<T extends Record<string, unknown>> =
   | {

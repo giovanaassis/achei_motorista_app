@@ -1,13 +1,24 @@
-function SignInForm({ pending }: { pending: boolean }) {
+import { FormState, SigninFields } from "@/lib/definitions";
+
+function SignInForm({
+  pending,
+  state,
+}: {
+  pending: boolean;
+  state: FormState<SigninFields>;
+}) {
   return (
     <>
       <input
-        type="text"
+        type="email"
         id="email"
         name="email"
         placeholder="E-mail"
         className="input p-2 text-xl"
       />
+      {state?.errors?.email && (
+        <p className="text-red -my-5">{state.errors.email}</p>
+      )}
 
       <input
         type="password"
@@ -17,6 +28,12 @@ function SignInForm({ pending }: { pending: boolean }) {
         className="input p-2 text-xl"
         autoComplete="off"
       />
+      {state?.errors?.password &&
+        state.errors.password.map((err: string) => (
+          <p key={err} className="text-red -my-5">
+            {err}
+          </p>
+        ))}
 
       <input
         type="password"

@@ -25,7 +25,7 @@ export default function SignInPage() {
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl">Login.</h1>
       <form className="loginForm" action={formAction}>
-        <SignInForm pending={pending} />
+        <SignInForm pending={pending} state={state} />
 
         <p>
           Não tem uma conta?{" "}

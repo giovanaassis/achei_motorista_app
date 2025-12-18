@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
@@ -7,7 +6,13 @@ import { redirect } from "next/navigation";
 import { getErrorMessage } from "@/app/utils/getErrorMessage";
 import { http } from "../api/http";
 import { UserType } from "@/app/types/user";
-import { FormState, SignupFields, SignupFormSchema } from "@/lib/definitions";
+import {
+  FormState,
+  SigninFields,
+  SigninFormSchema,
+  SignupFields,
+  SignupFormSchema,
+} from "@/lib/definitions";
 import { validateForm } from "../utils/validateForm";
 
 export async function signup(
@@ -20,7 +25,6 @@ export async function signup(
   const validation = validateForm(SignupFormSchema, rawData);
 
   if (!validation.success) {
-    console.log("errors", validation.errors);
     return { errors: validation.errors };
   }
 
@@ -69,7 +73,10 @@ export async function signup(
   redirect("/edit-profile");
 }
 
-export async function signin(prevState: any, formData: FormData) {
+export async function signin(
+  state: FormState<SigninFields>,
+  formData: FormData
+) {
   const identifier = formData.get("email");
   const password = formData.get("password");
   const confirmPassword = formData.get("confirm-password");
@@ -79,6 +86,17 @@ export async function signin(prevState: any, formData: FormData) {
     return { message: "As senhas tem que ser iguais." };
   }
 
+  // VALIDATE FORM FIELDS
+  const validation = validateForm(SigninFormSchema, {
+    email: identifier,
+    password,
+  });
+
+  if (!validation.success) {
+    console.log("validate error");
+    return { errors: validation.errors };
+  }
+
   // SEND REQUEST TO LOGIN
   const res = await fetch(`${API_URL}/auth/local`, {
     method: "POST",
@@ -86,6 +104,8 @@ export async function signin(prevState: any, formData: FormData) {
     body: JSON.stringify({ identifier, password }),
     cache: "no-store",
   });
+
+  console.log("res", res);
 
   if (!res.ok) {
     return { message: getErrorMessage(res.status) };
