@@ -93,7 +93,6 @@ export async function signin(
   });
 
   if (!validation.success) {
-    console.log("validate error");
     return { errors: validation.errors };
   }
 

@@ -6,27 +6,25 @@ import { getErrorMessage } from "@/app/utils/getErrorMessage";
 import { http } from "../api/http";
 import { SocialType } from "@/app/types/social";
 import { deleteSocials } from "./social";
+import { validateForm } from "../utils/validateForm";
+import { UserFormFields, UserFormSchema } from "@/lib/definitions";
 
-export async function updateUser(userId: number, formData: FormData) {
+export async function updateUser(
+  userId: number,
+  formData: FormData
+): Promise<{
+  success: boolean;
+  message?: string;
+  errors?: Partial<Record<keyof UserFormFields, string[]>>;
+}> {
   const rawData = Object.fromEntries(formData);
   const token = (await cookies()).get("token")?.value;
 
-  // UPDATE NAME AND EMAIL
-  const res = await fetch(`${API_URL}/users/${userId}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: rawData.name,
-      email: rawData.email,
-      username: rawData.email,
-    }),
-  });
+  // VALIDATE FORM FIELDS
+  const validation = validateForm(UserFormSchema, rawData);
 
-  if (!res.ok) {
-    return { success: false, message: getErrorMessage(res.status) };
+  if (!validation.success) {
+    return { success: false, errors: validation.errors };
   }
 
   // UPDATE PASSWORD
@@ -47,6 +45,24 @@ export async function updateUser(userId: number, formData: FormData) {
     if (!res2.ok) {
       return { success: false, message: getErrorMessage(res2.status) };
     }
+  }
+
+  // UPDATE NAME AND EMAIL
+  const res = await fetch(`${API_URL}/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: rawData.name,
+      email: rawData.email,
+      username: rawData.email,
+    }),
+  });
+
+  if (!res.ok) {
+    return { success: false, message: getErrorMessage(res.status) };
   }
 
   return { success: true };

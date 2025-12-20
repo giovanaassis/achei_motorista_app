@@ -1,12 +1,16 @@
 import { updateUser } from "@/app/actions/user";
 import EditAccountForm from "@/app/(login)/_components/EditAccountForm";
 import { verifySession } from "@/app/utils/session";
+import { FormState, UserFormFields } from "@/lib/definitions";
 
 export default async function EditAccountPage() {
   const session = await verifySession();
   const user = session;
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (
+    state: FormState<UserFormFields>,
+    formData: FormData
+  ) => {
     "use server";
     const result = await updateUser(session.id, formData);
     return result;
