@@ -5,6 +5,7 @@ import { FaMotorcycle } from "react-icons/fa";
 import QuantityInput from "@/app/components/QuantityInput";
 import { DriverType } from "@/app/types/driver";
 import { ChangeEvent, useState } from "react";
+import { DriverFormFields } from "@/lib/definitions";
 
 const daysWeek = [
   "segunda-feira",
@@ -16,7 +17,16 @@ const daysWeek = [
   "domingo",
 ];
 
-function VehicleForm({ driver }: { driver?: DriverType }) {
+interface VehicleFormProps {
+  driver?: DriverType;
+  state?: {
+    success: boolean;
+    message?: string;
+    errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+  };
+}
+
+function VehicleForm({ driver, state }: VehicleFormProps) {
   const [availability, setAvailability] = useState<string[]>(
     driver?.driver_availability || []
   );
@@ -43,7 +53,12 @@ function VehicleForm({ driver }: { driver?: DriverType }) {
 
   return (
     <>
-      <p className="self-start text-2xl my-5">Tipo de veículo</p>
+      <div className="flex gap-2 items-center">
+        <p className="self-start text-2xl my-5">Tipo de veículo</p>
+        {state?.errors?.vehicle_type && (
+          <p className="error-edit-profile">{state.errors.vehicle_type}</p>
+        )}
+      </div>
       <div className="self-start flex gap-15">
         <label htmlFor="car">
           <input
@@ -81,11 +96,21 @@ function VehicleForm({ driver }: { driver?: DriverType }) {
       {vehicle === "carro" && (
         <div className="self-start mb-5">
           <p className="text-2xl">Quantidade de assentos no carro</p>
+          {state?.errors?.vehicle_seats && (
+            <p className="text-red">{state.errors.vehicle_seats}</p>
+          )}
           <QuantityInput seats={driver?.vehicle_seats} />
         </div>
       )}
 
-      <p className="self-start text-2xl mb-5 select-none">Disponibilidade</p>
+      <div className="flex gap-2 items-center mb-5">
+        <p className="self-start text-2xl select-none">Disponibilidade</p>
+        {state?.errors?.driver_availability && (
+          <p className="error-edit-profile">
+            {state.errors.driver_availability}
+          </p>
+        )}
+      </div>
       <div className="self-start flex gap-4 flex-wrap">
         {daysWeek.map((day) => (
           <label htmlFor={day} key={day}>

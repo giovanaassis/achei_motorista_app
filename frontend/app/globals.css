@@ -70,6 +70,11 @@
     gap: 2.5rem;
     margin-top: 3.75rem;
   }
+
+  .error-edit-profile {
+    color: red;
+    margin-top: 4px;
+  }
 }
 
 @layer base {

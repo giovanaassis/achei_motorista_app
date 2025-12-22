@@ -3,7 +3,7 @@ import { API_URL } from "@/app/config/env";
 import { verifySession } from "@/app/utils/session";
 import EditProfileForm from "../_components/EditProfileForm";
 import { createDriver, updateDriver } from "@/app/actions/driver";
-import { http } from "@/app/api/http";
+import { DriverFormFields, FormState } from "@/lib/definitions";
 
 export default async function EditProfilePage() {
   // CHECK AUTH
@@ -23,7 +23,10 @@ export default async function EditProfilePage() {
     driver = data[0];
   }
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (
+    state: FormState<DriverFormFields>,
+    formData: FormData
+  ) => {
     "use server";
 
     let response;
@@ -34,22 +37,8 @@ export default async function EditProfilePage() {
       formData.append("user", session.id);
       response = await createDriver(formData);
     }
-    // FETCH UPDATED DRIVER
-    const { driverId } = response;
-    const res = await http(
-      `drivers?filters[id][$eq]=${driverId}&populate=driver_socials`,
-      "GET"
-    );
-    if (!res.ok) {
-      response.success = false;
-      response.message = "Erro ao atualizar";
-      return response;
-    } else {
-      const data = await res.json();
-      const updatedDriver: DriverType = data.data[0];
-      const { message } = response;
-      return { success: true, message: message, driver: updatedDriver };
-    }
+
+    return response;
   };
 
   return (

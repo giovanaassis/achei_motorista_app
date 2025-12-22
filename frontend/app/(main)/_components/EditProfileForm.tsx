@@ -2,18 +2,24 @@
 
 import { DriverType } from "@/app/types/driver";
 import ContactForm from "@/app/(main)/_components/ContactForm";
-import { useState, useTransition } from "react";
+import { useActionState, useEffect, useState } from "react";
 import PersonalForm from "./PersonalForm";
 import VehicleForm from "./VehicleForm";
-import FeedbackMessage from "./FeedbackMessage";
 import { useDriverContext } from "@/app/context/DriverContext";
+import { DriverFormFields, FormState } from "@/lib/definitions";
+import FeedbackMessage from "./FeedbackMessage";
 
 interface EditProfileFormProps {
   driver?: DriverType;
   isUpdating: boolean;
   handleSubmitAction: (
+    state: FormState<DriverFormFields>,
     data: FormData
-  ) => Promise<{ success: boolean; message: string; driver?: DriverType }>;
+  ) => Promise<{
+    success: boolean;
+    message?: string;
+    errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+  }>;
 }
 
 function EditProfileForm({
@@ -21,10 +27,15 @@ function EditProfileForm({
   isUpdating,
   handleSubmitAction,
 }: EditProfileFormProps) {
-  const [isPending, startTransition] = useTransition();
-  const [isSuccess, setIsSuccess] = useState<boolean>();
-  const [message, setMessage] = useState<string>("");
-  const { update, clear } = useDriverContext();
+  const [state, formAction, pending] = useActionState(
+    handleSubmitAction,
+    undefined
+  );
+  const [feedBack, setFeedback] = useState<{
+    success: boolean;
+    message: string;
+  }>();
+  const { clear } = useDriverContext();
 
   const handleLogout = async () => {
     const res = await fetch("/api/auth/logout", { method: "POST" });
@@ -37,39 +48,59 @@ function EditProfileForm({
     }
   };
 
+  useEffect(() => {
+    if (!state) return;
+    if (state.errors) return;
+
+    if (state?.success !== undefined) {
+      sessionStorage.setItem(
+        "feedback",
+        JSON.stringify({
+          success: state.success,
+          message: state.message ?? "",
+        })
+      );
+
+      window.location.reload();
+    }
+  }, [state]);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("feedback");
+
+    if (stored) {
+      setFeedback(JSON.parse(stored));
+      sessionStorage.removeItem("feedback");
+    }
+  }, []);
+
   return (
     <form
       className="flex justify-between flex-col md:flex-row"
-      action={(formData) =>
-        startTransition(async () => {
-          const result = await handleSubmitAction(formData);
-          setIsSuccess(result.success);
-          setMessage(result.message);
-          if (result.driver) {
-            update(result.driver);
-          }
-        })
-      }
+      action={formAction}
     >
       {/* LEFT SIDE */}
       <div className="flex-1">
-        {isSuccess !== undefined && (
-          <FeedbackMessage isSuccess={isSuccess} message={message} />
+        {feedBack && (
+          <FeedbackMessage
+            isSuccess={feedBack.success}
+            message={feedBack.message}
+          />
         )}
-        <PersonalForm driver={driver} />
-        <ContactForm driver={driver} />
+        <PersonalForm driver={driver} state={state} />
+        <ContactForm driver={driver} state={state} />
       </div>
 
       {/* RIGHT SIDE */}
       <div className="flex-1 mt-5">
-        <VehicleForm driver={driver} />
+        <VehicleForm driver={driver} state={state} />
         <div className="flex gap-5">
           <button type="submit" className="mt-10 text-2xl">
             {isUpdating
-              ? isPending
+              ? pending
                 ? "Salvando..."
                 : "Salvar"
-              : isPending
+              : pending
               ? "Criando..."
               : "Criar"}
           </button>

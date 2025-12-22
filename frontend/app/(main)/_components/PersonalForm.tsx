@@ -3,6 +3,7 @@
 import { DriverType } from "@/app/types/driver";
 import { useState } from "react";
 import LocaleInput from "@/app/components/LocaleInput";
+import { DriverFormFields } from "@/lib/definitions";
 
 const genders = [
   {
@@ -19,7 +20,16 @@ const genders = [
   },
 ];
 
-function PersonalForm({ driver }: { driver?: DriverType }) {
+interface PersonalFormProps {
+  driver?: DriverType;
+  state?: {
+    success: boolean;
+    message?: string;
+    errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+  };
+}
+
+function PersonalForm({ driver, state }: PersonalFormProps) {
   const [selectedState, setSelectedState] = useState<string | undefined>(
     driver?.state
   );
@@ -72,7 +82,13 @@ function PersonalForm({ driver }: { driver?: DriverType }) {
       )} */}
 
       {/* GENDER INPUT */}
-      <p className="text-2xl self-start mt-5">Gênero</p>
+
+      <div className="flex items-center mt-5 gap-2">
+        <p className="text-2xl self-start">Gênero</p>
+        {state?.errors?.gender && (
+          <p className="error-edit-profile">{state.errors.gender}</p>
+        )}
+      </div>
       <div className="flex gap-5 text-2xl self-start my-5">
         {genders.map(({ gender, name }) => (
           <label
@@ -102,7 +118,7 @@ function PersonalForm({ driver }: { driver?: DriverType }) {
           setSelectedState={setSelectedState}
         />
       </div>
-
+      {state?.errors?.state && <p className="text-red">{state.errors.state}</p>}
       <div className="flex flex-col gap-3 text-2xl self-start">
         <input hidden name="city" defaultValue={selectedCity} />
         <LocaleInput
@@ -112,6 +128,7 @@ function PersonalForm({ driver }: { driver?: DriverType }) {
           setSelectedCity={setSelectedCity}
         />
       </div>
+      {state?.errors?.city && <p className="text-red">{state.errors.city}</p>}
     </>
   );
 }

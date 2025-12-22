@@ -104,8 +104,6 @@ export async function signin(
     cache: "no-store",
   });
 
-  console.log("res", res);
-
   if (!res.ok) {
     return { message: getErrorMessage(res.status) };
   }

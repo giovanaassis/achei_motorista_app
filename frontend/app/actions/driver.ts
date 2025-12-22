@@ -4,12 +4,33 @@ import { SocialType } from "@/app/types/social";
 import { createSocials, updateSocials } from "./social";
 import { http } from "../api/http";
 import { getErrorMessage } from "@/app/utils/getErrorMessage";
+import { validateForm } from "../utils/validateForm";
+import { DriverFormFields, DriverFormSchema } from "@/lib/definitions";
 
-export async function createDriver(formData: FormData) {
+export async function createDriver(formData: FormData): Promise<{
+  success: boolean;
+  driverId?: number;
+  message?: string;
+  errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+}> {
   const rawData = Object.fromEntries(formData);
   const driver_availability = formData.getAll("driver_availability");
   const { instagram, facebook, site, ...driver } = rawData;
   const payload = { ...driver, driver_availability };
+
+  const cleanedData = Object.fromEntries(
+    Object.entries(rawData).map(([key, value]) => [
+      key,
+      value === "" ? undefined : value,
+    ])
+  );
+
+  // VALIDATE FORM FIELDS
+  const validation = validateForm(DriverFormSchema, cleanedData);
+
+  if (!validation.success) {
+    return { success: false, errors: validation.errors };
+  }
 
   // CREATE DRIVER
   const res = await http("drivers", "POST", payload);
@@ -58,11 +79,30 @@ export async function createDriver(formData: FormData) {
   };
 }
 
-export async function updateDriver(formData: FormData) {
+export async function updateDriver(formData: FormData): Promise<{
+  success: boolean;
+  driverId?: number;
+  message?: string;
+  errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+}> {
   const rawData = Object.fromEntries(formData);
   const driver_availability = formData.getAll("driver_availability");
   const { instagram, facebook, site, documentId, ...driver } = rawData;
   const payload = { ...driver, driver_availability };
+
+  const cleanedData = Object.fromEntries(
+    Object.entries(rawData).map(([key, value]) => [
+      key,
+      value === "" ? undefined : value,
+    ])
+  );
+
+  // VALIDATE FORM FIELDS
+  const validation = validateForm(DriverFormSchema, cleanedData);
+
+  if (!validation.success) {
+    return { success: false, errors: validation.errors };
+  }
 
   // UPDATE DRIVER
   const res = await http(`drivers/${documentId}`, "PUT", payload);

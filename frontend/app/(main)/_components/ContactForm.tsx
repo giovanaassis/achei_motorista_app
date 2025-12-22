@@ -1,6 +1,7 @@
 "use client";
 
 import { DriverType } from "@/app/types/driver";
+import { DriverFormFields } from "@/lib/definitions";
 import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiFillInstagram } from "react-icons/ai";
@@ -13,7 +14,16 @@ type DriverSocialType = {
   site?: string;
 };
 
-function ContactForm({ driver }: { driver?: DriverType }) {
+interface ContactFormProps {
+  driver?: DriverType;
+  state?: {
+    success: boolean;
+    message?: string;
+    errors?: Partial<Record<keyof DriverFormFields, string[]>>;
+  };
+}
+
+function ContactForm({ driver, state }: ContactFormProps) {
   const [socials, setSocials] = useState<DriverSocialType>();
 
   useEffect(() => {
@@ -31,9 +41,14 @@ function ContactForm({ driver }: { driver?: DriverType }) {
   return (
     <>
       <div className="flex flex-col gap-5 mt-5">
-        <label htmlFor="phone_number" className="text-2xl self-start">
-          Contato
-        </label>
+        <div className="flex gap-2 items-center">
+          <label htmlFor="phone_number" className="text-2xl self-start">
+            Contato
+          </label>
+          {state?.errors?.phone_number && (
+            <p className="error-edit-profile">{state.errors.phone_number}</p>
+          )}
+        </div>
         <input
           type="text"
           name="phone_number"
@@ -47,6 +62,14 @@ function ContactForm({ driver }: { driver?: DriverType }) {
       <p className="text-2xl self-start my-5">
         Redes Sociais (não é obrigatório)
       </p>
+      {state?.errors?.instagram && (
+        <p className="text-red">{state.errors.instagram}</p>
+      )}
+      {state?.errors?.facebook && (
+        <p className="text-red">{state.errors.facebook}</p>
+      )}
+      {state?.errors?.site && <p className="text-red">{state.errors.site}</p>}
+
       <div className="flex flex-col gap-7">
         <div className="self-start relative -mb-3">
           <AiFillInstagram className="text-3xl text-gray-secondary absolute top-2 left-2 opacity-75" />

@@ -14,7 +14,7 @@ export default async function EditAccountPage() {
     "use server";
     const result = await updateUser(session.id, formData);
     return result;
-  };
+  }; 
 
   return (
     <div className="flex flex-col items-center justify-center">
