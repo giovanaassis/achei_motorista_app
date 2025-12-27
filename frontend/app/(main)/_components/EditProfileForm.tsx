@@ -2,7 +2,7 @@
 
 import { DriverType } from "@/app/types/driver";
 import ContactForm from "@/app/(main)/_components/ContactForm";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import PersonalForm from "./PersonalForm";
 import VehicleForm from "./VehicleForm";
 import { useDriverContext } from "@/app/context/DriverContext";
@@ -36,6 +36,45 @@ function EditProfileForm({
     message: string;
   }>();
   const { clear } = useDriverContext();
+  const submitRef = useRef(false);
+
+  const handleClientSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (submitRef.current) {
+      submitRef.current = false;
+      return;
+    }
+
+    e.preventDefault();
+
+    const form = e.currentTarget;
+
+    await new Promise((r) => requestAnimationFrame(r));
+
+    const triggers = form.querySelectorAll("[data-radix-select-trigger]");
+
+    const stateTrigger = triggers[0] as HTMLElement | undefined;
+    const cityTrigger = triggers[1] as HTMLElement | undefined;
+
+    const stateHidden = form.querySelector(
+      "#state-hidden"
+    ) as HTMLInputElement | null;
+
+    const cityHidden = form.querySelector(
+      "#city-hidden"
+    ) as HTMLInputElement | null;
+
+    if (stateTrigger && stateHidden) {
+      stateHidden.value = stateTrigger.textContent?.trim() ?? "";
+    }
+
+    if (cityTrigger && cityHidden) {
+      cityHidden.value = cityTrigger.textContent?.trim() ?? "";
+    }
+
+    submitRef.current = true;
+
+    form.requestSubmit();
+  };
 
   const handleLogout = async () => {
     const res = await fetch("/api/auth/logout", { method: "POST" });
@@ -78,6 +117,7 @@ function EditProfileForm({
     <form
       className="flex justify-between flex-col md:flex-row"
       action={formAction}
+      onSubmit={handleClientSubmit}
     >
       {/* LEFT SIDE */}
       <div className="flex-1">

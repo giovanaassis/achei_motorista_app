@@ -111,7 +111,13 @@ function PersonalForm({ driver, state }: PersonalFormProps) {
 
       {/* LOCATION INPUT */}
       <div className="flex flex-col gap-3 text-2xl self-start mb-5">
-        <input hidden name="state" defaultValue={selectedState} />
+        <input
+          hidden
+          name="state"
+          value={selectedState ?? ""}
+          id="state-hidden"
+          readOnly
+        />
         <LocaleInput
           hasState={false}
           selectedState={selectedState}
@@ -120,7 +126,13 @@ function PersonalForm({ driver, state }: PersonalFormProps) {
       </div>
       {state?.errors?.state && <p className="text-red">{state.errors.state}</p>}
       <div className="flex flex-col gap-3 text-2xl self-start">
-        <input hidden name="city" defaultValue={selectedCity} />
+        <input
+          hidden
+          name="city"
+          value={selectedCity ?? ""}
+          id="city-hidden"
+          readOnly
+        />
         <LocaleInput
           hasState={true}
           selectedState={selectedState}
